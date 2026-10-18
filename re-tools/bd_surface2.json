@@ -1,0 +1,419 @@
+{
+  "count": 24,
+  "rows": [
+    {
+      "name": "Action",
+      "bd": true,
+      "kinds": "base x412, fieldType x3",
+      "namespaces": [
+        "BehaviorDesigner.Runtime.Tasks",
+        "BehaviorDesigner.Runtime"
+      ],
+      "files": [
+        "BehaviorDesigner/Runtime/Tasks/GetFieldValue.cs",
+        "BehaviorDesigner/Runtime/Tasks/GetPropertyValue.cs",
+        "BehaviorDesigner/Runtime/Tasks/Idle.cs",
+        "BehaviorDesigner/Runtime/Tasks/InvokeMethod.cs"
+      ],
+      "examples": [
+        "public class GetFieldValue : Action",
+        "public class GetPropertyValue : Action",
+        "public class Idle : Action"
+      ]
+    },
+    {
+      "name": "Animator",
+      "bd": true,
+      "kinds": "fieldType x42",
+      "namespaces": [
+        "BehaviorDesigner.Runtime.Tasks",
+        "BehaviorDesigner.Runtime"
+      ],
+      "files": [
+        "AmmoAnimation.cs",
+        "Beam.cs",
+        "BehaviorDesigner/Runtime/Tasks/Unity/UnityAnimator/CrossFade.cs",
+        "BehaviorDesigner/Runtime/Tasks/Unity/UnityAnimator/GetApplyRootMotion.cs"
+      ],
+      "examples": [
+        "private Animator animator;",
+        "private Animator animator;",
+        "private Animator animator;"
+      ]
+    },
+    {
+      "name": "Behavior",
+      "bd": true,
+      "kinds": "base x1, fieldType x3",
+      "namespaces": [],
+      "files": [
+        "BehaviorDesigner/Runtime/BehaviorTree.cs",
+        "BehaviorDesigner/Runtime/Tasks/RestartBehaviorTree.cs",
+        "BehaviorDesigner/Runtime/Tasks/StartBehaviorTree.cs",
+        "BehaviorDesigner/Runtime/Tasks/StopBehaviorTree.cs"
+      ],
+      "examples": [
+        "public class BehaviorTree : Behavior",
+        "private Behavior behavior;",
+        "private Behavior behavior;"
+      ]
+    },
+    {
+      "name": "BehaviorReference",
+      "bd": true,
+      "kinds": "base x1",
+      "namespaces": [],
+      "files": [
+        "BehaviorDesigner/Runtime/Tasks/BehaviorTreeReference.cs"
+      ],
+      "examples": [
+        "public class BehaviorTreeReference : BehaviorReference"
+      ]
+    },
+    {
+      "name": "BoxCollider2D",
+      "bd": true,
+      "kinds": "fieldType x3",
+      "namespaces": [
+        "BehaviorDesigner.Runtime.Tasks"
+      ],
+      "files": [
+        "BehaviorDesigner/Runtime/Tasks/Unity/UnityBoxCollider2D/GetSize.cs",
+        "BehaviorDesigner/Runtime/Tasks/Unity/UnityBoxCollider2D/SetSize.cs",
+        "Spinny.cs"
+      ],
+      "examples": [
+        "private BoxCollider2D boxCollider2D;",
+        "private BoxCollider2D boxCollider2D;",
+        "private BoxCollider2D boxCollider2D;"
+      ]
+    },
+    {
+      "name": "Collision2D collision",
+      "bd": true,
+      "kinds": "paramType x16",
+      "namespaces": [
+        "BehaviorDesigner.Runtime.Tasks"
+      ],
+      "files": [
+        "BehaviorDesigner/Runtime/Tasks/HasEnteredCollision2D.cs",
+        "BehaviorDesigner/Runtime/Tasks/HasExitedCollision2D.cs",
+        "BehaviorDesigner/Runtime/Tasks/StackedAction.cs",
+        "BehaviorDesigner/Runtime/Tasks/StackedConditional.cs"
+      ],
+      "examples": [
+        "OnCollisionEnter2D(Collision2D collision)",
+        "OnCollisionExit2D(Collision2D collision)",
+        "OnCollisionEnter2D(Collision2D collision)"
+      ]
+    },
+    {
+      "name": "Color",
+      "bd": true,
+      "kinds": "fieldType x4, base:genericArg x1",
+      "namespaces": [
+        "BehaviorDesigner.Runtime.Tasks"
+      ],
+      "files": [
+        "AmmoDetailsSO.cs",
+        "BehaviorDesigner/Runtime/SharedColor.cs",
+        "DeadAction.cs",
+        "Effect.cs"
+      ],
+      "examples": [
+        "public Color ammoEffectType;",
+        "public class SharedColor : SharedVariable<Color>",
+        "public Color fadeColor;"
+      ]
+    },
+    {
+      "name": "Composite",
+      "bd": true,
+      "kinds": "base x10",
+      "namespaces": [],
+      "files": [
+        "BehaviorDesigner/Runtime/Tasks/Parallel.cs",
+        "BehaviorDesigner/Runtime/Tasks/ParallelComplete.cs",
+        "BehaviorDesigner/Runtime/Tasks/ParallelSelector.cs",
+        "BehaviorDesigner/Runtime/Tasks/PrioritySelector.cs"
+      ],
+      "examples": [
+        "public class Parallel : Composite",
+        "public class ParallelComplete : Composite",
+        "public class ParallelSelector : Composite"
+      ]
+    },
+    {
+      "name": "Conditional",
+      "bd": true,
+      "kinds": "base x75, fieldType x2",
+      "namespaces": [
+        "BehaviorDesigner.Runtime.Tasks"
+      ],
+      "files": [
+        "BehaviorDesigner/Runtime/Tasks/CompareFieldValue.cs",
+        "BehaviorDesigner/Runtime/Tasks/ComparePropertyValue.cs",
+        "BehaviorDesigner/Runtime/Tasks/ConditionalEvaluator.cs",
+        "BehaviorDesigner/Runtime/Tasks/HasEnteredCollision.cs"
+      ],
+      "examples": [
+        "public class CompareFieldValue : Conditional",
+        "public class ComparePropertyValue : Conditional",
+        "public Conditional conditionalTask;"
+      ]
+    },
+    {
+      "name": "Decorator",
+      "bd": true,
+      "kinds": "base x10",
+      "namespaces": [],
+      "files": [
+        "BehaviorDesigner/Runtime/Tasks/ConditionalEvaluator.cs",
+        "BehaviorDesigner/Runtime/Tasks/Cooldown.cs",
+        "BehaviorDesigner/Runtime/Tasks/Interrupt.cs",
+        "BehaviorDesigner/Runtime/Tasks/Inverter.cs"
+      ],
+      "examples": [
+        "public class ConditionalEvaluator : Decorator",
+        "public class Cooldown : Decorator",
+        "public class Interrupt : Decorator"
+      ]
+    },
+    {
+      "name": "Dictionary",
+      "bd": true,
+      "kinds": "fieldType x2",
+      "namespaces": [
+        "BehaviorDesigner.Runtime.Tasks"
+      ],
+      "files": [
+        "PoolManager.cs",
+        "SkillsAction.cs"
+      ],
+      "examples": [
+        "private Dictionary<int, Queue<Component>> poolDictionary;",
+        "protected Dictionary<BossAnimationState, int> bossAnimationStateDic;"
+      ]
+    },
+    {
+      "name": "ExternalBehavior",
+      "bd": true,
+      "kinds": "base x1",
+      "namespaces": [],
+      "files": [
+        "BehaviorDesigner/Runtime/ExternalBehaviorTree.cs"
+      ],
+      "examples": [
+        "public class ExternalBehaviorTree : ExternalBehavior"
+      ]
+    },
+    {
+      "name": "float time",
+      "bd": true,
+      "kinds": "paramType x1",
+      "namespaces": [
+        "BehaviorDesigner.Runtime.Tasks"
+      ],
+      "files": [
+        "SkillsAction.cs"
+      ],
+      "examples": [
+        "HandleTimeOfHits(float time)"
+      ]
+    },
+    {
+      "name": "HealthEvent healthEvent",
+      "bd": true,
+      "kinds": "paramType x6",
+      "namespaces": [
+        "BehaviorDesigner.Runtime.Tasks"
+      ],
+      "files": [
+        "Boss.cs",
+        "BossHealthBar.cs",
+        "Enemy.cs",
+        "HealthBar.cs"
+      ],
+      "examples": [
+        "HealthEvent_OnHealthLost(HealthEvent healthEvent)",
+        "HealthEvent_OnHealthChanged(HealthEvent healthEvent)",
+        "HealthEvent_OnHealthLost(HealthEvent healthEvent)"
+      ]
+    },
+    {
+      "name": "HealthEventArgs healthEventArgs",
+      "bd": true,
+      "kinds": "paramType x6",
+      "namespaces": [
+        "BehaviorDesigner.Runtime.Tasks"
+      ],
+      "files": [
+        "Boss.cs",
+        "BossHealthBar.cs",
+        "Enemy.cs",
+        "HealthBar.cs"
+      ],
+      "examples": [
+        "HealthEvent_OnHealthLost(HealthEventArgs healthEventArgs)",
+        "HealthEvent_OnHealthChanged(HealthEventArgs healthEventArgs)",
+        "HealthEvent_OnHealthLost(HealthEventArgs healthEventArgs)"
+      ]
+    },
+    {
+      "name": "IEnumerator",
+      "bd": true,
+      "kinds": "returnType x49, fieldType x1",
+      "namespaces": [
+        "BehaviorDesigner.Runtime.Tasks"
+      ],
+      "files": [
+        "AnimateEnemy.cs",
+        "AnimatePlayer.cs",
+        "AudioManager.cs",
+        "BehaviorDesigner/Runtime/Tasks/Unity/UnityAnimator/SetBoolParameter.cs"
+      ],
+      "examples": [
+        "private IEnumerator PlayAttackAnimationCoroutine()",
+        "private IEnumerator PlayAttackAnimationCoroutine()",
+        "private IEnumerator SetVolumeCoroutine()"
+      ]
+    },
+    {
+      "name": "ObjectDrawerAttribute",
+      "bd": true,
+      "kinds": "base x2",
+      "namespaces": [],
+      "files": [
+        "BehaviorDesigner/Runtime/ObjectDrawers/FloatSliderAttribute.cs",
+        "BehaviorDesigner/Runtime/ObjectDrawers/IntSliderAttribute.cs"
+      ],
+      "examples": [
+        "public class FloatSliderAttribute : ObjectDrawerAttribute",
+        "public class IntSliderAttribute : ObjectDrawerAttribute"
+      ]
+    },
+    {
+      "name": "ParentTask",
+      "bd": true,
+      "kinds": "base x1",
+      "namespaces": [],
+      "files": [
+        "BehaviorDesigner/Runtime/Tasks/EntryTask.cs"
+      ],
+      "examples": [
+        "public class EntryTask : ParentTask"
+      ]
+    },
+    {
+      "name": "public",
+      "bd": true,
+      "kinds": "returnType x702",
+      "namespaces": [
+        "BehaviorDesigner.Runtime.Tasks",
+        "BehaviorDesigner.Runtime"
+      ],
+      "files": [
+        "Ammo.cs",
+        "AmmoAnimation.cs",
+        "AmmoDetailsSO.cs",
+        "AmmoHitEffect.cs"
+      ],
+      "examples": [
+        "public Ammo()",
+        "public AmmoAnimation()",
+        "public AmmoDetailsSO()"
+      ]
+    },
+    {
+      "name": "Rigidbody2D",
+      "bd": true,
+      "kinds": "fieldType x32",
+      "namespaces": [
+        "BehaviorDesigner.Runtime.Tasks"
+      ],
+      "files": [
+        "BehaviorDesigner/Runtime/Tasks/Unity/UnityRigidbody2D/AddForce.cs",
+        "BehaviorDesigner/Runtime/Tasks/Unity/UnityRigidbody2D/AddForceAtPosition.cs",
+        "BehaviorDesigner/Runtime/Tasks/Unity/UnityRigidbody2D/AddTorque.cs",
+        "BehaviorDesigner/Runtime/Tasks/Unity/UnityRigidbody2D/GetAngularDrag.cs"
+      ],
+      "examples": [
+        "private Rigidbody2D rigidbody2D;",
+        "private Rigidbody2D rigidbody2D;",
+        "private Rigidbody2D rigidbody2D;"
+      ]
+    },
+    {
+      "name": "SharedGenericVariable",
+      "bd": true,
+      "kinds": "fieldType x3",
+      "namespaces": [],
+      "files": [
+        "BehaviorDesigner/Runtime/Tasks/Unity/UnityDebug/LogValue.cs",
+        "BehaviorDesigner/Runtime/Tasks/Unity/UnityGameObject/SendMessage.cs",
+        "BehaviorDesigner/Runtime/Tasks/Unity/UnityString/Format.cs"
+      ],
+      "examples": [
+        "public SharedGenericVariable variable;",
+        "public SharedGenericVariable value;",
+        "public SharedGenericVariable[] variables;"
+      ]
+    },
+    {
+      "name": "SharedVariable",
+      "bd": true,
+      "kinds": "base x25, fieldType x21",
+      "namespaces": [],
+      "files": [
+        "BehaviorDesigner/Runtime/SharedAnimationCurve.cs",
+        "BehaviorDesigner/Runtime/SharedBehaviour.cs",
+        "BehaviorDesigner/Runtime/SharedBool.cs",
+        "BehaviorDesigner/Runtime/SharedCollider.cs"
+      ],
+      "examples": [
+        "public class SharedAnimationCurve : SharedVariable<AnimationCurve>",
+        "public class SharedBehaviour : SharedVariable<Behaviour>",
+        "public class SharedBool : SharedVariable<bool>"
+      ]
+    },
+    {
+      "name": "TaskStatus",
+      "bd": true,
+      "kinds": "returnType x506, fieldType x21",
+      "namespaces": [
+        "BehaviorDesigner.Runtime.Tasks",
+        "BehaviorDesigner.Runtime"
+      ],
+      "files": [
+        "BehaviorDesigner/Runtime/Tasks/CompareFieldValue.cs",
+        "BehaviorDesigner/Runtime/Tasks/ComparePropertyValue.cs",
+        "BehaviorDesigner/Runtime/Tasks/ConditionalEvaluator.cs",
+        "BehaviorDesigner/Runtime/Tasks/Cooldown.cs"
+      ],
+      "examples": [
+        "public override TaskStatus OnUpdate()",
+        "public override TaskStatus OnUpdate()",
+        "private TaskStatus executionStatus;"
+      ]
+    },
+    {
+      "name": "Vector2",
+      "bd": true,
+      "kinds": "fieldType x16, returnType x5, base:genericArg x1, fieldType:genericArg x2",
+      "namespaces": [
+        "BehaviorDesigner.Runtime.Tasks"
+      ],
+      "files": [
+        "Ammo.cs",
+        "AmmoVisual.cs",
+        "BehaviorDesigner/Runtime/SharedVector2.cs",
+        "DashEventArgs.cs"
+      ],
+      "examples": [
+        "private Vector2 trajectoryStartPoint;",
+        "private Vector2 target;",
+        "private Vector2 trajectoryRange;"
+      ]
+    }
+  ]
+}

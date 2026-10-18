@@ -1,0 +1,30 @@
+// Reconstructed from IL2CPP metadata (Dump/dump.cs) + decompiled webgl wasm (wabt wasm-decompile).
+// Structure (types/fields/method signatures) is accurate; bodies are decompiled pseudo-code
+// recovered from the WebAssembly binary, not original C#.
+
+// Namespace: BehaviorDesigner.Runtime.Tasks.Unity.UnityVector2
+[TaskDescription("Stores the square magnitude of the Vector2.")]
+[TaskCategory("Unity/Vector2")]
+public class GetSqrMagnitude : Action
+{
+	// Fields
+	public SharedVector2 vector2Variable;
+	public SharedFloat storeResult;
+
+	// Methods
+	public override TaskStatus OnUpdate()
+	{
+		// <no wasm mapping>
+	}
+
+	public override void OnReset()
+	{
+		// <no wasm mapping>
+	}
+
+	public void .ctor()
+	{
+		// <no wasm mapping>
+	}
+
+}

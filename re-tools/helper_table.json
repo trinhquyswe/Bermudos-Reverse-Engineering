@@ -1,0 +1,391 @@
+{
+  "unnamedTargets": 136,
+  "rows": [
+    {
+      "index": 1099,
+      "callSites": 5560,
+      "dcmpName": "f_hpa",
+      "bodyLines": 3,
+      "shape": "thin wrapper",
+      "callees": [
+        "f_jlje#94961"
+      ],
+      "forwardsTo": "f_jlje(#94961)",
+      "marks": [
+        "thin wrapper"
+      ],
+      "topCallers": [
+        "AnimatePlayer (76)",
+        "GameManager (65)",
+        "InputSystem_Actions (64)"
+      ]
+    },
+    {
+      "index": 94848,
+      "callSites": 1240,
+      "dcmpName": "f_ahje",
+      "bodyLines": 200,
+      "shape": "166 statements",
+      "callees": [
+        "f_naa#715",
+        "f_oaa#716",
+        "f_pwje#95253",
+        "f_gxje#95270",
+        "f_lt#531",
+        "f_bhje#94849"
+      ],
+      "forwardsTo": null,
+      "marks": [
+        "C++ exception plumbing (`cxa_find_matching_catch`/`resumeException`)",
+        "codegen invocation (`env_invoke_*`)",
+        "large body (200 lines)"
+      ],
+      "topCallers": [
+        "TMPro.TMP_DigitValidator (15)",
+        "Inventory (10)",
+        "TMPro.Examples.TMP_TextSelector_B (10)"
+      ]
+    },
+    {
+      "index": 95402,
+      "callSites": 864,
+      "dcmpName": "f_icke",
+      "bodyLines": 36,
+      "shape": "29 statements",
+      "callees": [
+        "f_pwje#95253",
+        "f_qla#1004",
+        "f_sr#486",
+        "f_hka#969",
+        "f_pla#1003",
+        "f_ypje#95080"
+      ],
+      "forwardsTo": null,
+      "marks": [],
+      "topCallers": [
+        "InputSystem_Actions (65)",
+        "AnimatePlayer (32)",
+        "TMPro.Examples.TextMeshProFloatingText (28)"
+      ]
+    },
+    {
+      "index": 61203,
+      "callSites": 596,
+      "dcmpName": "f_zmlc",
+      "bodyLines": 5,
+      "shape": "3 statements",
+      "callees": [],
+      "forwardsTo": null,
+      "marks": [
+        "dynamic dispatch (`call_indirect`)"
+      ],
+      "topCallers": [
+        "BehaviorDesigner.Runtime.Tasks.Unity.Math.IntComparison (14)",
+        "BehaviorDesigner.Runtime.Tasks.Unity.Math.IntClamp (12)",
+        "BehaviorDesigner.Runtime.Tasks.Unity.SharedVariables.CompareSharedGameObject (10)"
+      ]
+    },
+    {
+      "index": 44710,
+      "callSites": 322,
+      "dcmpName": "f_qcnb",
+      "bodyLines": 9,
+      "shape": "6 statements",
+      "callees": [
+        "f_hpa#1099",
+        "f_ahje#94848",
+        "UnityEngine_Object_Equals#44680 [managed]"
+      ],
+      "forwardsTo": null,
+      "marks": [
+        "calls managed code (UnityEngine_Object_Equals#44680)"
+      ],
+      "topCallers": [
+        "Bash (4)",
+        "BehaviorDesigner.Runtime.Tasks.Unity.SharedVariables.CompareSharedFloat (3)",
+        "BehaviorDesigner.Runtime.Tasks.Unity.SharedVariables.CompareSharedInt (3)"
+      ]
+    },
+    {
+      "index": 516,
+      "callSites": 260,
+      "dcmpName": "f_ws",
+      "bodyLines": 3,
+      "shape": "thin wrapper",
+      "callees": [
+        "f_ss#512"
+      ],
+      "forwardsTo": "f_ss(#512)",
+      "marks": [
+        "thin wrapper"
+      ],
+      "topCallers": [
+        "InputSystem_Actions (260)"
+      ]
+    },
+    {
+      "index": 520,
+      "callSites": 220,
+      "dcmpName": "f_at",
+      "bodyLines": 17,
+      "shape": "12 statements",
+      "callees": [
+        "f_sr#486",
+        "f_ws#516"
+      ],
+      "forwardsTo": null,
+      "marks": [],
+      "topCallers": [
+        "InputSystem_Actions (220)"
+      ]
+    },
+    {
+      "index": 44644,
+      "callSites": 174,
+      "dcmpName": "f_canb",
+      "bodyLines": 5,
+      "shape": "3 statements",
+      "callees": [
+        "f_fpa#1097"
+      ],
+      "forwardsTo": null,
+      "marks": [
+        "dynamic dispatch (`call_indirect`)"
+      ],
+      "topCallers": [
+        "Ammo (12)",
+        "Inventory (12)",
+        "InventoryManager (10)"
+      ]
+    },
+    {
+      "index": 1116,
+      "callSites": 161,
+      "dcmpName": "f_ypa",
+      "bodyLines": 22,
+      "shape": "18 statements",
+      "callees": [
+        "f_lia#921",
+        "env_invoke_ii#9",
+        "env_invoke_vii#13",
+        "env_cxa_find_matching_catch#18",
+        "env_getTempRet0#11",
+        "f_ygqf#117154"
+      ],
+      "forwardsTo": null,
+      "marks": [
+        "C++ exception plumbing (`cxa_find_matching_catch`/`resumeException`)",
+        "codegen invocation (`env_invoke_*`)"
+      ],
+      "topCallers": [
+        "AnimatePlayer (19)",
+        "StaticEventHandler (18)",
+        "InventoryManager (10)"
+      ]
+    },
+    {
+      "index": 1112,
+      "callSites": 157,
+      "dcmpName": "f_upa",
+      "bodyLines": 3,
+      "shape": "thin wrapper",
+      "callees": [
+        "f_lcke#95405"
+      ],
+      "forwardsTo": "f_lcke(#95405)",
+      "marks": [
+        "thin wrapper"
+      ],
+      "topCallers": [
+        "AnimatePlayer (19)",
+        "StaticEventHandler (12)",
+        "BehaviorDesigner.Runtime.Tasks.Unity.UnityDebug.LogFormat (10)"
+      ]
+    },
+    {
+      "index": 61226,
+      "callSites": 146,
+      "dcmpName": "f_wnlc",
+      "bodyLines": 5,
+      "shape": "3 statements",
+      "callees": [],
+      "forwardsTo": null,
+      "marks": [
+        "dynamic dispatch (`call_indirect`)"
+      ],
+      "topCallers": [
+        "BehaviorDesigner.Runtime.Tasks.Unity.Math.FloatComparison (14)",
+        "BehaviorDesigner.Runtime.Tasks.Unity.Math.FloatClamp (12)",
+        "BehaviorDesigner.Runtime.Tasks.StunAction (5)"
+      ]
+    },
+    {
+      "index": 61227,
+      "callSites": 135,
+      "dcmpName": "f_xnlc",
+      "bodyLines": 8,
+      "shape": "5 statements",
+      "callees": [],
+      "forwardsTo": null,
+      "marks": [
+        "dynamic dispatch (`call_indirect`)"
+      ],
+      "topCallers": [
+        "BehaviorDesigner.Runtime.Tasks.Unity.Math.FloatComparison (9)",
+        "BehaviorDesigner.Runtime.Tasks.Wait (6)",
+        "BehaviorDesigner.Runtime.Tasks.StunAction (3)"
+      ]
+    },
+    {
+      "index": 44686,
+      "callSites": 123,
+      "dcmpName": "f_sbnb",
+      "bodyLines": 5,
+      "shape": "3 statements",
+      "callees": [
+        "f_fpa#1097"
+      ],
+      "forwardsTo": null,
+      "marks": [
+        "dynamic dispatch (`call_indirect`)"
+      ],
+      "topCallers": [
+        "GameManager (17)",
+        "Inventory (12)",
+        "InventoryManager (9)"
+      ]
+    },
+    {
+      "index": 519,
+      "callSites": 100,
+      "dcmpName": "f_zs",
+      "bodyLines": 28,
+      "shape": "21 statements",
+      "callees": [],
+      "forwardsTo": null,
+      "marks": [],
+      "topCallers": [
+        "InputSystem_Actions (100)"
+      ]
+    },
+    {
+      "index": 94961,
+      "callSites": 97,
+      "dcmpName": "f_jlje",
+      "bodyLines": 50,
+      "shape": "39 statements",
+      "callees": [
+        "f_klje#94962",
+        "f_evje#95216",
+        "f_llje#94963",
+        "f_flje#94957",
+        "f_crje#95110",
+        "f_mlje#94964"
+      ],
+      "forwardsTo": null,
+      "marks": [],
+      "topCallers": [
+        "EnemyEffect (6)",
+        "MusicManager (6)",
+        "NavmeshManager (4)"
+      ]
+    },
+    {
+      "index": 61245,
+      "callSites": 91,
+      "dcmpName": "f_polc",
+      "bodyLines": 18,
+      "shape": "14 statements",
+      "callees": [],
+      "forwardsTo": null,
+      "marks": [
+        "dynamic dispatch (`call_indirect`)"
+      ],
+      "topCallers": [
+        "BehaviorDesigner.Runtime.Tasks.Unity.UnityVector3.Normalize (6)",
+        "BehaviorDesigner.Runtime.Tasks.Unity.UnityPhysics.Linecast (3)",
+        "BehaviorDesigner.Runtime.Tasks.Unity.UnityPhysics.Raycast (3)"
+      ]
+    },
+    {
+      "index": 61204,
+      "callSites": 82,
+      "dcmpName": "f_anlc",
+      "bodyLines": 8,
+      "shape": "5 statements",
+      "callees": [],
+      "forwardsTo": null,
+      "marks": [
+        "dynamic dispatch (`call_indirect`)"
+      ],
+      "topCallers": [
+        "BehaviorDesigner.Runtime.Tasks.Unity.Math.IntComparison (9)",
+        "BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject.FindGameObjectsWithTag (3)",
+        "BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject.FindWithTag (3)"
+      ]
+    },
+    {
+      "index": 85158,
+      "callSites": 80,
+      "dcmpName": "f_iyud",
+      "bodyLines": 28,
+      "shape": "23 statements",
+      "callees": [
+        "f_hpa#1099",
+        "f_klqd#82118",
+        "f_ahje#94848",
+        "multiple_8_System_RuntimeType_op_Equality#7721 [managed]",
+        "f_aopd#81510",
+        "f_jlje#94961"
+      ],
+      "forwardsTo": null,
+      "marks": [
+        "dynamic dispatch (`call_indirect`)",
+        "calls managed code (multiple_8_System_RuntimeType_op_Equality#7721, System_String_Format_4#82707)"
+      ],
+      "topCallers": [
+        "StaticEventHandler (18)",
+        "AnimatePlayer (9)",
+        "AnimateEnemy (3)"
+      ]
+    },
+    {
+      "index": 60160,
+      "callSites": 78,
+      "dcmpName": "f_wyjc",
+      "bodyLines": 26,
+      "shape": "20 statements",
+      "callees": [
+        "f_ppa#1107",
+        "f_rpa#1109",
+        "System_Text_Encoding_get_UTF8#1122 [managed]"
+      ],
+      "forwardsTo": null,
+      "marks": [
+        "calls managed code (System_Text_Encoding_get_UTF8#1122)"
+      ],
+      "topCallers": [
+        "InputSystem_Actions (60)",
+        "PlayerControl (16)",
+        "MenuInGame (1)"
+      ]
+    },
+    {
+      "index": 10,
+      "callSites": 74,
+      "dcmpName": "env_cxa_find_matching_catch_3",
+      "bodyLines": 0,
+      "shape": "imported host function",
+      "callees": [],
+      "forwardsTo": null,
+      "marks": [
+        "imported from the JS host (`env_*`)"
+      ],
+      "topCallers": [
+        "EnemyManager (21)",
+        "InventoryManager (8)",
+        "Inventory (7)"
+      ]
+    }
+  ]
+}

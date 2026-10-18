@@ -1,0 +1,20 @@
+# Derived / large artifacts of the RE pipeline.
+# These are regenerated from Build/ (the original WebGL build, committed) using
+# the tools in re-tools/; they are not needed to read the decompiled output.
+Decompiled/build.named.wasm
+Decompiled/build.dcmp
+Decompiled/isil/
+
+# Extracted assets / decompressed game data (large, mostly binary).
+RippedProject/
+Extracted/
+Build/webgl.data/extracted/
+
+# AssetRipper + dumper scratch directories.
+re-tools/dump/
+re-tools/AssetRipperProject/
+
+# Python bytecode from the PyGhidra scripts.
+re-tools/ghidra/__pycache__/
+
+*.log
