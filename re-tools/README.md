@@ -73,6 +73,36 @@ errors — the project's last syntax gate.
 | 4 | `layout_tree.js` | moves the 160 game scripts (with their `.meta` files) into their subsystem folders per `layout.json`; `--base <ref>` restores the raw-listing tree first, so this script alone can re-run the whole loop (`--dry` reports only) |
 | 5 | `regen.ps1` | the whole loop in order: `git clean` the moved files, `git restore` the tree from the base commit (that order — restored files are not in the index, so a later clean would delete them) → `--all` → `apply_cs.js` → `layout_tree.js`; every step's exit code is checked (native git failures do not throw in PowerShell) and the result is byte-identical on re-run |
 
+## Ghidra C → C# (`Assembly-CSharp/*.c` → `Assembly-CSharp/*.cs`)
+
+A second, independent path: `c2cs.js` renders one `.cs` per type directly from the Ghidra
+decompiler C that sits in `RippedProject/bermudos/Assets/Scripts/Assembly-CSharp/*.c`. It does
+**not** touch the `.c` evidence files — it writes the `.cs` alongside them.
+
+    node c2cs.js [--dir <asm-c dir>] [--dump <dump.cs>] [--only A,B] [--dry]
+
+| what | source |
+|---|---|
+| type kind, base list, attributes, field names/types + `0xNN` offsets, property and method signatures | `Dump/dump.cs` (Assembly-CSharp TypeDef range `5534..6341`) |
+| method bodies | the matching `.c` function (by header `// ---- Type::Member`, falling back to the flattened name) |
+
+Translation legend (also written into each file's header): `param_1` → `this`; `*(T *)(this + 0xNN)`
+→ `this.<field>` when the offset matches a metadata field; `A__B(` → `A.B(` resolved through the
+call map built from every `.c` symbol, with a heuristic for non-Assembly-CSharp callees;
+`undefined1/2/4/8`, `ulonglong`, `char` → `byte/ushort/uint/ulong/byte`; `T x [N];` →
+`T[] x = new T[N];`; `::` → `.`; compiler-generated names (`<X>d__10`, `<asset>k__BackingField`)
+sanitized. `goto code_r0x…`, `halt_trap()`, `CONCAT44`, pointer arithmetic, `unnamed_function_N`
+and `iRam…`/`uRam…`/`cRam…` are kept verbatim. An event's `[CompilerGenerated]` backing field plus
+its `add_`/`remove_` accessors are folded back into a single `event` member. `.c` functions with no
+metadata member (lambdas, nested state machines, closures) are appended under a
+`// ---- members with no metadata member …` banner. Output is ASCII, UTF-8 without BOM, CRLF.
+
+Last run: 141 type files, 0 without metadata; 734 `.c` functions, 618 bodies rendered, 179 members
+without a recovered body, 116 `.c` functions with no metadata member. The gate is clean:
+
+    dotnet run --project syncheck -- RippedProject/bermudos/Assets/Scripts/Assembly-CSharp
+    # parsed 141 files; 0 with syntax errors; 0 errors total
+
 `scope.js` is what keeps the loop honest: it answers "is this `.cs` one of the game scripts?"
 from `layout.json`, accepting both the raw state (files at the assembly root) and the laid-out
 state (files in their subsystem folder). Every step of the loop uses it, so the 559
