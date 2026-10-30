@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Gate
+  - PlayerWeapon
+  - Enemy
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Ground
+  - Water
+  - UI
+  - Back
+  - Instances
+  - Front
+  - Collision
+  - Minimap
+  - Environment
+  - Decor
+  - Shade
+  - Map
+  - PlayerWeapon
+  - Player
+  - Enemy
+  - EnemyAmmo
+  - BashAmmo
+  - Boss
+  - Item
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 2425651459
+    locked: 0
+  - name: Shade
+    uniqueID: 234579129
+    locked: 0
+  - name: Back
+    uniqueID: 4250941897
+    locked: 0
+  - name: Instances
+    uniqueID: 4189426099
+    locked: 0
+  - name: Front
+    uniqueID: 36290061
+    locked: 0
+  - name: Decoration
+    uniqueID: 3150266075
+    locked: 0
+  - name: Collision
+    uniqueID: 2365219377
+    locked: 0
+  - name: Minimap
+    uniqueID: 487967311
+    locked: 0
+  - name: Effect
+    uniqueID: 864944027
+    locked: 0
