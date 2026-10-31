@@ -117,3 +117,37 @@ python tools/il2cpp_ghidra.py export --assembly Assembly-CSharp   # this folder
 
 `apply`/`types` write into the Ghidra project (and save it); `export`
 regenerates this folder from the current project state.
+
+## pseudo-C# view (`~/pseudoc-cs`)
+
+`tools/infer_cs.py --assembly Assembly-CSharp` rewrites this folder into
+`pseudoc-cs/Assembly-CSharp/*.cs` — the same methods as readable pseudo-C#.
+
+This is a **reading aid, not compilable C#**: lambdas, `foreach`, `async`,
+LINQ and generic sharing were already lowered by the AOT compiler, so they
+appear here as loops / state machines / `unnamed_function_N` calls.
+
+P0 transformations applied (text-level, no decompilation):
+
+- C function frame (signature line, outer braces, C local temp block,
+  trailing `return;`) replaced by the C# declaration from dump.cs
+  (`void .ctor` → `TypeName()`, exact header when found in skeleton)
+- `Recv__Method(recv, ...)` → `recv.Method(...)`; static → `Type.Method(...)`;
+  `get_X` → property read; `set_X` → `recv.X = v`; `$$.ctor` → `new T(...)`
+- `MethodInfo *method` args dropped; `->` → `.`; `__this` → `this`
+- IL2CPP class-init prologues removed (`if (DAT_... == '\0') {
+  unnamed_function_1099... }` blocks; also nested ones)
+- `StringLiteral_N` → real literal; `halt_trap()` → `throw null;`
+- sret pattern `*__ret = e; return;` → `return e;`
+- cosmetic: `Ammo_o*` → `Ammo`, continuation lines re-joined
+
+Still visible on purpose (P1/P2 scope): `unnamed_function_N` runtime helpers
+(GetComponent, boxing, delegates...), `DAT_ram_*` TypeInfo globals, raw
+offset derefs `*(int *)(x + 0x14)`, virtual calls `(**(code **)...`, compiler
+temps (`iVar1`, `local_10`).
+
+```
+python tools/infer_cs.py --assembly Assembly-CSharp
+```
+
+regenerates `pseudoc-cs/` without touching Ghidra or this folder.
