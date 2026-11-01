@@ -2,62 +2,88 @@ using UnityEngine;
 
 public class Beam : MonoBehaviour
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    private bool isColliding;
+    private int damageBeam = 20;
+    private Animator animator;
+    private LayerMask enemyLayerMask;
+    private LayerMask bossLayerMask;
+    private LayerMask playerLayerMask;
+    private LayerMask bashAmmoLayerMask;
+    [HideInInspector]
+    public float amountScaleY;
+    [SerializeField]
+    private SoundEffectSO beamSoundEffect;
+    [SerializeField]
+    private SoundEffectSO beamPlayerSoundEffect;
 
-	1. No dll files were provided to AssetRipper.
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+        enemyLayerMask = LayerMask.GetMask("Enemy");
+        bossLayerMask = LayerMask.GetMask("Boss");
+        playerLayerMask = LayerMask.GetMask("Player");
+        bashAmmoLayerMask = LayerMask.GetMask("BashAmmo");
+    }
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    private void LateUpdate()
+    {
+        float normalizedTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        float t = Mathf.Clamp01(normalizedTime / 1.5f);
+        Vector3 scale = transform.localScale;
+        transform.localScale = new Vector3(scale.x, amountScaleY * t, scale.z);
+    }
 
-	2. Incorrect dll files were provided to AssetRipper.
+    private void Start()
+    {
+        int bashAmmoBit = bashAmmoLayerMask.value & (1 << gameObject.layer);
+        SoundEffectSO sound = bashAmmoBit < 1 ? beamSoundEffect : beamPlayerSoundEffect;
+        SoundEffectManager.Instance.PlaySoundEffect(sound);
+    }
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+    public void EyeAttackEnd()
+    {
+        Destroy(gameObject);
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (isColliding) return;
 
-	3. Assembly Reconstruction has not been implemented.
+        int layer = collision.gameObject.layer;
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
+        if ((playerLayerMask.value & (1 << layer)) > 0)
+        {
+            PlayerEffect playerEffect = collision.GetComponent<PlayerEffect>();
+            playerEffect.DamagePushEfect(transform.position);
+            playerEffect.CallDamageFlashEffect(GameResources.Instance.damegeFlashMaterial, GameResources.Instance.litMaterial, collision.GetComponentsInChildren<SpriteRenderer>());
+        }
 
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
+        ReceiveDamage receiveDamage = collision.GetComponent<ReceiveDamage>();
+        if (receiveDamage != null)
+        {
+            receiveDamage.TakeDamage(damageBeam);
+        }
 
-	4. This script is unnecessary.
+        if ((enemyLayerMask.value & (1 << layer)) > 0)
+        {
+            EnemyEffect enemyEffect = collision.GetComponent<EnemyEffect>();
+            if (enemyEffect != null)
+            {
+                enemyEffect.DamagePushEfect(transform.position);
+                enemyEffect.CallDamageFlashEffect(GameResources.Instance.damegeFlashMaterial, GameResources.Instance.litMaterial, collision.GetComponentsInChildren<SpriteRenderer>());
+            }
+        }
 
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
+        if ((bossLayerMask.value & (1 << layer)) > 0)
+        {
+            BossEffect bossEffect = collision.GetComponent<BossEffect>();
+            if (bossEffect != null)
+            {
+                bossEffect.PushBossByWeapon(transform.position);
+                bossEffect.OuchEffect();
+            }
+        }
 
-	5. Script Content Level 0
-
-		AssetRipper was set to not load any script information.
-
-	6. Cpp2IL failed to decompile Il2Cpp data
-
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
-
-	7. An incorrect path was provided to AssetRipper.
-
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
-
-	*/
+        isColliding = true;
+    }
 }

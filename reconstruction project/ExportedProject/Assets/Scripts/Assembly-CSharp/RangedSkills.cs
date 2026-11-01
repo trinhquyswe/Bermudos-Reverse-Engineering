@@ -1,63 +1,90 @@
+using System.Collections;
 using UnityEngine;
 
 public class RangedSkills : MonoBehaviour
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    private Animator animator;
+    public Transform shootPosition;
+    public AmmoDetailsSO ammo;
+    public AmmoDetailsSO ammoPhase2;
+    [Header("EYE ATTACK")]
+    public GameObject Beam;
+    public float[] offsetArr;
 
-	1. No dll files were provided to AssetRipper.
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    public void Shoot(AmmoDetailsSO ammoDetailsSO, Vector3 shootPosition, Vector3 target)
+    {
+        // TODO(il2cpp): shot origin is ambiguous in the decompile; the pseudo sets only z.
+        Component component = PoolManager.Instance.ReuseComponent(ammoDetailsSO.ammoPrefab, shootPosition, Quaternion.identity);
+        if (component != null)
+        {
+            IFireable fireable = (IFireable)component;
+            fireable.InitialiseAmmo(ammoDetailsSO, target);
+        }
+    }
 
-	2. Incorrect dll files were provided to AssetRipper.
+    private Vector2[] Get15ShootDirections()
+    {
+        // TODO(il2cpp): base vector assumed to be Vector2.right * 30 (static field at offset 0x28).
+        Vector2[] directions = new Vector2[15];
+        Vector2 baseDirection = Vector2.right * 30f;
+        directions[0] = baseDirection;
+        for (int i = 1; i != 15; i++)
+        {
+            directions[i] = Quaternion.Euler(0f, 0f, i * 24f) * baseDirection;
+        }
+        return directions;
+    }
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+    public void BaseShoot()
+    {
+        Vector2[] directions = Get15ShootDirections();
+        for (int i = 0; i < directions.Length; i++)
+        {
+            Vector3 position = transform.position;
+            Vector3 target = position + (Vector3)directions[i];
+            Shoot(ammo, position, target);
+        }
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    public void EyeAttack()
+    {
+        Vector3 playerPosition = GameManager.Instance.player.transform.position;
+        Vector3 position = transform.position;
+        float angle = Mathf.Atan2(playerPosition.y - position.y, playerPosition.x - position.x) * Mathf.Rad2Deg + 90f;
+        GameObject beamInstance = Instantiate(Beam, shootPosition.position, Quaternion.Euler(0f, 0f, angle));
+        beamInstance.transform.SetParent(transform);
+        // TODO(il2cpp): Beam component field at offset 0x2c (3.5f) not identified.
+    }
 
-	3. Assembly Reconstruction has not been implemented.
+    public void OpenMouth()
+    {
+        // TODO(il2cpp): body not recovered; decompiled loop over GetTargetPositionList is unreadable.
+    }
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
+    public void StartEyeLoop(float eyeLoopDuration, float eyeLoopRate)
+    {
+        StartCoroutine(EyeLoop(eyeLoopDuration, eyeLoopRate));
+    }
 
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
+    public IEnumerator EyeLoop(float eyeLoopDuration, float eyeLoopRate)
+    {
+        // TODO(il2cpp): coroutine MoveNext body not recovered.
+        yield break;
+    }
 
-	4. This script is unnecessary.
+    public void StartMouthOpenLoopMouth(float mouthOpenLoopRate, float mouthOpenLoopDuration)
+    {
+        StartCoroutine(MouthOpenLoop(mouthOpenLoopRate, mouthOpenLoopDuration));
+    }
 
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
-
-	5. Script Content Level 0
-
-		AssetRipper was set to not load any script information.
-
-	6. Cpp2IL failed to decompile Il2Cpp data
-
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
-
-	7. An incorrect path was provided to AssetRipper.
-
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
-
-	*/
+    public IEnumerator MouthOpenLoop(float mouthOpenLoopRate, float mouthOpenLoopDuration)
+    {
+        // TODO(il2cpp): coroutine MoveNext body not recovered.
+        yield break;
+    }
 }

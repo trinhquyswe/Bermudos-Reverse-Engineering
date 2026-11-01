@@ -1,63 +1,117 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class PlayerEffect : MonoBehaviour
+[DisallowMultipleComponent]
+public class PlayerEffect : Effect
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    private Player player;
+    private Coroutine pushPlayerByEnemyCoroutine;
+    [HideInInspector]
+    public bool isDashing;
+    private float dashEffectDuration;
 
-	1. No dll files were provided to AssetRipper.
+    public PlayerEffect()
+    {
+        dashEffectDuration = 0.05f;
+    }
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
 
-	2. Incorrect dll files were provided to AssetRipper.
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (pushPlayerByEnemyCoroutine != null)
+        {
+            StopCoroutine(pushPlayerByEnemyCoroutine);
+        }
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    private void Awake()
+    {
+        player = GetComponent<Player>();
+        rb = GetComponent<Rigidbody2D>();
+    }
 
-	3. Assembly Reconstruction has not been implemented.
+    private void Update()
+    {
+        if (isDashing)
+        {
+            DashShadowPlayerEffect();
+        }
+    }
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
+    public void CallDamageFlashEffect(Material damageFlash, Material defaultMaterial, SpriteRenderer[] spriteRenderers)
+    {
+        if (gameObject.activeSelf)
+        {
+            StartCoroutine(DamageFlashCoroutine(damageFlash, defaultMaterial, spriteRenderers));
+        }
+    }
 
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
+    private IEnumerator DamageFlashCoroutine(Material damageFlash, Material defaultMaterial, SpriteRenderer[] spriteRenderers)
+    {
+        // TODO(il2cpp): state machine body (d__10 MoveNext) was not recovered; the per-renderer flash over duration is not reproduced.
+        yield break;
+    }
 
-	4. This script is unnecessary.
+    public void DamagePushEfect(Vector2 damageSource)
+    {
+        if (pushPlayerByEnemyCoroutine != null)
+        {
+            StopCoroutine(pushPlayerByEnemyCoroutine);
+        }
 
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
+        if (gameObject.activeSelf)
+        {
+            Vector2 position = rb.position;
+            Vector2 offset = position - damageSource;
+            float length = offset.magnitude;
+            Vector2 direction;
+            if (length > 1e-5f)
+            {
+                direction = offset / length;
+            }
+            else
+            {
+                // TODO(il2cpp): fallback direction came from an unresolved Vector2 static; using zero.
+                direction = Vector2.zero;
+            }
 
-	5. Script Content Level 0
+            Vector3 targetPosition = new Vector3(position.x + direction.x * damageForce, position.y + direction.y * damageForce, 0f);
+            pushPlayerByEnemyCoroutine = StartCoroutine(PushPlayerByEnemy(targetPosition));
+        }
+    }
 
-		AssetRipper was set to not load any script information.
+    private IEnumerator PushPlayerByEnemy(Vector3 targetPosition)
+    {
+        // TODO(il2cpp): state machine body was not recovered; the lerp toward targetPosition over duration is not reproduced.
+        yield break;
+    }
 
-	6. Cpp2IL failed to decompile Il2Cpp data
-
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
-
-	7. An incorrect path was provided to AssetRipper.
-
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
-
-	*/
+    private void DashShadowPlayerEffect()
+    {
+        if (dashEffectDuration > 0f)
+        {
+            dashEffectDuration -= Time.deltaTime;
+        }
+        else
+        {
+            SpriteRenderer[] playerSpriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+            PlayerShadow shadow = PoolManager.Instance.ReuseComponent(GameResources.Instance.playerShadowPrefab, player.transform.position, Quaternion.identity) as PlayerShadow;
+            if (shadow != null)
+            {
+                shadow.gameObject.SetActive(true);
+                shadow.InitialiseSprite(playerSpriteRenderers);
+            }
+            dashEffectDuration = 0.035f;
+        }
+    }
 }

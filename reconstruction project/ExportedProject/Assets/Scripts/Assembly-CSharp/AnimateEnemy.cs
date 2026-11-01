@@ -1,63 +1,138 @@
+using System.Collections;
 using UnityEngine;
 
 public class AnimateEnemy : MonoBehaviour
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    private Enemy enemy;
+    private AimDirection aimDirection;
+    private Coroutine attackAnimationCoroutine;
 
-	1. No dll files were provided to AssetRipper.
+    private void Awake()
+    {
+        enemy = GetComponent<Enemy>();
+    }
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    private void Start()
+    {
+        enemy.animateEvent.OnAnimate += AnimateEnemy_OnAnimate;
+        enemy.idleEvent.OnIdle += IdleEvent_OnIdle;
+        enemy.moveByEnemyAIEvent.OnMoveByEnemyAI += MoveByEnemyAIEvent_OnMoveByEnemyAI;
+        enemy.attackEvent.OnAttack += AttackEvent_OnAttack;
+    }
 
-	2. Incorrect dll files were provided to AssetRipper.
+    private void OnDisable()
+    {
+        enemy.animateEvent.OnAnimate -= AnimateEnemy_OnAnimate;
+        enemy.idleEvent.OnIdle -= IdleEvent_OnIdle;
+        enemy.moveByEnemyAIEvent.OnMoveByEnemyAI -= MoveByEnemyAIEvent_OnMoveByEnemyAI;
+        enemy.attackEvent.OnAttack -= AttackEvent_OnAttack;
+    }
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+    private void MoveByEnemyAIEvent_OnMoveByEnemyAI(MoveByEnemyAIEvent moveByEnemyAIEvent)
+    {
+        if (attackAnimationCoroutine == null &&
+            (enemy.animationEnemyType == AnimationEnemyType.IdleAndRun ||
+             enemy.animationEnemyType == AnimationEnemyType.IdleRunAndAttack))
+        {
+            InitializeStateAnimationParameters();
+            enemy.animator.SetBool(Settings.isMoving, true);
+        }
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    private void IdleEvent_OnIdle(IdleEvent idleEvent)
+    {
+        if (enemy.animationEnemyType == AnimationEnemyType.IdleAndRun ||
+            enemy.animationEnemyType == AnimationEnemyType.IdleRunAndAttack)
+        {
+            InitializeStateAnimationParameters();
+            enemy.animator.SetBool(Settings.isIdle, true);
+        }
+    }
 
-	3. Assembly Reconstruction has not been implemented.
+    private void AttackEvent_OnAttack(AttackEvent attackEvent)
+    {
+        if (enemy.animationEnemyType != AnimationEnemyType.IdleRunAndAttack)
+        {
+            return;
+        }
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
+        PlayAttackAnimation();
 
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
+        InitializeStateAnimationParameters();
+        enemy.animator.SetTrigger(Settings.isAttack);
+    }
 
-	4. This script is unnecessary.
+    private void PlayAttackAnimation()
+    {
+        if (attackAnimationCoroutine != null)
+        {
+            StopCoroutine(attackAnimationCoroutine);
+        }
 
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
+        attackAnimationCoroutine = StartCoroutine(PlayAttackAnimationCoroutine());
+    }
 
-	5. Script Content Level 0
+    private IEnumerator PlayAttackAnimationCoroutine()
+    {
+        // TODO(il2cpp): the original coroutine body lived in a compiler-generated state machine
+        // (AnimateEnemy.<PlayAttackAnimationCoroutine>d__10) that was not exported; this clears the
+        // running animation after the attack animation has had time to play.
+        yield return new WaitForSeconds(0.5f);
 
-		AssetRipper was set to not load any script information.
+        attackAnimationCoroutine = null;
+    }
 
-	6. Cpp2IL failed to decompile Il2Cpp data
+    private void InitializeStateAnimationParameters()
+    {
+        Animator animator = enemy.animator;
 
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
+        if (enemy.animationEnemyType == AnimationEnemyType.IdleRunAndAttack)
+        {
+            animator.SetBool(Settings.isIdle, false);
+            animator.SetBool(Settings.isMoving, false);
+            animator.SetBool(Settings.isAttack, false);
+        }
+        else
+        {
+            animator.SetBool(Settings.isIdle, false);
+            animator.SetBool(Settings.isMoving, false);
+        }
+    }
 
-	7. An incorrect path was provided to AssetRipper.
+    private void AnimateEnemy_OnAnimate(AnimateEvent animateEvent, AnimateEventArgs animateEventArgs)
+    {
+        InitializeAnimationParameters();
+        SetAimAnimationParameters(animateEventArgs.aimDirection);
+        aimDirection = animateEventArgs.aimDirection;
+    }
 
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
+    private void InitializeAnimationParameters()
+    {
+        enemy.animator.SetBool(Settings.aimDown, false);
+        enemy.animator.SetBool(Settings.aimUp, false);
+        enemy.animator.SetBool(Settings.aimRight, false);
+        enemy.animator.SetBool(Settings.aimLeft, false);
+    }
 
-	*/
+    private void SetAimAnimationParameters(AimDirection aimDirection)
+    {
+        switch (aimDirection)
+        {
+            case AimDirection.Up:
+                enemy.animator.SetBool(Settings.aimUp, true);
+                break;
+            case AimDirection.Right:
+                enemy.animator.SetBool(Settings.aimRight, true);
+                break;
+            case AimDirection.Left:
+                enemy.animator.SetBool(Settings.aimLeft, true);
+                break;
+            case AimDirection.Down:
+                enemy.animator.SetBool(Settings.aimDown, true);
+                break;
+            case AimDirection.UpRight:
+            case AimDirection.UpLeft:
+                break;
+        }
+    }
 }

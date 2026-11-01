@@ -1,63 +1,146 @@
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class HotBarScroll : MonoBehaviour
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    [SerializeField]
+    private Image itemIcom;
 
-	1. No dll files were provided to AssetRipper.
+    private TextMeshProUGUI itemQuantity;
+    private int currentIndex;
+    private Sprite emptyItemSprite;
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    private void Awake()
+    {
+        itemQuantity = GetComponentInChildren<TextMeshProUGUI>();
 
-	2. Incorrect dll files were provided to AssetRipper.
+        StaticEventHandler.OnItemChanged += StaticEventHandler_OnItemChanged;
+        StaticEventHandler.OnMoveItemToHotBar += StaticEventHandler_OnMoveItemToHotBar;
+        GameManager.Instance.OnGameStateChange += OnGameStateChange_HotBar;
+    }
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+    private void OnDestroy()
+    {
+        StaticEventHandler.OnItemChanged -= StaticEventHandler_OnItemChanged;
+        StaticEventHandler.OnMoveItemToHotBar -= StaticEventHandler_OnMoveItemToHotBar;
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    private void OnGameStateChange_HotBar(GameState gameState)
+    {
+        if ((gameState & ~GameState.Begin) == GameState.Instruct)
+        {
+            gameObject.SetActive(true);
+            emptyItemSprite = itemIcom.sprite;
 
-	3. Assembly Reconstruction has not been implemented.
+            List<InventoryItem> hotBarItem = GameManager.Instance.player.inventoryManager.HotBarItem;
+            if (hotBarItem.Count != 0)
+            {
+                currentIndex = 0;
+                itemIcom.sprite = hotBarItem[currentIndex].itemSO.itemIcon;
+                itemQuantity.text = hotBarItem[currentIndex].quantity.ToString();
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
+                GameManager.Instance.OnGameStateChange -= OnGameStateChange_HotBar;
+            }
+        }
+    }
 
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
+    private void StaticEventHandler_OnItemChanged(OnInventoryItemChangedEventArgs onInventoryItemChangedEventArgs)
+    {
+        List<InventoryItem> hotBarItem = GameManager.Instance.player.inventoryManager.HotBarItem;
+        if (hotBarItem.Count != 0)
+        {
+            InventoryItem currentSelectedItem = hotBarItem[currentIndex];
+            if (currentSelectedItem != null)
+            {
+                if (onInventoryItemChangedEventArgs.inventoryItem.hotbarSlot == currentSelectedItem.hotbarSlot)
+                {
+                    itemIcom.sprite = onInventoryItemChangedEventArgs.inventoryItem.itemSO.itemIcon;
+                    itemQuantity.text = onInventoryItemChangedEventArgs.inventoryItem.quantity.ToString();
 
-	4. This script is unnecessary.
+                    if (onInventoryItemChangedEventArgs.inventoryItem.quantity == 0)
+                    {
+                        itemIcom.sprite = emptyItemSprite;
+                        itemQuantity.text = "";
+                    }
+                }
+            }
+        }
+    }
 
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
+    private void StaticEventHandler_OnMoveItemToHotBar(OnInventoryItemChangedEventArgs onInventoryItemChangedEventArgs)
+    {
+        List<InventoryItem> hotBarItem = GameManager.Instance.player.inventoryManager.HotBarItem;
+        if (hotBarItem.Count == 1)
+        {
+            itemIcom.sprite = onInventoryItemChangedEventArgs.inventoryItem.itemSO.itemIcon;
+            itemQuantity.text = onInventoryItemChangedEventArgs.inventoryItem.quantity.ToString();
+        }
+    }
 
-	5. Script Content Level 0
+    private void Start()
+    {
+        gameObject.SetActive(false);
+    }
 
-		AssetRipper was set to not load any script information.
+    private void Update()
+    {
+        if (Mouse.current != null)
+        {
+            Vector2 scrollDelta = Mouse.current.scroll.ReadValue();
+            // TODO(il2cpp): the compiled code reads a single float from the scroll control; the Y axis is the conventional guess.
+            if (scrollDelta.y != 0f)
+            {
+                ChangedItem((int)scrollDelta.y);
+            }
+        }
+    }
 
-	6. Cpp2IL failed to decompile Il2Cpp data
+    private void ChangedItem(int scrollValue)
+    {
+        if (scrollValue < 0)
+        {
+            currentIndex--;
 
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
+            if (currentIndex < 0)
+            {
+                currentIndex = GameManager.Instance.player.inventoryManager.HotBarItem.Count - 1;
+            }
 
-	7. An incorrect path was provided to AssetRipper.
+            if (GameManager.Instance.player.inventoryManager.HotBarItem.Count == 0)
+            {
+                return;
+            }
 
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
+            List<InventoryItem> hotBarItem = GameManager.Instance.player.inventoryManager.HotBarItem;
+            itemIcom.sprite = hotBarItem[currentIndex].itemSO.itemIcon;
+        }
+        else
+        {
+            currentIndex++;
 
-	*/
+            if (GameManager.Instance.player.inventoryManager.HotBarItem.Count - 1 < currentIndex)
+            {
+                currentIndex = 0;
+            }
+
+            if (GameManager.Instance.player.inventoryManager.HotBarItem.Count == 0)
+            {
+                return;
+            }
+
+            List<InventoryItem> hotBarItem = GameManager.Instance.player.inventoryManager.HotBarItem;
+            itemIcom.sprite = hotBarItem[currentIndex].itemSO.itemIcon;
+        }
+
+        itemQuantity.text = GameManager.Instance.player.inventoryManager.HotBarItem[currentIndex].quantity.ToString();
+
+        InventoryItem inventoryItem = GameManager.Instance.player.inventoryManager.HotBarItem[currentIndex];
+        StaticEventHandler.OnHotBarScrollChanged?.Invoke(new OnInventoryItemChangedEventArgs
+        {
+            inventoryItem = inventoryItem
+        });
+    }
 }

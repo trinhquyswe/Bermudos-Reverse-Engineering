@@ -1,63 +1,127 @@
+// NOTE: the original base class is SingletonMonobehaviourPersistent<MusicManager> (dump TypeDefIndex 5671).
+// That base has no source file in this export (same gap as GameManager.cs). The base is kept so that
+// MusicManager.Instance call sites in other files match the original.
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 
-public class MusicManager : MonoBehaviour
+[DisallowMultipleComponent]
+public class MusicManager : SingletonMonobehaviourPersistent<MusicManager>
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    private AudioSource musicAudioSource;
+    private AudioClip currentAudioClip;
+    private Coroutine fadeOutMusicCoroutine;
+    private Coroutine fadeInMusicCoroutine;
+    public float musicVolume;
+    private bool isPlayingFirstClip;
 
-	1. No dll files were provided to AssetRipper.
+    public MusicManager()
+    {
+        isPlayingFirstClip = true;
+        musicVolume = 20f;
+        // TODO(il2cpp): the original also constructed an AmmoAnimation from an unresolved static (DAT_ram_00565d50); not reproduced.
+    }
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    protected override void Awake()
+    {
+        base.Awake();
+        musicAudioSource = GetComponent<AudioSource>();
+        GameResources.Instance.musicOffSnapshot.TransitionTo(0f);
+    }
 
-	2. Incorrect dll files were provided to AssetRipper.
+    private void Start()
+    {
+        float linear;
+        if (!PlayerPrefs.HasKey("musicVolume"))
+        {
+            linear = musicVolume;
+        }
+        else
+        {
+            linear = PlayerPrefs.GetFloat("musicVolume");
+            musicVolume = linear;
+        }
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+        float decibels = -80f;
+        AudioMixer mixer = GameResources.Instance.musicMasterMixerGroup.audioMixer;
+        if (linear != 0f)
+        {
+            decibels = HelperUtilities.LinearToDecibels(linear);
+        }
+        mixer.SetFloat("musicVolume", decibels);
+        PlayBackgroundMusic();
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    public void PlayBackgroundMusic()
+    {
+        MusicTrackSO musicTrack;
+        if (!isPlayingFirstClip)
+        {
+            musicTrack = GameResources.Instance.musicTrack2;
+            StartCoroutine(PlayMusicRoutine(musicTrack, 0.5f, 0.5f));
+            isPlayingFirstClip = true;
+        }
+        else
+        {
+            musicTrack = GameResources.Instance.musicTrack1;
+            StartCoroutine(PlayMusicRoutine(musicTrack, 0.5f, 0.5f));
+            isPlayingFirstClip = false;
+        }
+        float clipLength = musicTrack.musicClip.length;
+        // TODO(il2cpp): original invokes "PlayerBackgroundMusic", which is not a method in this class (probably meant PlayBackgroundMusic). Kept as decompiled.
+        Invoke("PlayerBackgroundMusic", clipLength);
+    }
 
-	3. Assembly Reconstruction has not been implemented.
+    public void StopPlayingBackgroundMusic()
+    {
+        musicAudioSource.Stop();
+        CancelInvoke("PlayBackgroundMusic");
+    }
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
+    public void PlayMusic(MusicTrackSO musicTrack, float fadeOutTime = 0.5f, float fadeInTime = 0.5f)
+    {
+        StartCoroutine(PlayMusicRoutine(musicTrack, fadeOutTime, fadeInTime));
+    }
 
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
+    public void StopMusic()
+    {
+        musicAudioSource.Stop();
+    }
 
-	4. This script is unnecessary.
+    private IEnumerator PlayMusicRoutine(MusicTrackSO musicTrack, float fadeOutTime, float fadeInTime)
+    {
+        // TODO(il2cpp): state machine body (d__12 MoveNext) was not recovered; not reproduced.
+        yield break;
+    }
 
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
+    private IEnumerator FadeOutMusic(float fadeOutTime)
+    {
+        // TODO(il2cpp): state machine body (d__13 MoveNext) was not recovered; not reproduced.
+        yield break;
+    }
 
-	5. Script Content Level 0
+    private IEnumerator FadeInMusic(MusicTrackSO musicTrack, float fadeInTime)
+    {
+        // TODO(il2cpp): state machine body (d__14 MoveNext) was not recovered; not reproduced.
+        yield break;
+    }
 
-		AssetRipper was set to not load any script information.
+    public void ChangeMusicVolume(float musicVolume)
+    {
+        if (musicVolume < 20f)
+        {
+            this.musicVolume = musicVolume;
+            SetMusicVolume(musicVolume);
+        }
+    }
 
-	6. Cpp2IL failed to decompile Il2Cpp data
-
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
-
-	7. An incorrect path was provided to AssetRipper.
-
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
-
-	*/
+    public void SetMusicVolume(float musicVolume)
+    {
+        float decibels = -80f;
+        if (musicVolume != 0f)
+        {
+            decibels = HelperUtilities.LinearToDecibels(musicVolume);
+        }
+        GameResources.Instance.musicMasterMixerGroup.audioMixer.SetFloat("musicVolume", decibels);
+    }
 }

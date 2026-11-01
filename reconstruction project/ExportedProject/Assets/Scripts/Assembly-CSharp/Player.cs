@@ -1,63 +1,180 @@
+using DG.Tweening;
+using Esper.ESave;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    [HideInInspector]
+    public MovementByVelocityEvent movementByVelocityEvent;
+    [HideInInspector]
+    public MovementToPositionEvent movementToPositionEvent;
+    public MovementDetailsSO movementDetails;
+    [HideInInspector]
+    public IdleEvent idleEvent;
+    [HideInInspector]
+    public AnimateEvent animateEvent;
+    [HideInInspector]
+    public AttackEvent attackEvent;
+    [HideInInspector]
+    public DealDamageEvent dealDamageEvent;
+    [HideInInspector]
+    public HealthEvent healthEvent;
+    [HideInInspector]
+    public DestroyedEvent destroyedEvent;
+    [HideInInspector]
+    public BashEvent bashEvent;
+    [HideInInspector]
+    public DashEvent dashEvent;
+    [HideInInspector]
+    public StaminaEvent staminaEvent;
+    [HideInInspector]
+    public Stamina stamina;
+    [HideInInspector]
+    public Animator animator;
+    [HideInInspector]
+    public PlayerEffect playerEffect;
+    [HideInInspector]
+    public Rage rage;
+    [HideInInspector]
+    public InventoryManager inventoryManager;
+    private DieEvent dieEvent;
+    [HideInInspector]
+    public Vector2[] spawnPosition = new Vector2[2];
+    public SoundEffectSO runSoundEffect;
+    public SoundEffectSO dashSoundEffect;
+    public SoundEffectSO attackSoundEffect;
+    public SoundEffectSO dieSoundEffect;
+    private bool isDead;
 
-	1. No dll files were provided to AssetRipper.
+    private void Awake()
+    {
+        movementByVelocityEvent = GetComponent<MovementByVelocityEvent>();
+        movementToPositionEvent = GetComponent<MovementToPositionEvent>();
+        idleEvent = GetComponent<IdleEvent>();
+        animateEvent = GetComponent<AnimateEvent>();
+        attackEvent = GetComponent<AttackEvent>();
+        dealDamageEvent = GetComponent<DealDamageEvent>();
+        healthEvent = GetComponent<HealthEvent>();
+        destroyedEvent = GetComponent<DestroyedEvent>();
+        bashEvent = GetComponent<BashEvent>();
+        dashEvent = GetComponent<DashEvent>();
+        staminaEvent = GetComponent<StaminaEvent>();
+        stamina = GetComponent<Stamina>();
+        animator = GetComponent<Animator>();
+        playerEffect = GetComponent<PlayerEffect>();
+        rage = GetComponent<Rage>();
+        inventoryManager = GetComponent<InventoryManager>();
+        dieEvent = GetComponent<DieEvent>();
+    }
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    private void OnEnable()
+    {
+        StaticEventHandler.CallPlayerChangedEvent(this);
+        healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged;
+        GameManager.Instance.OnGameStateChange += GameStateChanged_OnPlayer;
+        dieEvent.OnDie += DieEvent_OnDie;
+    }
 
-	2. Incorrect dll files were provided to AssetRipper.
+    private void OnDisable()
+    {
+        healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged;
+        dieEvent.OnDie -= DieEvent_OnDie;
+    }
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+    public Vector2 GetPlayerPosition()
+    {
+        return transform.position;
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    private void DieEvent_OnDie(DieEvent dieEvent)
+    {
+        SoundEffectManager.Instance.PlaySoundEffect(dieSoundEffect);
 
-	3. Assembly Reconstruction has not been implemented.
+        SaveFile saveFile = GameManager.Instance.saveFileSetup.GetSaveFile();
+        if (saveFile.HasData("Checkpoint"))
+        {
+            string checkpoint = saveFile.GetData<string>("Checkpoint", null);
+            string sceneName = null;
+            if (checkpoint == "Coast")
+            {
+                transform.position = spawnPosition[0];
+                sceneName = "Coast";
+            }
+            else if (checkpoint == "The Forest")
+            {
+                transform.position = spawnPosition[1];
+                sceneName = "The Forest";
+            }
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
+            if (sceneName != null)
+            {
+                Scene currentScene = SceneManager.GetSceneAt(1);
+                SceneManager.UnloadSceneAsync(currentScene.name);
+                SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+            }
+        }
 
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
+        GameResources.Instance.beginUI.SetFloat("_FadeAmount", 0f);
+        Image fade = GameManager.Instance.beginSreen;
+        fade.color = Color.black;
+        fade.gameObject.SetActive(true);
+        fade.DOFade(0f, 2f).SetEase(Ease.InOutSine).OnComplete(() =>
+        {
+            // TODO(il2cpp): OnComplete body (Player.<>c.<DieEvent_OnDie>b__28_0) is not in the pseudo output.
+        });
+    }
 
-	4. This script is unnecessary.
+    private void HealthEvent_OnHealthChanged(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
+    {
+        if (healthEventArgs.healthAmount < 1)
+        {
+            // TODO(il2cpp): isDead polarity looks inverted (true means alive); logic kept literal.
+            if (!isDead)
+            {
+                return;
+            }
 
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
+            destroyedEvent.CallDestroyedEvent(new DestroyedEventArgs { playerDied = true });
+            isDead = false;
+        }
+        else
+        {
+            isDead = true;
+        }
+    }
 
-	5. Script Content Level 0
+    private void GameStateChanged_OnPlayer(GameState gameState)
+    {
+        if (gameState == GameState.Intro)
+        {
+            transform.position = spawnPosition[0];
+            GameManager.Instance.OnGameStateChange -= GameStateChanged_OnPlayer;
+        }
+    }
 
-		AssetRipper was set to not load any script information.
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Boss"))
+        {
+            Boss boss = collision.gameObject.GetComponent<Boss>();
+            if (boss.isPhaseTwo)
+            {
+                boss.rb.constraints = (RigidbodyConstraints2D)7; // FreezeAll
+            }
+        }
+    }
 
-	6. Cpp2IL failed to decompile Il2Cpp data
-
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
-
-	7. An incorrect path was provided to AssetRipper.
-
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
-
-	*/
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Boss"))
+        {
+            Boss boss = collision.gameObject.GetComponent<Boss>();
+            if (boss.isPhaseTwo)
+            {
+                boss.rb.constraints = (RigidbodyConstraints2D)4; // FreezeRotation
+            }
+        }
+    }
 }

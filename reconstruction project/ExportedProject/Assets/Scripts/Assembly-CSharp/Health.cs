@@ -2,62 +2,89 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    public int currentHealth;
+    public int startingHealth;
 
-	1. No dll files were provided to AssetRipper.
+    private HealthEvent healthEvent;
+    private DieEvent dieEvent;
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    private void Awake()
+    {
+        healthEvent = GetComponent<HealthEvent>();
+        dieEvent = GetComponent<DieEvent>();
+    }
 
-	2. Incorrect dll files were provided to AssetRipper.
+    private void OnEnable()
+    {
+        StaticEventHandler.OnRestInBonfire += StaticEventHandler_OnRestInBonfire;
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+        if (dieEvent != null)
+        {
+            dieEvent.OnDie += DieEvent_OnDie;
+        }
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    private void OnDisable()
+    {
+        StaticEventHandler.OnRestInBonfire -= StaticEventHandler_OnRestInBonfire;
 
-	3. Assembly Reconstruction has not been implemented.
+        if (dieEvent != null)
+        {
+            dieEvent.OnDie -= DieEvent_OnDie;
+        }
+    }
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
+    private void StaticEventHandler_OnRestInBonfire()
+    {
+        ResetHealth();
+    }
 
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
+    private void DieEvent_OnDie(DieEvent dieEvent)
+    {
+        ResetHealth();
+    }
 
-	4. This script is unnecessary.
+    private void Start()
+    {
+        ResetHealth();
+    }
 
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
+    public void TakeDamage(int damageAmount)
+    {
+        currentHealth -= damageAmount;
 
-	5. Script Content Level 0
+        // The compiled code switches the hurt sound based on whether this Health
+        // sits on the Player.
+        // TODO(il2cpp): component type in the null-check (DAT_ram_00567ef0) guessed as Player.
+        SoundEffectSO soundEffect;
+        if (GetComponent<Player>() != null)
+        {
+            soundEffect = GameResources.Instance.getHurtPlayer;
+        }
+        else
+        {
+            soundEffect = GameResources.Instance.getHurtEnemy;
+        }
+        SoundEffectManager.Instance.PlaySoundEffect(soundEffect);
 
-		AssetRipper was set to not load any script information.
+        healthEvent.CallHealthChangedEvent((float)currentHealth / (float)startingHealth, currentHealth, damageAmount);
+    }
 
-	6. Cpp2IL failed to decompile Il2Cpp data
+    public void IncreaseHealth(int healthAmount)
+    {
+        int newMax = startingHealth;
+        int newCurrent = currentHealth + healthAmount;
+        if (newCurrent <= newMax)
+        {
+            newCurrent = newMax;
+        }
+        currentHealth = newCurrent;
+        healthEvent.CallHealthChangedEvent((float)currentHealth / (float)newMax, currentHealth, 0);
+    }
 
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
-
-	7. An incorrect path was provided to AssetRipper.
-
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
-
-	*/
+    private void ResetHealth()
+    {
+        currentHealth = startingHealth;
+        healthEvent.CallHealthChangedEvent((float)currentHealth / (float)startingHealth, currentHealth, 0);
+    }
 }

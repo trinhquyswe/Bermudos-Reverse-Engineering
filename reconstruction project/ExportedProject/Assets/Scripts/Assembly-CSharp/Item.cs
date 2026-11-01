@@ -1,63 +1,73 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    private float timeToDestroy = 10f;
+    private LayerMask playerLayerMark;
+    public ItemSO itemSO;
+    private float jumDuration = 0.5f;
+    private int numJumps = 2;
+    private float jumpPower = 1f;
+    private float shakeDuration = 0.46f;
+    private float shakeStrength = 0.5f;
+    private int shakeVibrato = 3;
+    private bool isColliding = true;
+    [SerializeField]
+    private SoundEffectSO dropItemSoundEffect;
 
-	1. No dll files were provided to AssetRipper.
+    private void Start()
+    {
+        playerLayerMark = LayerMask.GetMask("Player");
+        DropItemEffect();
+    }
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    private void Update()
+    {
+        if (timeToDestroy <= 0f)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        timeToDestroy -= Time.deltaTime;
+    }
 
-	2. Incorrect dll files were provided to AssetRipper.
+    private void OnDestroy()
+    {
+        DOTween.Kill(gameObject); // approximated from decompile
+    }
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if ((playerLayerMark.value & (1 << collision.gameObject.layer)) != 0 && isColliding)
+        {
+            SoundEffectManager.Instance.PlaySoundEffect(dropItemSoundEffect);
+            InventoryManager inventoryManager = collision.GetComponent<InventoryManager>();
+            if (inventoryManager != null)
+            {
+                inventoryManager.CollectIntentoryItem(itemSO);
+            }
+            Destroy(gameObject);
+            isColliding = false;
+        }
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    public void DropItemEffect()
+    {
+        Vector3 direction = transform.position - GameManager.Instance.player.transform.position;
+        if (direction.magnitude > 1e-5f)
+        {
+            direction = direction.normalized;
+        }
+        else
+        {
+            direction = Vector3.zero; // TODO(il2cpp): fallback vector not recoverable from decompile
+        }
 
-	3. Assembly Reconstruction has not been implemented.
-
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
-
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
-
-	4. This script is unnecessary.
-
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
-
-	5. Script Content Level 0
-
-		AssetRipper was set to not load any script information.
-
-	6. Cpp2IL failed to decompile Il2Cpp data
-
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
-
-	7. An incorrect path was provided to AssetRipper.
-
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
-
-	*/
+        Vector3 target = transform.position + direction * 2f;
+        transform.DOJump(target, jumpPower, numJumps, jumDuration).OnComplete(() =>
+        {
+            transform.DOShakePosition(shakeDuration, new Vector3(0f, shakeStrength, 0f), shakeVibrato, 0f, false, true).SetLoops(-1);
+        });
+    }
 }

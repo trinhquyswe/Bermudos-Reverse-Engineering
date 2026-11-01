@@ -1,63 +1,85 @@
+using System.Collections;
 using UnityEngine;
 
 public class Dash : MonoBehaviour
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    private Player player;
+    private Coroutine dashCoroutine;
+    private WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
+    private float dashCooldownTimer;
+    private int dashCost = 10;
 
-	1. No dll files were provided to AssetRipper.
+    private void Awake()
+    {
+        player = GetComponent<Player>();
+    }
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    private void OnEnable()
+    {
+        player.dashEvent.OnDashEvent += DashEvent_OnDashEvent;
+    }
 
-	2. Incorrect dll files were provided to AssetRipper.
+    private void OnDisable()
+    {
+        player.dashEvent.OnDashEvent -= DashEvent_OnDashEvent;
+    }
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+    private void DashEvent_OnDashEvent(DashEvent dashEvent, DashEventArgs dashEventArgs)
+    {
+        if (dashCooldownTimer < Time.time && (float)dashCost < player.stamina.currentStamina)
+        {
+            SoundEffectManager.Instance.PlaySoundEffect(player.dashSoundEffect);
+            Vector2 direction = dashEventArgs.direction;
+            if (dashCoroutine != null)
+            {
+                StopCoroutine(dashCoroutine);
+            }
+            dashCoroutine = StartCoroutine(DashCoroutine(direction));
+            player.playerEffect.isDashing = true;
+            dashCooldownTimer = Time.time + player.movementDetails.dashCooldownTime;
+            player.stamina.UseStamina(dashCost);
+        }
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    public void PlayDash(Vector2 direction)
+    {
+        if (dashCoroutine != null)
+        {
+            StopCoroutine(dashCoroutine);
+        }
+        dashCoroutine = StartCoroutine(DashCoroutine(direction));
+        player.playerEffect.isDashing = true;
+    }
 
-	3. Assembly Reconstruction has not been implemented.
+    private IEnumerator DashCoroutine(Vector2 direction)
+    {
+        // TODO(il2cpp): coroutine body not recoverable from decompile
+        yield break;
+    }
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        player.playerEffect.isDashing = false;
+        StopPlayerDashRoutine();
+    }
 
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        player.playerEffect.isDashing = false;
+        StopPlayerDashRoutine();
+    }
 
-	4. This script is unnecessary.
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        player.playerEffect.isDashing = false;
+        StopPlayerDashRoutine();
+    }
 
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
-
-	5. Script Content Level 0
-
-		AssetRipper was set to not load any script information.
-
-	6. Cpp2IL failed to decompile Il2Cpp data
-
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
-
-	7. An incorrect path was provided to AssetRipper.
-
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
-
-	*/
+    private void StopPlayerDashRoutine()
+    {
+        if (dashCoroutine != null)
+        {
+            StopCoroutine(dashCoroutine);
+        }
+    }
 }

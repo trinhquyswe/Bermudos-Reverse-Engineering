@@ -1,63 +1,113 @@
+using Esper.ESave;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    [SerializeField]
+    private Button newGameBtn;
+    [SerializeField]
+    private Button continueGameBtn;
+    [SerializeField]
+    private Button settingsBtn;
+    [SerializeField]
+    private Button exitGameBtn;
+    [SerializeField]
+    private Image SettingPanel;
+    [SerializeField]
+    private Image controlsPanel;
+    [SerializeField]
+    private Image audioPanel;
+    [SerializeField]
+    private Intro intro;
+    private SaveFileSetup saveFileSetup;
+    private bool isfirstTime;
 
-	1. No dll files were provided to AssetRipper.
+    public MainMenu()
+    {
+        isfirstTime = true;
+    }
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    private void Awake()
+    {
+        saveFileSetup = GetComponent<SaveFileSetup>();
+    }
 
-	2. Incorrect dll files were provided to AssetRipper.
+    private void Start()
+    {
+        SaveFile saveFile = saveFileSetup.GetSaveFile();
+        bool hasFirstTimeData = saveFile.HasData("FirstTime");
+        if (!hasFirstTimeData)
+        {
+            saveFile.AddOrUpdateData<bool>("FirstTime", true);
+            saveFile.Save();
+            isfirstTime = true;
+        }
+        else
+        {
+            saveFile.AddOrUpdateData<bool>("FirstTime", false);
+            saveFile.Save();
+            isfirstTime = false;
+        }
+        SyncFirstTimePlayerPrefs();
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+        newGameBtn.onClick.AddListener(OnNewGameClick);
+        continueGameBtn.onClick.AddListener(OnContinueGameClick);
+        settingsBtn.onClick.AddListener(OnSettingsClick);
+        exitGameBtn.onClick.AddListener(OnExitGameClick);
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    private void SyncFirstTimePlayerPrefs()
+    {
+        // TODO(il2cpp): JsonUtility does not support bare bool values; the decompiled PlayerPrefs round-trip is kept. Verify at runtime.
+        if (!PlayerPrefs.HasKey("FirstTime"))
+        {
+            PlayerPrefs.SetString("FirstTime", JsonUtility.ToJson(isfirstTime));
+            PlayerPrefs.Save();
+        }
+        else
+        {
+            isfirstTime = JsonUtility.FromJson<bool>(PlayerPrefs.GetString("FirstTime"));
+        }
+    }
 
-	3. Assembly Reconstruction has not been implemented.
+    private void OnNewGameClick()
+    {
+        SoundEffectManager.Instance.PlaySoundEffect(GameResources.Instance.clickButton);
+        intro.gameObject.SetActive(true);
+    }
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
+    private void OnContinueGameClick()
+    {
+        if (!isfirstTime)
+        {
+            SceneManager.LoadScene("MainScene");
+            SceneManager.sceneLoaded += LoadContineGameScene;
+            SoundEffectManager.Instance.PlaySoundEffect(GameResources.Instance.clickButton);
+        }
+    }
 
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
+    private void LoadContineGameScene(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "MainScene" && scene.isLoaded)
+        {
+            GameManager.Instance.TransitionToGame();
+            SceneManager.sceneLoaded -= LoadContineGameScene;
+        }
+    }
 
-	4. This script is unnecessary.
+    private void OnSettingsClick()
+    {
+        SettingPanel.gameObject.SetActive(true);
+        controlsPanel.gameObject.SetActive(false);
+        audioPanel.gameObject.SetActive(false);
+        SoundEffectManager.Instance.PlaySoundEffect(GameResources.Instance.clickButton);
+    }
 
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
-
-	5. Script Content Level 0
-
-		AssetRipper was set to not load any script information.
-
-	6. Cpp2IL failed to decompile Il2Cpp data
-
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
-
-	7. An incorrect path was provided to AssetRipper.
-
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
-
-	*/
+    private void OnExitGameClick()
+    {
+        SoundEffectManager.Instance.PlaySoundEffect(GameResources.Instance.clickButton);
+        Application.Quit();
+    }
 }

@@ -1,63 +1,68 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    [SerializeField]
+    private Slider musicSlider;
+    [SerializeField]
+    private Slider sfxSlider;
+    private float normalizedValue = 20f;
 
-	1. No dll files were provided to AssetRipper.
+    private void Start()
+    {
+        StartCoroutine(SetVolumeCoroutine());
+        musicSlider.onValueChanged.RemoveAllListeners();
+        sfxSlider.onValueChanged.RemoveAllListeners();
+        musicSlider.onValueChanged.AddListener(SetMusicVolume);
+        sfxSlider.onValueChanged.AddListener(SetSoundsVolume);
+    }
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    private IEnumerator SetVolumeCoroutine()
+    {
+        // TODO(il2cpp): MoveNext state machine <SetVolumeCoroutine>d__4 (dump 421833) is not in the pseudo output; body not reconstructed.
+        yield break;
+    }
 
-	2. Incorrect dll files were provided to AssetRipper.
+    private void SetMusicVolume(float value)
+    {
+        float linear = normalizedValue * value;
+        // TODO(il2cpp): threshold 20f is the raw pseudo literal; verify against the original.
+        if (linear < 20f)
+        {
+            // TODO(il2cpp): MusicManager.musicVolume is at MusicManager +0x20 (dump 422032); MusicManager.cs is still a dummy.
+            MusicManager.Instance.musicVolume = linear;
+            float decibels = -80f;
+            AudioMixer mixer = GameResources.Instance.musicMasterMixerGroup.audioMixer;
+            if (linear != 0f)
+            {
+                decibels = HelperUtilities.LinearToDecibels(linear);
+            }
+            mixer.SetFloat("musicVolume", decibels);
+        }
+        PlayerPrefs.SetFloat("musicVolume", linear);
+        PlayerPrefs.Save();
+    }
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
-
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
-
-	3. Assembly Reconstruction has not been implemented.
-
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
-
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
-
-	4. This script is unnecessary.
-
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
-
-	5. Script Content Level 0
-
-		AssetRipper was set to not load any script information.
-
-	6. Cpp2IL failed to decompile Il2Cpp data
-
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
-
-	7. An incorrect path was provided to AssetRipper.
-
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
-
-	*/
+    private void SetSoundsVolume(float value)
+    {
+        float linear = normalizedValue * value;
+        // TODO(il2cpp): threshold 20f is the raw pseudo literal; verify against the original.
+        if (linear < 20f)
+        {
+            // SoundEffectManager.soundsVolume is public float at +0x10 (dump 422168).
+            SoundEffectManager.Instance.soundsVolume = linear;
+            float decibels = -80f;
+            AudioMixer mixer = GameResources.Instance.soundsMasterMixerGroup.audioMixer;
+            if (linear != 0f)
+            {
+                decibels = HelperUtilities.LinearToDecibels(linear);
+            }
+            mixer.SetFloat("soundsVolume", decibels);
+        }
+        PlayerPrefs.SetFloat("soundsVolume", linear);
+        PlayerPrefs.Save();
+    }
 }

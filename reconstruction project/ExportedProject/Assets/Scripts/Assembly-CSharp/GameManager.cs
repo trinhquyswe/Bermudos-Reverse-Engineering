@@ -1,63 +1,228 @@
+using System;
+using DG.Tweening;
+using Esper.ESave;
+using TMPEffects.Components;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class GameManager : SingletonMonobehaviour<GameManager>
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    [HideInInspector]
+    public Player player;
+    public EnemyManagerDetailsSO[] enemyManagerDetailsSO;
+    [HideInInspector]
+    public SaveFileSetup saveFileSetup;
+    public GameState gameState;
+    [HideInInspector]
+    public Action<GameState> OnGameStateChange;
+    [SerializeField]
+    public Image beginSreen;
+    [SerializeField]
+    private Image wonPanel;
+    [SerializeField]
+    private Image wonScreen;
+    [SerializeField]
+    private TextMeshProUGUI wonText;
+    [SerializeField]
+    private GameObject healthBar;
+    [SerializeField]
+    private GameObject staminaBar;
+    [SerializeField]
+    private GameObject skillBar;
 
-	1. No dll files were provided to AssetRipper.
+    private void OnEnable()
+    {
+        StaticEventHandler.OnPlayerChanged += StaticEventHandler_OnPlayerChanged;
+        StaticEventHandler.OnRestInBonfire += StaticEventHandler_OnRestInBonfire;
+    }
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    private void OnDisable()
+    {
+        StaticEventHandler.OnPlayerChanged -= StaticEventHandler_OnPlayerChanged;
+        StaticEventHandler.OnRestInBonfire -= StaticEventHandler_OnRestInBonfire;
+    }
 
-	2. Incorrect dll files were provided to AssetRipper.
+    private void StaticEventHandler_OnPlayerChanged(OnPlayerChangedEventArgs onPlayerChangedEventArgs)
+    {
+        player = onPlayerChangedEventArgs.player;
+    }
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+    private void StaticEventHandler_OnRestInBonfire()
+    {
+        InitializeEnemyManagerData();
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    protected override void Awake()
+    {
+        base.Awake();
+        saveFileSetup = GetComponent<SaveFileSetup>();
+    }
 
-	3. Assembly Reconstruction has not been implemented.
+    private void Start()
+    {
+        InitializeEnemyManagerData();
+    }
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
+    public void TransitionToGame()
+    {
+        SaveFile saveFile = saveFileSetup.GetSaveFile();
+        if (saveFile.HasData("Checkpoint"))
+        {
+            string checkpoint = saveFile.GetData<string>("Checkpoint", null);
+            string sceneName = null;
+            if (checkpoint == "Coast")
+            {
+                player.transform.position = player.spawnPosition[0];
+                sceneName = "Coast";
+            }
+            else if (checkpoint == "The Forest")
+            {
+                player.transform.position = player.spawnPosition[1];
+                sceneName = "The Forest";
+            }
 
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
+            if (sceneName != null)
+            {
+                SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+            }
+        }
 
-	4. This script is unnecessary.
+        GameResources.Instance.beginUI.SetFloat("_FadeAmount", 0f);
+        beginSreen.color = Color.black;
+        beginSreen.gameObject.SetActive(true);
+        beginSreen.DOFade(0f, 1.5f).SetEase(Ease.InOutSine).OnComplete(() =>
+        {
+            beginSreen.gameObject.SetActive(false);
+            gameState = GameState.Play;
+            Play();
+            OnGameStateChange?.Invoke(gameState);
+        });
+    }
 
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
+    public void HandleGameState(GameState gameState)
+    {
+        this.gameState = gameState;
 
-	5. Script Content Level 0
+        if (gameState == GameState.Intro)
+        {
+            SaveBossState(0);
+            Intro();
+        }
+        else if (gameState == GameState.Instruct)
+        {
+            Instruct();
+        }
+        else if (gameState == GameState.Play)
+        {
+            Play();
+        }
+        else if (gameState == GameState.EngagedBoss)
+        {
+            EngagedBoss();
+            MusicManager.Instance.StopPlayingBackgroundMusic();
+            MusicManager.Instance.PlayMusic(GameResources.Instance.musicTrack_Bossfight, 0.5f, 0.5f);
+        }
+        else if (gameState == GameState.Won)
+        {
+            SaveBossState(1);
+            WonScene();
+        }
 
-		AssetRipper was set to not load any script information.
+        OnGameStateChange?.Invoke(gameState);
+    }
 
-	6. Cpp2IL failed to decompile Il2Cpp data
+    private void SaveBossState(int isBossDefeated)
+    {
+        PlayerPrefs.SetInt("isBossDefeated", isBossDefeated);
+    }
 
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
+    private void WonScene()
+    {
+        SceneManager.UnloadSceneAsync("North Of The Forest");
+        wonPanel.gameObject.SetActive(true);
+        wonPanel.color = Color.clear;
+        wonPanel.DOFade(1f, 1f).OnComplete(_WonScene_b__20_0);
+    }
 
-	7. An incorrect path was provided to AssetRipper.
+    private void _WonScene_b__20_0()
+    {
+        wonText.gameObject.SetActive(true);
+        TMPWriter writer = wonText.GetComponent<TMPWriter>();
+        writer.OnFinishWriter.RemoveAllListeners();
+        writer.OnFinishWriter.AddListener(_WonScene_b__20_1);
+    }
 
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
+    private void _WonScene_b__20_1(TMPWriter tMP)
+    {
+        DOTweenModuleUI.DOFade(wonText, 0f, 3f).OnComplete(_WonScene_b__20_2);
+    }
 
-	*/
+    private void _WonScene_b__20_2()
+    {
+        wonText.gameObject.SetActive(false);
+        wonScreen.gameObject.SetActive(true);
+        wonScreen.transform.DOScale(0f, 3f).OnComplete(() =>
+        {
+            // TODO(il2cpp): OnComplete body (GameManager.<>c.<WonScene>b__20_3) is not in the pseudo output.
+        });
+    }
+
+    private void Instruct()
+    {
+        healthBar.SetActive(true);
+        staminaBar.SetActive(true);
+        skillBar.SetActive(true);
+    }
+
+    public void Intro()
+    {
+        healthBar.SetActive(false);
+        staminaBar.SetActive(false);
+        skillBar.SetActive(false);
+        GameResources.Instance.beginUI.SetFloat("_FadeAmount", 0f);
+        beginSreen.gameObject.SetActive(true);
+        beginSreen.DOColor(Color.black, 3f).OnComplete(() =>
+        {
+            SceneManager.LoadScene("Coast", LoadSceneMode.Additive);
+            SaveFile saveFile = saveFileSetup.GetSaveFile();
+            saveFile.AddOrUpdateData("Checkpoint", "Coast");
+            saveFile.Save();
+            PlayerPrefs.SetString("Checkpoint", JsonUtility.ToJson("Coast"));
+            PlayerPrefs.Save();
+            GameResources.Instance.beginUI.DOFloat(1f, "_FadeAmount", 2f).OnComplete(() =>
+            {
+                beginSreen.gameObject.SetActive(false);
+                gameState = GameState.Begin;
+                OnGameStateChange?.Invoke(gameState);
+            });
+        });
+    }
+
+    public void Play()
+    {
+        player.GetComponent<Rigidbody2D>().mass = 0.5f;
+    }
+
+    public void EngagedBoss()
+    {
+        player.GetComponent<Rigidbody2D>().mass = 1000000f;
+    }
+
+    public void InitializeEnemyManagerData()
+    {
+        for (int i = 0; i < enemyManagerDetailsSO.Length; i++)
+        {
+            EnemyManagerDetailsSO details = enemyManagerDetailsSO[i];
+            EnemyManagerData data = new EnemyManagerData();
+            data.enemieStateList = new System.Collections.Generic.List<bool>();
+            data.enemyCount = details.enemyPostionList.Count;
+            data.enemyName = details.enemyName;
+            data.GetEnemyList(-1);
+            SaveFile saveFile = saveFileSetup.GetSaveFile();
+            saveFile.AddOrUpdateData(details.enemyManagerDataKey, data);
+            saveFile.Save();
+        }
+    }
 }

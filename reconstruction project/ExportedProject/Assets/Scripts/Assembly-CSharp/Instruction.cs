@@ -1,63 +1,61 @@
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 public class Instruction : MonoBehaviour
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    [SerializeField]
+    private TextMeshProUGUI instructionText;
+    [SerializeField]
+    private TextMeshProUGUI displayCount;
 
-	1. No dll files were provided to AssetRipper.
+    // TODO(il2cpp): base scale is packed Vector3 constants (Vector3 statics +0xc/+0x10/+0x14) that were not decoded; Vector3.one is a placeholder.
+    private static Vector3 BaseScale => Vector3.one;
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    private void Start()
+    {
+        gameObject.SetActive(false);
+        StaticEventHandler.OnInstructionChanged += OnInstructionChanged;
+    }
 
-	2. Incorrect dll files were provided to AssetRipper.
+    private void OnEnable()
+    {
+        transform.localScale = BaseScale * 2f;
+        transform.DOScale(BaseScale, 0.3f).SetEase(Ease.OutBack);
+    }
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+    private void OnDestroy()
+    {
+        StaticEventHandler.OnInstructionChanged -= OnInstructionChanged;
+        DOTween.Kill(transform);
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    private void OnInstructionChanged(string instruction, int displayCount = -1, bool isActive = true)
+    {
+        if (displayCount == -1)
+        {
+            gameObject.SetActive(true);
+            instructionText.text = instruction;
+            this.displayCount.text = "";
+            return;
+        }
 
-	3. Assembly Reconstruction has not been implemented.
+        if (displayCount >= 0 && displayCount < 3)
+        {
+            transform.localScale = BaseScale * 2f;
+            transform.DOScale(BaseScale, 0.3f).SetEase(Ease.OutBack).SetUpdate(true);
+            gameObject.SetActive(true);
+            instructionText.text = instruction;
+            this.displayCount.text = displayCount.ToString() + "/3";
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
-
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
-
-	4. This script is unnecessary.
-
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
-
-	5. Script Content Level 0
-
-		AssetRipper was set to not load any script information.
-
-	6. Cpp2IL failed to decompile Il2Cpp data
-
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
-
-	7. An incorrect path was provided to AssetRipper.
-
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
-
-	*/
+        if (!isActive)
+        {
+            gameObject.SetActive(false);
+        }
+    }
 }

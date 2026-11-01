@@ -1,63 +1,161 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
-public class HelperUtilities : MonoBehaviour
+public static class HelperUtilities
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    public static Camera mainCamera;
 
-	1. No dll files were provided to AssetRipper.
+    public static bool ValidateCheckEmptyString(Object thisObject, string fieldName, string stringToCheck)
+    {
+        if (stringToCheck == "")
+        {
+            Debug.Log(fieldName + " is empty and must contain a value in object " + thisObject.name);
+            return true;
+        }
+        return false;
+    }
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    public static bool ValidateCheckNullValue(Object thisObject, string fieldName, Object objectToCheck)
+    {
+        if (objectToCheck == null)
+        {
+            Debug.Log(fieldName + " is null and must contain a value in object " + thisObject.name);
+            return true;
+        }
+        return false;
+    }
 
-	2. Incorrect dll files were provided to AssetRipper.
+    public static bool ValidateCheckEnumerableValues(Object thisObject, string fieldName, IEnumerable enumerableObjectToCheck)
+    {
+        bool error = false;
+        int count = 0;
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+        if (enumerableObjectToCheck == null)
+        {
+            Debug.Log(fieldName + " is null in object " + thisObject.name);
+            return true;
+        }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+        foreach (var item in enumerableObjectToCheck)
+        {
+            if (item == null)
+            {
+                Debug.Log(fieldName + " has null values in object " + thisObject.name);
+                error = true;
+            }
+            else
+            {
+                count++;
+            }
+        }
 
-	3. Assembly Reconstruction has not been implemented.
+        if (count == 0)
+        {
+            Debug.Log(fieldName + " has no values in object " + thisObject.name);
+            error = true;
+        }
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
+        return error;
+    }
 
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
+    public static bool ApproximatelyEqual(Vector2 v1, Vector2 v2, float epsilon)
+    {
+        return Mathf.Abs(v1.x - v2.x) < epsilon && Mathf.Abs(v1.y - v2.y) < epsilon;
+    }
 
-	4. This script is unnecessary.
+    public static float GetAngleFromVector(Vector3 vector)
+    {
+        return Mathf.Atan2(vector.y, vector.x) * 57.29578f;
+    }
 
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
+    public static Vector2 GetRandomDirection()
+    {
+        Vector2 randomDirection = Random.insideUnitCircle;
+        float magnitude = Mathf.Sqrt(randomDirection.x * randomDirection.x + randomDirection.y * randomDirection.y);
+        if (magnitude > 1e-05f)
+        {
+            return new Vector2(randomDirection.x / magnitude, randomDirection.y / magnitude);
+        }
+        return Vector2.zero;
+    }
 
-	5. Script Content Level 0
+    public static Vector3 GetDirectionVectorFromAngle(float angle)
+    {
+        float angleRadians = angle * Mathf.Deg2Rad;
+        return new Vector3(Mathf.Cos(angleRadians), Mathf.Sin(angleRadians), 0f);
+    }
 
-		AssetRipper was set to not load any script information.
+    public static bool ValidateCheckPositiveValue(Object thisObject, string fieldName, float valueToCheck, bool isZeroAllowed)
+    {
+        if (!isZeroAllowed)
+        {
+            if (valueToCheck > 0f)
+            {
+                return false;
+            }
+            Debug.Log(fieldName + " must contain a positive value in object " + thisObject.name);
+            return true;
+        }
+        else
+        {
+            if (valueToCheck >= 0f)
+            {
+                return false;
+            }
+            Debug.Log(fieldName + " must contain a positive value or zero in object " + thisObject.name);
+            return true;
+        }
+    }
 
-	6. Cpp2IL failed to decompile Il2Cpp data
+    public static Vector3 GetMouseWorldPosition()
+    {
+        if (mainCamera == null)
+        {
+            mainCamera = Camera.main;
+        }
 
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
 
-	7. An incorrect path was provided to AssetRipper.
+        mousePosition.x = Mathf.Clamp(mousePosition.x, 0f, Screen.width);
+        mousePosition.y = Mathf.Clamp(mousePosition.y, 0f, Screen.height);
 
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
+        Vector3 worldPosition = mainCamera.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, 0f));
+        worldPosition.z = 0f;
+        return worldPosition;
+    }
 
-	*/
+    public static bool ValidateCheckPositiveRange(Object thisObject, string fieldNameMinimum, float valueToCheckMinimum, string fieldNameMaximum, float valueToCheckMaximum, bool isZeroAllowed)
+    {
+        if (valueToCheckMaximum < valueToCheckMinimum)
+        {
+            Debug.Log(fieldNameMinimum + " must be less than or equal to " + fieldNameMaximum + " in object " + thisObject.name);
+        }
+
+        bool minimumCheck = ValidateCheckPositiveValue(thisObject, fieldNameMinimum, valueToCheckMinimum, isZeroAllowed);
+        bool maximumCheck = ValidateCheckPositiveValue(thisObject, fieldNameMaximum, valueToCheckMaximum, isZeroAllowed);
+
+        return minimumCheck || maximumCheck || valueToCheckMaximum < valueToCheckMinimum;
+    }
+
+    public static Vector3 GetMousePositionInUI(RectTransform rectTransform, Camera uiCamera)
+    {
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
+
+        mousePosition.x = Mathf.Clamp(mousePosition.x, 0f, Screen.width);
+        mousePosition.y = Mathf.Clamp(mousePosition.y, 0f, Screen.height);
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, mousePosition, uiCamera, out Vector2 localPoint);
+
+        Vector3 worldPosition = rectTransform.TransformPoint(localPoint);
+        return worldPosition;
+    }
+
+    public static float LinearToDecibels(float linear)
+    {
+        // 20 * Mathf.Log10(linear / 20f) as compiled.
+        // TODO(il2cpp): helper function resolved to Mathf.Log10 is a guess; the divisor/multiplier literals are kept as compiled.
+        return Mathf.Log10(linear / 20f) * 20f;
+    }
 }

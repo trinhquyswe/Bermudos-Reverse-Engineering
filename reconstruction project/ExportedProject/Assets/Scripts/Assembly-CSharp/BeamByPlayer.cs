@@ -2,62 +2,94 @@ using UnityEngine;
 
 public class BeamByPlayer : MonoBehaviour
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    public GameObject beamPrefab;
+    public Material beamMaterial;
+    private Rage rage;
+    private AnimateEvent animateEvent;
+    private Vector3 direction;
+    private float ragePercent;
 
-	1. No dll files were provided to AssetRipper.
+    private void Awake()
+    {
+        rage = GetComponent<Rage>();
+        animateEvent = GetComponent<AnimateEvent>();
+    }
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    private void OnEnable()
+    {
+        RageEvent.OnRageChanged += RageEvent_OnRageChanged;
+        animateEvent.OnAnimate += AnimateEvent_OnAnimate;
+    }
 
-	2. Incorrect dll files were provided to AssetRipper.
+    private void OnDisable()
+    {
+        RageEvent.OnRageChanged -= RageEvent_OnRageChanged;
+        animateEvent.OnAnimate -= AnimateEvent_OnAnimate;
+    }
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+    private void AnimateEvent_OnAnimate(AnimateEvent sender, AnimateEventArgs animateEventArgs)
+    {
+        // TODO(il2cpp): direction vectors were read from Vector3 static offsets (0x18, 0x24, 0x30, 0x3c);
+        // mapped to Vector3.up/down/left/right. Verify the static order against Unity.
+        switch (animateEventArgs.aimDirection)
+        {
+            case AimDirection.Up:
+                direction = Vector3.up;
+                break;
+            case AimDirection.UpRight:
+                direction = Vector3.up + Vector3.right;
+                break;
+            case AimDirection.UpLeft:
+                direction = Vector3.up + Vector3.left;
+                break;
+            case AimDirection.Right:
+                direction = Vector3.right;
+                break;
+            case AimDirection.Left:
+                direction = Vector3.left;
+                break;
+            case AimDirection.Down:
+                direction = Vector3.down;
+                break;
+            case AimDirection.DownRight:
+                direction = Vector3.down + Vector3.right;
+                break;
+            case AimDirection.DownLeft:
+                direction = Vector3.down + Vector3.left;
+                break;
+        }
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    private void RageEvent_OnRageChanged(RageEventArgs rageEventArgs)
+    {
+        ragePercent = rageEventArgs.ragePercent;
+    }
 
-	3. Assembly Reconstruction has not been implemented.
+    public void Beam()
+    {
+        if (ragePercent < 1f)
+        {
+            return;
+        }
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90f;
+        Quaternion rotation = Quaternion.Euler(0f, 0f, angle);
+        GameObject beamObject = Instantiate(beamPrefab, transform.position, rotation);
+        beamObject.layer = LayerMask.NameToLayer("BashAmmo");
 
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
+        Beam beamComponent = beamObject.GetComponent<Beam>();
+        beamComponent.amountScaleY = 10f;
 
-	4. This script is unnecessary.
+        // The original applied beamMaterial through a Renderer component lookup (type inferred).
+        beamObject.GetComponent<Renderer>().material = beamMaterial;
 
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
-
-	5. Script Content Level 0
-
-		AssetRipper was set to not load any script information.
-
-	6. Cpp2IL failed to decompile Il2Cpp data
-
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
-
-	7. An incorrect path was provided to AssetRipper.
-
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
-
-	*/
+        rage.currentRage = 0f;
+        // Replaces RageEvent.CallRageChangedEvent(0f, 0f, rage.maxRage), which does not exist in the project's RageEvent.cs.
+        RageEvent.OnRageChanged?.Invoke(new RageEventArgs
+        {
+            ragePercent = 0f,
+            currentRage = 0f,
+            maxRage = rage.maxRage
+        });
+    }
 }

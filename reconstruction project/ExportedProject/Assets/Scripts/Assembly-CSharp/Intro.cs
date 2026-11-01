@@ -1,63 +1,90 @@
+using System.Collections;
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Intro : MonoBehaviour
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    [SerializeField]
+    private IntroSO[] introSOList = new IntroSO[4];
+    [SerializeField]
+    private Image introImage;
+    [SerializeField]
+    private Image map;
+    private TextMeshProUGUI introText;
+    private Button nextBtn;
+    private int introIndex;
+    private TMPWriter tmpWriter;
 
-	1. No dll files were provided to AssetRipper.
+    private void Awake()
+    {
+        tmpWriter = GetComponentInChildren<TMPWriter>();
+        introText = GetComponentInChildren<TextMeshProUGUI>();
+        nextBtn = GetComponentInChildren<Button>();
+        nextBtn.gameObject.SetActive(false);
+        introImage.enabled = false;
+    }
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    private void OnDestroy()
+    {
+        tmpWriter.OnFinishWriter.RemoveListener(OnFinishWriter);
+        nextBtn.onClick.RemoveListener(OnNextBtnClick);
+        DOTween.Kill(transform);
+    }
 
-	2. Incorrect dll files were provided to AssetRipper.
+    private void Start()
+    {
+        map.gameObject.SetActive(true);
+        map.transform.DOScale(new Vector3(8f, 8f, 8f), 2.5f).SetEase(Ease.Linear).OnComplete(() =>
+        {
+            map.gameObject.SetActive(false);
+            tmpWriter.OnFinishWriter.AddListener(OnFinishWriter);
+            StartCoroutine(WaitUntilIntroEnable());
+            nextBtn.onClick.AddListener(OnNextBtnClick);
+            introImage.enabled = true;
+        });
+    }
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+    private void OnFinishWriter(TMPWriter tmpWriter)
+    {
+        nextBtn.gameObject.SetActive(true);
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    private void OnNextBtnClick()
+    {
+        introImage.color = Color.white; // approximated from decompile
+        nextBtn.gameObject.SetActive(false);
+        if (introIndex < introSOList.Length)
+        {
+            introImage.sprite = introSOList[introIndex].introSprite;
+            if (introImage != null)
+            {
+                introImage.DOFade(1f, 2f);
+            }
+            introText.text = introSOList[introIndex].introText;
+        }
+        else
+        {
+            SceneManager.LoadScene("MainScene");
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+        introIndex++;
+    }
 
-	3. Assembly Reconstruction has not been implemented.
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "MainScene" && scene.isLoaded)
+        {
+            GameManager.Instance.HandleGameState(GameState.Intro); // approximated from decompile
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+    }
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
-
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
-
-	4. This script is unnecessary.
-
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
-
-	5. Script Content Level 0
-
-		AssetRipper was set to not load any script information.
-
-	6. Cpp2IL failed to decompile Il2Cpp data
-
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
-
-	7. An incorrect path was provided to AssetRipper.
-
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
-
-	*/
+    private IEnumerator WaitUntilIntroEnable()
+    {
+        // TODO(il2cpp): coroutine body not recoverable from decompile
+        yield break;
+    }
 }

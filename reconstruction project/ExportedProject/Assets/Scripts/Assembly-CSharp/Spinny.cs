@@ -1,63 +1,109 @@
+// NOTE: the original base class is BehaviorDesigner.Runtime.Tasks.Action (task-based, TaskStatus returns).
+// Re-exposed as a MonoBehaviour keeping the exact serialized field names. BehaviorDesigner is not in this project,
+// so TaskStatus returns are marked TODO(il2cpp).
 using UnityEngine;
 
 public class Spinny : MonoBehaviour
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    private Animator animator;
+    private Vector2 direction;
+    private Weapon weapon;
+    private DealContactDamage dealContactDamage;
+    private Rigidbody2D rb;
+    [SerializeField]
+    private float speed;
+    [SerializeField]
+    private int damage;
+    private bool isColliding;
+    private MeleeSkills meleeSkills;
+    private BoxCollider2D boxCollider2D;
+    [SerializeField]
+    private SoundEffectSO spinnySoundEffect;
+    [SerializeField]
+    private float spinnyTime;
 
-	1. No dll files were provided to AssetRipper.
+    public Spinny()
+    {
+        spinnyTime = 5f;
+        speed = 5f;
+        damage = 10;
+    }
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    public void OnAwake()
+    {
+        animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        meleeSkills = GetComponent<MeleeSkills>();
+        weapon = GetComponent<Weapon>();
+        dealContactDamage = GetComponent<DealContactDamage>();
+        boxCollider2D = GetComponent<BoxCollider2D>();
+    }
 
-	2. Incorrect dll files were provided to AssetRipper.
+    public void OnStart()
+    {
+        rb.drag = 0f;
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+        // TODO(il2cpp): original called Physics2D.IgnoreCollision(boxCollider2D, <player collider>, ...). The collider
+        // component type was not resolved, so this call is not reproduced.
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+        transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        dealContactDamage.isRemoved = false;
+        isColliding = false;
+        animator.SetTrigger(Settings.spinny2);
 
-	3. Assembly Reconstruction has not been implemented.
+        Vector3 toPlayer = GameManager.Instance.player.transform.position - transform.position;
+        float length = toPlayer.magnitude;
+        if (length > 1e-5f)
+        {
+            direction = new Vector2(toPlayer.x, toPlayer.y) / length;
+        }
+        else
+        {
+            // TODO(il2cpp): fallback direction came from an unresolved Vector2 static; using zero.
+            direction = Vector2.zero;
+        }
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
+        dealContactDamage.contactDamageAmount = damage;
+        SoundEffectManager.Instance.PlaySoundEffectPersistent(spinnySoundEffect, true);
+        spinnyTime = 5f;
+    }
 
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
+    public void OnFixedUpdate()
+    {
+        rb.velocity = direction * speed;
+    }
 
-	4. This script is unnecessary.
+    public void OnUpdate()
+    {
+        // TODO(il2cpp): original returned a BehaviorDesigner TaskStatus; the returned status is not reproduced.
+        if (!isColliding && spinnyTime >= 0f)
+        {
+            spinnyTime -= Time.deltaTime;
+        }
+    }
 
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
+    public void OnLateUpdate()
+    {
+        weapon.GetWeaponCollider();
+    }
 
-	5. Script Content Level 0
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Collision"))
+        {
+            isColliding = true;
+        }
+    }
 
-		AssetRipper was set to not load any script information.
+    public void OnEnd()
+    {
+        SoundEffectManager.Instance.StopSoundEffectLoop(spinnySoundEffect);
+        rb.drag = 100000f;
 
-	6. Cpp2IL failed to decompile Il2Cpp data
+        // TODO(il2cpp): original called Physics2D.IgnoreCollision(boxCollider2D, <player collider>, false); not reproduced (see OnStart).
 
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
-
-	7. An incorrect path was provided to AssetRipper.
-
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
-
-	*/
+        rb.velocity = Vector2.zero;
+        dealContactDamage.isRemoved = true;
+        transform.localScale = new Vector3(3f, 3f, 3f);
+    }
 }

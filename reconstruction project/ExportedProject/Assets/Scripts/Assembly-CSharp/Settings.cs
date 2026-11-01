@@ -1,63 +1,101 @@
 using UnityEngine;
 
-public class Settings : MonoBehaviour
+public static class Settings
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    public static int isIdle;
+    public static int isMoving;
+    public static int isAttack;
+    public static int isFaint;
+    public static int aimUp;
+    public static int aimUp1;
+    public static int aimDown;
+    public static int aimUpRight;
+    public static int aimUpLeft;
+    public static int aimRight;
+    public static int aimLeft;
+    public static int aimDownRight;
+    public static int aimDownLeft;
+    public static int Idle;
+    public static int ouch;
+    public static int OpenMouth;
+    public static int eyeAttack;
+    public static int eyeLoop;
+    public static int Hop;
+    public static int EyeLoopDeath;
+    public static int Base;
+    public static int Walk;
+    public static int swipe;
+    public static int mouthOpenLoop;
+    public static int spearAtk;
+    public static int spinny;
+    public static int Idle2;
+    public static int ouch2;
+    public static int OpenMouth2;
+    public static int eyeAttack2;
+    public static int eyeLoop2;
+    public static int Hop2;
+    public static int EyeLoopDeath2;
+    public static int Base2;
+    public static int Walk2;
+    public static int swipe2;
+    public static int mouthOpenLoop2;
+    public static int spearAtk2;
+    public static int spinny2;
 
-	1. No dll files were provided to AssetRipper.
+    public const float epsilon = 0.01f;
+    public const float contactDamageCollisionResetDelay = 0.5f;
+    public const float dashCooldown = 1f;
+    public const float rageAmount = 1f;
+    public const float bashCooldown = 0.5f;
+    public const float beamRotationOffset = 90f;
+    public const int inventorySlotQuantity = 70;
+    public const int hotBarSlotQuantity = 10;
+    public const int maxStack = 10;
+    public const float orthoSize = 8.4375f;
+    public const float musicFadeOutTime = 0.5f;
+    public const float musicFadeInTime = 0.5f;
+    public const int attackCost = 10;
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
-
-	2. Incorrect dll files were provided to AssetRipper.
-
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
-
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
-
-	3. Assembly Reconstruction has not been implemented.
-
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
-
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
-
-	4. This script is unnecessary.
-
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
-
-	5. Script Content Level 0
-
-		AssetRipper was set to not load any script information.
-
-	6. Cpp2IL failed to decompile Il2Cpp data
-
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
-
-	7. An incorrect path was provided to AssetRipper.
-
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
-
-	*/
+    static Settings()
+    {
+        isIdle = Animator.StringToHash("isIdle");
+        isMoving = Animator.StringToHash("isMove");
+        isAttack = Animator.StringToHash("isAttack");
+        isFaint = Animator.StringToHash("isFaint");
+        aimUp = Animator.StringToHash("aimUp");
+        aimUp1 = Animator.StringToHash("aimUp1");
+        aimDown = Animator.StringToHash("aimDown");
+        aimUpRight = Animator.StringToHash("aimUpRight");
+        aimUpLeft = Animator.StringToHash("aimUpLeft");
+        aimRight = Animator.StringToHash("aimRight");
+        aimLeft = Animator.StringToHash("aimLeft");
+        aimDownRight = Animator.StringToHash("aimDownRight");
+        aimDownLeft = Animator.StringToHash("aimDownLeft");
+        Idle = Animator.StringToHash("Idle");
+        ouch = Animator.StringToHash("ouch");
+        OpenMouth = Animator.StringToHash("OpenMouth");
+        eyeAttack = Animator.StringToHash("eyeAttack");
+        eyeLoop = Animator.StringToHash("eyeLoop");
+        Hop = Animator.StringToHash("Hop");
+        EyeLoopDeath = Animator.StringToHash("EyeLoopDeath");
+        Base = Animator.StringToHash("Base");
+        Walk = Animator.StringToHash("Walk");
+        swipe = Animator.StringToHash("swipe");
+        mouthOpenLoop = Animator.StringToHash("mouthOpenLoop");
+        spearAtk = Animator.StringToHash("spearAtk");
+        spinny = Animator.StringToHash("spinny");
+        Idle2 = Animator.StringToHash("Idle2");
+        ouch2 = Animator.StringToHash("ouch2");
+        OpenMouth2 = Animator.StringToHash("OpenMouth2");
+        eyeAttack2 = Animator.StringToHash("eyeAttack2");
+        eyeLoop2 = Animator.StringToHash("eyeLoop2");
+        Hop2 = Animator.StringToHash("Hop2");
+        EyeLoopDeath2 = Animator.StringToHash("EyeLoopDeath2");
+        Base2 = Animator.StringToHash("Base2");
+        Walk2 = Animator.StringToHash("Walk2");
+        swipe2 = Animator.StringToHash("swipe2");
+        mouthOpenLoop2 = Animator.StringToHash("mouthOpenLoop2");
+        spearAtk2 = Animator.StringToHash("spearAtk2");
+        spinny2 = Animator.StringToHash("spinny2");
+    }
 }
