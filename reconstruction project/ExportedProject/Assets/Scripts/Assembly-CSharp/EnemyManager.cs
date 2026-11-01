@@ -25,7 +25,7 @@ public class EnemyManager : MonoBehaviour
         StaticEventHandler.OnBuildNavMesh -= StaticEventHandler_OnBuildNavMesh;
     }
 
-    private void StaticEventHandler_OnBuildNavMesh(BuildNavMeshEventArgs args)
+    private void StaticEventHandler_OnBuildNavMesh(OnBuildNavMeshEventArgs args)
     {
         if (args.isBuildWhenMapChanged)
         {

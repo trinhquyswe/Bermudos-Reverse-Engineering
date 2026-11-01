@@ -8,7 +8,7 @@ public class DealContactDamage : MonoBehaviour
     private LayerMask playerlayerMask;
     private bool isColliding;
     private float stunTime;
-    private bool isRemoved; // TODO(il2cpp): no writer recovered; removal path not verified.
+    public bool isRemoved; // TODO(il2cpp): no writer recovered; removal path not verified.
 
     private void Awake()
     {

@@ -1,5 +1,6 @@
 using System.Collections;
 using DG.Tweening;
+using TMPEffects.Components;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;

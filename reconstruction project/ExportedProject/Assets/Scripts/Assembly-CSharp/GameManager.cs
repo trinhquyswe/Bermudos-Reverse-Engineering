@@ -215,11 +215,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         for (int i = 0; i < enemyManagerDetailsSO.Length; i++)
         {
             EnemyManagerDetailsSO details = enemyManagerDetailsSO[i];
-            EnemyManagerData data = new EnemyManagerData();
-            data.enemieStateList = new System.Collections.Generic.List<bool>();
-            data.enemyCount = details.enemyPostionList.Count;
-            data.enemyName = details.enemyName;
-            data.GetEnemyList(-1);
+            EnemyManagerData data = new EnemyManagerData(details.enemyName, details.enemyPostionList.Count, -1);
             SaveFile saveFile = saveFileSetup.GetSaveFile();
             saveFile.AddOrUpdateData(details.enemyManagerDataKey, data);
             saveFile.Save();

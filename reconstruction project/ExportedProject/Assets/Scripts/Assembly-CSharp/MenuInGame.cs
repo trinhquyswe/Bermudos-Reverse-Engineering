@@ -50,8 +50,8 @@ public class MenuInGame : MonoBehaviour
         if (!gameObject.activeSelf)
         {
             gameObject.SetActive(true);
-            TMPEffectComponent.SetText(exitTMPWriter, "<+char>Exit");
-            TMPEffectComponent.SetText(resumeTMPWriter, "<+char>Resume");
+            exitTMPWriter.SetText("<+char>Exit");
+            resumeTMPWriter.SetText("<+char>Resume");
 
             // The start scale was read from a Vector3 static; zero matches the 0 -> 1 tween below.
             transform.localScale = Vector3.zero;

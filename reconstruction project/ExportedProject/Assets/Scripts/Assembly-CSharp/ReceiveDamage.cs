@@ -4,7 +4,7 @@ public class ReceiveDamage : MonoBehaviour
 {
     [SerializeField]
     [Header("The damage amount to receive")]
-    private int damageAmount;
+    public int damageAmount;
     private Health health;
     public bool isNotReceivingDamage;
 

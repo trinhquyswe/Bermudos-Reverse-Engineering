@@ -21,7 +21,7 @@ public class AmmoVisual : MonoBehaviour
 
     private void UpdateAmmoRotation()
     {
-        Vector2 direction = ammo.ammoMoveDirection;
+        Vector2 direction = ammo.GetAmmoMoveDirection();
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 

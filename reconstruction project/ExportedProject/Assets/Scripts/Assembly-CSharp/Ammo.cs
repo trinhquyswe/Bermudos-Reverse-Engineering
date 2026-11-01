@@ -284,10 +284,10 @@ public class Ammo : MonoBehaviour, IFireable
                 damage = receiveDamage.damageAmount;
             }
 
-            receiveDamage.health.TakeDamage(damage);
+            receiveDamage.TakeDamage(damage);
         }
 
-        if (playerLayerMask.Contains(collision.gameObject.layer))
+        if ((playerLayerMask.value & (1 << collision.gameObject.layer)) != 0)
         {
             PlayerEffect targetPlayerEffect = collision.GetComponent<PlayerEffect>();
 
@@ -306,7 +306,7 @@ public class Ammo : MonoBehaviour, IFireable
             }
         }
 
-        if (enemyLayerMask.Contains(collision.gameObject.layer))
+        if ((enemyLayerMask.value & (1 << collision.gameObject.layer)) != 0)
         {
             EnemyEffect targetEnemyEffect = collision.GetComponent<EnemyEffect>();
             if (targetEnemyEffect != null)
@@ -332,7 +332,7 @@ public class Ammo : MonoBehaviour, IFireable
             poise.TakePoise(poiseAmount);
         }
 
-        if (bossLayerMask.Contains(collision.gameObject.layer))
+        if ((bossLayerMask.value & (1 << collision.gameObject.layer)) != 0)
         {
             Poise poise = collision.GetComponent<Poise>();
             poise.TakePoise(poiseAmount);

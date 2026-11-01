@@ -1,7 +1,7 @@
 using UnityEngine;
 
 // approx: Awake body not recovered from dump; only signature is confirmed
-public abstract class SingletonMonobehaviour<T> : MonoBehaviour
+public abstract class SingletonMonobehaviour<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T instance;
 

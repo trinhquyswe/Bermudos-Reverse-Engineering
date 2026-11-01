@@ -63,7 +63,7 @@ public class SettingManager : MonoBehaviour
         previousText.fontSize = startFontSize;
         float startSize = currentText.fontSize;
         // TODO(il2cpp): color fade channel writes (aplha) not recovered
-        currentText.DOFontSize(1f, 0.5f).SetEase(Ease.InBounce);
+        DOTween.To(() => currentText.fontSize, x => currentText.fontSize = x, 1f, 0.5f).SetEase(Ease.InBounce);
         DOTween.To(() => startSize, x => currentText.fontSize = x, 12.5f, 0.5f);
     }
 }

@@ -84,8 +84,8 @@ public class BeamByPlayer : MonoBehaviour
         beamObject.GetComponent<Renderer>().material = beamMaterial;
 
         rage.currentRage = 0f;
-        // Replaces RageEvent.CallRageChangedEvent(0f, 0f, rage.maxRage), which does not exist in the project's RageEvent.cs.
-        RageEvent.OnRageChanged?.Invoke(new RageEventArgs
+        // Events can only be invoked inside RageEvent, so the raise goes through its helper.
+        RageEvent.RaiseRageChanged(new RageEventArgs
         {
             ragePercent = 0f,
             currentRage = 0f,

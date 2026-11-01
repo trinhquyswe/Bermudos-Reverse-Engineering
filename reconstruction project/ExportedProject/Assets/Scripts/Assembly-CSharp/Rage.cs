@@ -15,7 +15,7 @@ public class Rage : MonoBehaviour
             currentRage = maxRage;
         }
         // TODO(il2cpp): the decompiled code wrote maxRage into RageEventArgs.currentRage; the current value is used here.
-        RageEvent.OnRageChanged?.Invoke(new RageEventArgs
+        RageEvent.RaiseRageChanged(new RageEventArgs
         {
             ragePercent = currentRage / maxRage,
             currentRage = currentRage,
