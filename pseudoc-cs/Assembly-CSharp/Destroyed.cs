@@ -57,7 +57,7 @@ public class Destroyed : MonoBehaviour // TypeDefIndex: 5616
             param1_01 = System.Delegate.Combine(param1,param1_00,0);
             param2 = System_Action_DestroyedEvent__DestroyedEventArgs__TypeInfo;
             if ((param1_01 != 0) && (param2_00 = unnamed_function_1112 (param1_01,System_Action_DestroyedEvent__DestroyedEventArgs__TypeInfo) , param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&pDVar3.OnDestroyed,param2_00,param1);
+            pAVar2 = (Action)Interlocked.CompareExchange(ref pDVar3.OnDestroyed, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -91,7 +91,7 @@ public class Destroyed : MonoBehaviour // TypeDefIndex: 5616
             param1_01 = System.Delegate.Remove(param1,param1_00,0);
             param2 = System_Action_DestroyedEvent__DestroyedEventArgs__TypeInfo;
             if ((param1_01 != 0) && (param2_00 = unnamed_function_1112 (param1_01,System_Action_DestroyedEvent__DestroyedEventArgs__TypeInfo) , param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&pDVar3.OnDestroyed,param2_00,param1);
+            pAVar2 = (Action)Interlocked.CompareExchange(ref pDVar3.OnDestroyed, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -150,58 +150,48 @@ public class Destroyed : MonoBehaviour // TypeDefIndex: 5616
         iVar2 = UnityEngine.Component.GetComponent<object>(this,DAT_ram_00567e78);
         iVar5 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-            iVar5 = unnamed_function_95087(iVar5);
         }
         iVar5 = Raw.Read<int>(Raw.Read<int>(iVar5 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-            iVar5 = unnamed_function_95087(iVar5);
         }
         iVar5 = Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar5 + 0x5c)) + 0x14);
         if (0 < Raw.Read<int>(iVar5 + 0xc)) {
             iVar1 = 0;
             do {
                 iVar7 = Raw.Read<int>(iVar5 + iVar1 * 4 + 0x10);
-                iVar3 = unnamed_function_81494(Raw.Read<int>(iVar2 + 0x44),Raw.Read<int>(iVar7 + 0x18),0);
+                iVar3 = /* candidates: System.String.Equals | System.String.op_Equality */ unnamed_function_81494(Raw.Read<int>(iVar2 + 0x44),Raw.Read<int>(iVar7 + 0x18),0);
                 if (iVar3 != 0) {
                     iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
                     if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                        iVar3 = unnamed_function_95087(iVar3);
                     }
                     iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
                     if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                        iVar3 = unnamed_function_95087(iVar3);
                     }
                     uVar4 = Esper.ESave.SaveFileSetup.GetSaveFile(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar3 + 0x5c)) + 0x18),0);
                     iVar3 = Esper.ESave.SaveFile.HasData(uVar4,Raw.Read<int>(iVar7 + 0x18),0);
                     if (iVar3 != 0) {
                         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
                         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                            iVar3 = unnamed_function_95087(iVar3);
                         }
                         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
                         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                            iVar3 = unnamed_function_95087(iVar3);
                         }
                         uVar4 = Esper.ESave.SaveFileSetup.GetSaveFile(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar3 + 0x5c)) + 0x18),0);
                         iVar3 = Esper.ESave.SaveFile.GetData<object>(uVar4,Raw.Read<int>(iVar7 + 0x18),0,DAT_ram_0056c1bc);
-                        unnamed_function_9755 (Raw.Read<int>(iVar3 + 0x10),Raw.Read<int>(iVar2 + 0x48),0,DAT_ram_00562b68);
+                        /* candidates: System.Collections.Generic.List<bool>.set_Item | System.Collections.Generic.List<byte>.set_Item (+1) */ unnamed_function_9755 (Raw.Read<int>(iVar3 + 0x10),Raw.Read<int>(iVar2 + 0x48),0,DAT_ram_00562b68);
                         iVar6 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
                         if ((Raw.Read<byte>(iVar6 + 0xbd) & 1) == 0) {
-                            iVar6 = unnamed_function_95087(iVar6);
                         }
                         iVar6 = Raw.Read<int>(Raw.Read<int>(iVar6 + 0x60) + 8);
                         if ((Raw.Read<byte>(iVar6 + 0xbd) & 1) == 0) {
-                            iVar6 = unnamed_function_95087(iVar6);
                         }
                         uVar4 = Esper.ESave.SaveFileSetup.GetSaveFile(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar6 + 0x5c)) + 0x18),0);
                         Esper.ESave.SaveFile.AddOrUpdateData<object>(uVar4,Raw.Read<int>(iVar7 + 0x18),iVar3,DAT_ram_0056c1a0);
                         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
                         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                            iVar3 = unnamed_function_95087(iVar3);
                         }
                         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
                         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                            iVar3 = unnamed_function_95087(iVar3);
                         }
                         uVar4 = Esper.ESave.SaveFileSetup.GetSaveFile(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar3 + 0x5c)) + 0x18),0);
                         Esper.ESave.SaveFile.Save(uVar4,0,0);
@@ -218,6 +208,6 @@ public class Destroyed : MonoBehaviour // TypeDefIndex: 5616
     // RVA: 0x3817 Offset: 0x3817 VA: 0x3817
     public Destroyed()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

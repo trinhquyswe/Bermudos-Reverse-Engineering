@@ -44,11 +44,9 @@ public class HotBarScroll : MonoBehaviour // TypeDefIndex: 5639
         StaticEventHandler.add_OnMoveItemToHotBar(pSVar2);
         iVar5 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-            iVar5 = unnamed_function_95087(iVar5);
         }
         iVar5 = Raw.Read<int>(Raw.Read<int>(iVar5 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-            iVar5 = unnamed_function_95087(iVar5);
         }
         iVar6 = Raw.Deref(Raw.Read<object>(iVar5 + 0x5c));
         param1 = Raw.Read<int>(iVar6 + 0x20);
@@ -60,7 +58,7 @@ public class HotBarScroll : MonoBehaviour // TypeDefIndex: 5639
             Raw.Write<int>(iVar6 + 0x20, 0);
             return;
         }
-        iVar4 = unnamed_function_1112(iVar5,System_Action_GameState__TypeInfo);
+        iVar4 = (iVar5 as System_Action_GameState_);
         if (iVar4 == 0) {
             unnamed_function_1116(iVar5,uVar3);
             do {
@@ -69,7 +67,7 @@ public class HotBarScroll : MonoBehaviour // TypeDefIndex: 5639
         }
         Raw.Write<int>(iVar6 + 0x20, iVar4);
         uVar3 = System_Action_GameState__TypeInfo;
-        iVar6 = unnamed_function_1112(iVar5,System_Action_GameState__TypeInfo);
+        iVar6 = (iVar5 as System_Action_GameState_);
         if (iVar6 != 0) {
             return;
         }
@@ -110,11 +108,9 @@ public class HotBarScroll : MonoBehaviour // TypeDefIndex: 5639
             this.emptyItemSprite = (Sprite)this.itemIcom[0x20]._opaque;
             iVar4 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-                iVar4 = unnamed_function_95087(iVar4);
             }
             iVar4 = Raw.Read<int>(Raw.Read<int>(iVar4 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-                iVar4 = unnamed_function_95087(iVar4);
             }
             pSVar2 = (Raw.Read<object>(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar4 + 0x5c)) + 0x10) + 0x50)).HotBarItem;
             if (pSVar2[3]._opaque != 0) {
@@ -122,36 +118,30 @@ public class HotBarScroll : MonoBehaviour // TypeDefIndex: 5639
                 param1 = this.itemIcom;
                 iVar4 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
                 if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-                    iVar4 = unnamed_function_95087(iVar4);
                 }
                 iVar4 = Raw.Read<int>(Raw.Read<int>(iVar4 + 0x60) + 8);
                 if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-                    iVar4 = unnamed_function_95087(iVar4);
                 }
                 pSVar2 = (Raw.Read<object>(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar4 + 0x5c)) + 0x10) + 0x50)).HotBarItem;
-                iVar4 = unnamed_function_6529(pSVar2,this.currentIndex,DAT_ram_0056342c);
+                iVar4 = /* candidates: System.Collections.Generic.List<EasingFunction>.get_Item | System.Collections.Generic.List<InputEventPtr>.get_Item (+7) */ unnamed_function_6529(pSVar2,this.currentIndex,DAT_ram_0056342c);
                 UnityEngine.UI.Image.set_sprite(param1,Raw.Read<int>(Raw.Read<int>(iVar4 + 8) + 0x14),0);
                 pTVar5 = this.itemQuantity;
                 iVar4 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
                 if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-                    iVar4 = unnamed_function_95087(iVar4);
                 }
                 iVar4 = Raw.Read<int>(Raw.Read<int>(iVar4 + 0x60) + 8);
                 if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-                    iVar4 = unnamed_function_95087(iVar4);
                 }
                 pSVar2 = (Raw.Read<object>(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar4 + 0x5c)) + 0x10) + 0x50)).HotBarItem;
-                iVar4 = unnamed_function_6529(pSVar2,this.currentIndex,DAT_ram_0056342c);
+                iVar4 = /* candidates: System.Collections.Generic.List<EasingFunction>.get_Item | System.Collections.Generic.List<InputEventPtr>.get_Item (+7) */ unnamed_function_6529(pSVar2,this.currentIndex,DAT_ram_0056342c);
                 uVar1 = System.Int32.ToString(iVar4 + 0xc,0);
                 iVar4 = pTVar5._opaque;
                 Raw.VCall((ulong)Raw.Read<uint>(iVar4 + 0x2d0) * 4) /* virtual */ (pTVar5,uVar1,Raw.Read<int>(iVar4 + 0x2d4));
                 iVar4 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
                 if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-                    iVar4 = unnamed_function_95087(iVar4);
                 }
                 iVar4 = Raw.Read<int>(Raw.Read<int>(iVar4 + 0x60) + 8);
                 if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-                    iVar4 = unnamed_function_95087(iVar4);
                 }
                 iVar6 = Raw.Deref(Raw.Read<object>(iVar4 + 0x5c));
                 param1_00 = Raw.Read<int>(iVar6 + 0x20);
@@ -163,7 +153,7 @@ public class HotBarScroll : MonoBehaviour // TypeDefIndex: 5639
                     Raw.Write<int>(iVar6 + 0x20, 0);
                     return;
                 }
-                iVar3 = unnamed_function_1112(iVar4,System_Action_GameState__TypeInfo);
+                iVar3 = (iVar4 as System_Action_GameState_);
                 if (iVar3 == 0) {
                     unnamed_function_1116(iVar4,uVar1);
                     do {
@@ -172,7 +162,7 @@ public class HotBarScroll : MonoBehaviour // TypeDefIndex: 5639
                 }
                 Raw.Write<int>(iVar6 + 0x20, iVar3);
                 uVar1 = System_Action_GameState__TypeInfo;
-                iVar6 = unnamed_function_1112(iVar4,System_Action_GameState__TypeInfo);
+                iVar6 = (iVar4 as System_Action_GameState_);
                 if (iVar6 == 0) {
                     unnamed_function_1116(iVar4,uVar1);
                     do {
@@ -195,7 +185,6 @@ public class HotBarScroll : MonoBehaviour // TypeDefIndex: 5639
 
         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         pMVar4 = *(MethodInfo)(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((pMVar4[5].field_0x1d & 1) == 0) {
@@ -205,26 +194,24 @@ public class HotBarScroll : MonoBehaviour // TypeDefIndex: 5639
         if (pSVar1[3]._opaque != 0) {
             iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                iVar3 = unnamed_function_95087(iVar3);
             }
             pMVar4 = *(MethodInfo)(Raw.Read<int>(iVar3 + 0x60) + 8);
             if ((pMVar4[5].field_0x1d & 1) == 0) {
                 pMVar4 = unnamed_function_95087(pMVar4);
             }
             pSVar1 = (Raw.Read<object>(Raw.Read<int>(**(object)&pMVar4[2].field_0x1c + 0x10) + 0x50)).HotBarItem;
-            iVar3 = unnamed_function_6529(pSVar1,this.currentIndex,DAT_ram_0056342c);
+            iVar3 = /* candidates: System.Collections.Generic.List<EasingFunction>.get_Item | System.Collections.Generic.List<InputEventPtr>.get_Item (+7) */ unnamed_function_6529(pSVar1,this.currentIndex,DAT_ram_0056342c);
             if (iVar3 != 0) {
                 iVar5 = onInventoryItemChangedEventArgs.inventoryItem.hotbarSlot;
                 iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
                 if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                    iVar3 = unnamed_function_95087(iVar3);
                 }
                 pMVar4 = *(MethodInfo)(Raw.Read<int>(iVar3 + 0x60) + 8);
                 if ((pMVar4[5].field_0x1d & 1) == 0) {
                     pMVar4 = unnamed_function_95087(pMVar4);
                 }
                 pSVar1 = (Raw.Read<object>(Raw.Read<int>(**(object)&pMVar4[2].field_0x1c + 0x10) + 0x50)).HotBarItem;
-                iVar3 = unnamed_function_6529(pSVar1,this.currentIndex,DAT_ram_0056342c);
+                iVar3 = /* candidates: System.Collections.Generic.List<EasingFunction>.get_Item | System.Collections.Generic.List<InputEventPtr>.get_Item (+7) */ unnamed_function_6529(pSVar1,this.currentIndex,DAT_ram_0056342c);
                 if (iVar5 == Raw.Read<int>(iVar3 + 0x14)) {
                     UnityEngine.UI.Image.set_sprite(this.itemIcom,onInventoryItemChangedEventArgs.inventoryItem.itemSO.itemIcon ,0);
                     pTVar6 = this.itemQuantity;
@@ -252,7 +239,6 @@ public class HotBarScroll : MonoBehaviour // TypeDefIndex: 5639
 
         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         method_00 = *(MethodInfo)(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((method_00[5].field_0x1d & 1) == 0) {
@@ -314,22 +300,18 @@ public class HotBarScroll : MonoBehaviour // TypeDefIndex: 5639
             if (iVar5 < 0) {
                 iVar5 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
                 if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-                    iVar5 = unnamed_function_95087(iVar5);
                 }
                 iVar5 = Raw.Read<int>(Raw.Read<int>(iVar5 + 0x60) + 8);
                 if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-                    iVar5 = unnamed_function_95087(iVar5);
                 }
                 pSVar2 = (Raw.Read<object>(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar5 + 0x5c)) + 0x10) + 0x50)).HotBarItem;
                 this.currentIndex = pSVar2[3]._opaque + -1;
             }
             iVar5 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-                iVar5 = unnamed_function_95087(iVar5);
             }
             iVar5 = Raw.Read<int>(Raw.Read<int>(iVar5 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-                iVar5 = unnamed_function_95087(iVar5);
             }
             pSVar2 = (Raw.Read<object>(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar5 + 0x5c)) + 0x10) + 0x50)).HotBarItem;
             if (pSVar2[3]._opaque == 0) {
@@ -338,19 +320,16 @@ public class HotBarScroll : MonoBehaviour // TypeDefIndex: 5639
             pIVar6 = this.itemIcom;
             iVar5 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-                iVar5 = unnamed_function_95087(iVar5);
             }
             iVar5 = Raw.Read<int>(Raw.Read<int>(iVar5 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-                iVar5 = unnamed_function_95087(iVar5);
             }
             pSVar2 = (Raw.Read<object>(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar5 + 0x5c)) + 0x10) + 0x50)).HotBarItem;
-            iVar5 = unnamed_function_6529(pSVar2,this.currentIndex,DAT_ram_0056342c);
+            iVar5 = /* candidates: System.Collections.Generic.List<EasingFunction>.get_Item | System.Collections.Generic.List<InputEventPtr>.get_Item (+7) */ unnamed_function_6529(pSVar2,this.currentIndex,DAT_ram_0056342c);
             UnityEngine.UI.Image.set_sprite(pIVar6,Raw.Read<int>(Raw.Read<int>(iVar5 + 8) + 0x14),0);
             pTVar7 = this.itemQuantity;
             iVar5 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-                iVar5 = unnamed_function_95087(iVar5);
             }
             iVar5 = Raw.Read<int>(Raw.Read<int>(iVar5 + 0x60) + 8);
             bVar1 = Raw.Read<byte>(iVar5 + 0xbd);
@@ -360,11 +339,9 @@ public class HotBarScroll : MonoBehaviour // TypeDefIndex: 5639
             this.currentIndex = iVar8;
             iVar5 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-                iVar5 = unnamed_function_95087(iVar5);
             }
             iVar5 = Raw.Read<int>(Raw.Read<int>(iVar5 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-                iVar5 = unnamed_function_95087(iVar5);
             }
             pSVar2 = (Raw.Read<object>(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar5 + 0x5c)) + 0x10) + 0x50)).HotBarItem;
             if (pSVar2[3]._opaque + -1 < iVar8) {
@@ -372,11 +349,9 @@ public class HotBarScroll : MonoBehaviour // TypeDefIndex: 5639
             }
             iVar5 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-                iVar5 = unnamed_function_95087(iVar5);
             }
             iVar5 = Raw.Read<int>(Raw.Read<int>(iVar5 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-                iVar5 = unnamed_function_95087(iVar5);
             }
             pSVar2 = (Raw.Read<object>(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar5 + 0x5c)) + 0x10) + 0x50)).HotBarItem;
             if (pSVar2[3]._opaque == 0) {
@@ -385,40 +360,34 @@ public class HotBarScroll : MonoBehaviour // TypeDefIndex: 5639
             pIVar6 = this.itemIcom;
             iVar5 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-                iVar5 = unnamed_function_95087(iVar5);
             }
             iVar5 = Raw.Read<int>(Raw.Read<int>(iVar5 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-                iVar5 = unnamed_function_95087(iVar5);
             }
             pSVar2 = (Raw.Read<object>(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar5 + 0x5c)) + 0x10) + 0x50)).HotBarItem;
-            iVar5 = unnamed_function_6529(pSVar2,this.currentIndex,DAT_ram_0056342c);
+            iVar5 = /* candidates: System.Collections.Generic.List<EasingFunction>.get_Item | System.Collections.Generic.List<InputEventPtr>.get_Item (+7) */ unnamed_function_6529(pSVar2,this.currentIndex,DAT_ram_0056342c);
             UnityEngine.UI.Image.set_sprite(pIVar6,Raw.Read<int>(Raw.Read<int>(iVar5 + 8) + 0x14),0);
             pTVar7 = this.itemQuantity;
             iVar5 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-                iVar5 = unnamed_function_95087(iVar5);
             }
             iVar5 = Raw.Read<int>(Raw.Read<int>(iVar5 + 0x60) + 8);
             bVar1 = Raw.Read<byte>(iVar5 + 0xbd);
         }
         if ((bVar1 & 1) == 0) {
-            iVar5 = unnamed_function_95087(iVar5);
         }
         pSVar2 = (Raw.Read<object>(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar5 + 0x5c)) + 0x10) + 0x50)).HotBarItem;
-        iVar5 = unnamed_function_6529(pSVar2,this.currentIndex,DAT_ram_0056342c);
+        iVar5 = /* candidates: System.Collections.Generic.List<EasingFunction>.get_Item | System.Collections.Generic.List<InputEventPtr>.get_Item (+7) */ unnamed_function_6529(pSVar2,this.currentIndex,DAT_ram_0056342c);
         uVar3 = System.Int32.ToString(iVar5 + 0xc,0);
         Raw.VCall((ulong)Raw.Read<uint>(pTVar7._opaque + 0x2d0) * 4) /* virtual */ (pTVar7,uVar3,Raw.Read<int>(pTVar7._opaque + 0x2d4));
         iVar5 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-            iVar5 = unnamed_function_95087(iVar5);
         }
         iVar5 = Raw.Read<int>(Raw.Read<int>(iVar5 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-            iVar5 = unnamed_function_95087(iVar5);
         }
         pSVar2 = (Raw.Read<object>(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar5 + 0x5c)) + 0x10) + 0x50)).HotBarItem;
-        pIVar4 = (InventoryItem)unnamed_function_6529(pSVar2,this.currentIndex,DAT_ram_0056342c);
+        pIVar4 = (InventoryItem)/* candidates: System.Collections.Generic.List<EasingFunction>.get_Item | System.Collections.Generic.List<InputEventPtr>.get_Item (+7) */ unnamed_function_6529(pSVar2,this.currentIndex,DAT_ram_0056342c);
         iVar5 = StaticEventHandler.OnHotBarScrollChanged;
         if (iVar5 != 0) {
             __this_00 = (OnInventoryItemChangedEventArgs) new OnInventoryItemChangedEventArgs();
@@ -431,6 +400,6 @@ public class HotBarScroll : MonoBehaviour // TypeDefIndex: 5639
     // RVA: 0x389F Offset: 0x389F VA: 0x389F
     public HotBarScroll()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

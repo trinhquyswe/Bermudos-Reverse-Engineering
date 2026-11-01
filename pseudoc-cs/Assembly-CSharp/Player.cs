@@ -143,11 +143,9 @@ public class Player : MonoBehaviour // TypeDefIndex: 5688
         __this_01.add_OnHealthChanged(value);
         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar4 = Raw.Deref(Raw.Read<object>(iVar3 + 0x5c));
         param1 = Raw.Read<int>(iVar4 + 0x20);
@@ -159,7 +157,7 @@ public class Player : MonoBehaviour // TypeDefIndex: 5688
             Raw.Write<int>(iVar4 + 0x20, 0);
         }
         else {
-            iVar2 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+            iVar2 = (iVar3 as System_Action_GameState_);
             if (iVar2 == 0) {
                 unnamed_function_1116(iVar3,uVar1);
                 do {
@@ -168,7 +166,7 @@ public class Player : MonoBehaviour // TypeDefIndex: 5688
             }
             Raw.Write<int>(iVar4 + 0x20, iVar2);
             uVar1 = System_Action_GameState__TypeInfo;
-            iVar4 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+            iVar4 = (iVar3 as System_Action_GameState_);
             if (iVar4 == 0) {
                 unnamed_function_1116(iVar3,uVar1);
                 do {
@@ -235,44 +233,38 @@ public class Player : MonoBehaviour // TypeDefIndex: 5688
         local_18[0] = 0;
         iVar3 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         ((SoundEffectManager)Raw.Deref(Raw.Read<object>(iVar3 + 0x5c))).PlaySoundEffect(this.dieSoundEffect, &MStack_70);
         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         uVar1 = Esper.ESave.SaveFileSetup.GetSaveFile(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar3 + 0x5c)) + 0x18),0);
         iVar3 = Esper.ESave.SaveFile.HasData(uVar1,"Checkpoint",0);
         if (iVar3 != 0) {
             iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                iVar3 = unnamed_function_95087(iVar3);
             }
             iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                iVar3 = unnamed_function_95087(iVar3);
             }
             uVar1 = Esper.ESave.SaveFileSetup.GetSaveFile(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar3 + 0x5c)) + 0x18),0);
             uVar1 = Esper.ESave.SaveFile.GetData<object>(uVar1,"Checkpoint",0,DAT_ram_0056c1c8);
-            iVar3 = unnamed_function_81494(uVar1,"Coast",0);
+            iVar3 = /* candidates: System.String.Equals | System.String.op_Equality */ unnamed_function_81494(uVar1,"Coast",0);
             if (iVar3 == 0) {
-                iVar3 = unnamed_function_81494(uVar1,"The Forest",0);
+                iVar3 = /* candidates: System.String.Equals | System.String.op_Equality */ unnamed_function_81494(uVar1,"The Forest",0);
                 if (iVar3 == 0) goto code_r0x81a3cbf5;
                 uVar1 = UnityEngine.Component.get_transform(this,0);
                 local_48 = Raw.Read<long>((int)this.spawnPosition.x + 0x18);
                 local_30 = 0;
                 local_40 = 0;
                 local_38 = local_48;
-                unnamed_function_44962(uVar1,&local_48,0);
+                /* candidates: UnityEngine.Transform.set_position | UnityEngine.Transform.set_position_Injected */ unnamed_function_44962(uVar1,&local_48,0);
                 puVar4 = &"The Forest";
                 iVar3 = Raw.Read<int>(UnityEngine_SceneManagement_SceneManager_TypeInfo + 0x74);
             }
@@ -282,7 +274,7 @@ public class Player : MonoBehaviour // TypeDefIndex: 5688
                 local_20 = 0;
                 local_50 = 0;
                 local_28 = MStack_70._24_8_;
-                unnamed_function_44962(uVar1,&MStack_70.field_0x18,0);
+                /* candidates: UnityEngine.Transform.set_position | UnityEngine.Transform.set_position_Injected */ unnamed_function_44962(uVar1,&MStack_70.field_0x18,0);
                 puVar4 = &"Coast";
                 iVar3 = Raw.Read<int>(UnityEngine_SceneManagement_SceneManager_TypeInfo + 0x74);
             }
@@ -298,11 +290,9 @@ public class Player : MonoBehaviour // TypeDefIndex: 5688
         UnityEngine.Material.SetFloat(pGVar2.beginUI,"_FadeAmount",0.0,0);
         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         piVar5 = Raw.Read<object>(Raw.Deref(Raw.Read<object>(iVar3 + 0x5c)) + 0x24);
         local_8 = 0x3f80000000000000;
@@ -313,21 +303,17 @@ public class Player : MonoBehaviour // TypeDefIndex: 5688
         Raw.VCall((ulong)Raw.Read<uint>(iVar3 + 0x178) * 4) /* virtual */ (piVar5,&MStack_70.field_0x8,Raw.Read<int>(iVar3 + 0x17c));
         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         uVar1 = UnityEngine.Component.get_gameObject(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar3 + 0x5c)) + 0x24),0);
         UnityEngine.GameObject.SetActive(uVar1,1,0);
         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         uVar1 = DG.Tweening.DOTweenModuleUI.DOFade(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar3 + 0x5c)) + 0x24),0.0,2.0,0);
         uVar1 = DG.Tweening.TweenSettingsExtensions.SetEase<object>(uVar1,4,DAT_ram_0056d374);
@@ -385,14 +371,12 @@ public class Player : MonoBehaviour // TypeDefIndex: 5688
             local_8 = 0;
             local_18 = 0;
             local_10 = local_20;
-            unnamed_function_44962(uVar1,&local_20,0);
+            /* candidates: UnityEngine.Transform.set_position | UnityEngine.Transform.set_position_Injected */ unnamed_function_44962(uVar1,&local_20,0);
             iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                iVar3 = unnamed_function_95087(iVar3);
             }
             iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                iVar3 = unnamed_function_95087(iVar3);
             }
             iVar4 = Raw.Deref(Raw.Read<object>(iVar3 + 0x5c));
             param1 = Raw.Read<int>(iVar4 + 0x20);
@@ -404,7 +388,7 @@ public class Player : MonoBehaviour // TypeDefIndex: 5688
                 Raw.Write<int>(iVar4 + 0x20, 0);
             }
             else {
-                iVar2 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+                iVar2 = (iVar3 as System_Action_GameState_);
                 if (iVar2 == 0) {
                     unnamed_function_1116(iVar3,uVar1);
                     do {
@@ -413,7 +397,7 @@ public class Player : MonoBehaviour // TypeDefIndex: 5688
                 }
                 Raw.Write<int>(iVar4 + 0x20, iVar2);
                 uVar1 = System_Action_GameState__TypeInfo;
-                iVar4 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+                iVar4 = (iVar3 as System_Action_GameState_);
                 if (iVar4 == 0) {
                     unnamed_function_1116(iVar3,uVar1);
                     do {
@@ -469,6 +453,6 @@ public class Player : MonoBehaviour // TypeDefIndex: 5688
 
         fVar1 = (float)unnamed_function_1050(UnityEngine_Vector2___TypeInfo,2);
         this.spawnPosition.x = fVar1;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

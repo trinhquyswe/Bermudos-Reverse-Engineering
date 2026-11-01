@@ -208,7 +208,7 @@ public class BeamByPlayer : MonoBehaviour // TypeDefIndex: 5703
             iVar3 = UnityEngine.GameObject.GetComponent<object>(uVar2,DAT_ram_00569a58);
             Raw.Write<int>(iVar3 + 0x2c, 0x41200000);
             uVar2 = UnityEngine.GameObject.GetComponent<object>(uVar2,DAT_ram_00569b08);
-            unnamed_function_52795(uVar2,this.beamMaterial,0);
+            /* candidates: UnityEngine.Renderer.SetMaterial | UnityEngine.Renderer.set_material (+1) */ unnamed_function_52795(uVar2,this.beamMaterial,0);
             pRVar4 = this.rage;
             pRVar4.currentRage = 0.0;
             RageEvent.CallRageChangedEvent(0.0, 0.0, pRVar4.maxRage);
@@ -218,6 +218,6 @@ public class BeamByPlayer : MonoBehaviour // TypeDefIndex: 5703
     // RVA: 0x3A08 Offset: 0x3A08 VA: 0x3A08
     public BeamByPlayer()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

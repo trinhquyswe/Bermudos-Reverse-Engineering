@@ -124,7 +124,6 @@ public class MainMenu : MonoBehaviour // TypeDefIndex: 5658
 
         param1_00 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
         if ((Raw.Read<byte>(param1_00 + 0xbd) & 1) == 0) {
-            param1_00 = unnamed_function_95087(param1_00);
         }
         method_00 = *(MethodInfo)(Raw.Read<int>(param1_00 + 0x60) + 8);
         if ((method_00[5].field_0x1d & 1) == 0) {
@@ -153,7 +152,6 @@ public class MainMenu : MonoBehaviour // TypeDefIndex: 5658
             UnityEngine.SceneManagement.SceneManager.add_sceneLoaded(param1,0);
             param1_00 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
             if ((Raw.Read<byte>(param1_00 + 0xbd) & 1) == 0) {
-                param1_00 = unnamed_function_95087(param1_00);
             }
             method_00 = *(MethodInfo)(Raw.Read<int>(param1_00 + 0x60) + 8);
             if ((method_00[5].field_0x1d & 1) == 0) {
@@ -174,15 +172,13 @@ public class MainMenu : MonoBehaviour // TypeDefIndex: 5658
         UnityEngine.SceneManagement.Scene[] local_8 = new UnityEngine.SceneManagement.Scene[2];
         local_8[0] = scene;
         uVar1 = UnityEngine.SceneManagement.Scene.get_name(local_8,0);
-        iVar2 = unnamed_function_81494(uVar1,"MainScene",0);
+        iVar2 = /* candidates: System.String.Equals | System.String.op_Equality */ unnamed_function_81494(uVar1,"MainScene",0);
         if ((iVar2 != 0) && (iVar2 = UnityEngine.SceneManagement.Scene.get_isLoaded(local_8,0), iVar2 != 0)) {
             iVar2 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-                iVar2 = unnamed_function_95087(iVar2);
             }
             iVar2 = Raw.Read<int>(Raw.Read<int>(iVar2 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-                iVar2 = unnamed_function_95087(iVar2);
             }
             ((GameManager)Raw.Deref(Raw.Read<object>(iVar2 + 0x5c))).TransitionToGame();
             uVar1 = new UnityEngine_Events_UnityAction_Scene__LoadSceneMode_();
@@ -208,7 +204,6 @@ public class MainMenu : MonoBehaviour // TypeDefIndex: 5658
         UnityEngine.GameObject.SetActive(uVar1,0,0);
         param1 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
         if ((Raw.Read<byte>(param1 + 0xbd) & 1) == 0) {
-            param1 = unnamed_function_95087(param1);
         }
         method_00 = *(MethodInfo)(Raw.Read<int>(param1 + 0x60) + 8);
         if ((method_00[5].field_0x1d & 1) == 0) {
@@ -229,7 +224,6 @@ public class MainMenu : MonoBehaviour // TypeDefIndex: 5658
 
         param1 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
         if ((Raw.Read<byte>(param1 + 0xbd) & 1) == 0) {
-            param1 = unnamed_function_95087(param1);
         }
         method_00 = *(MethodInfo)(Raw.Read<int>(param1 + 0x60) + 8);
         if ((method_00[5].field_0x1d & 1) == 0) {
@@ -245,6 +239,6 @@ public class MainMenu : MonoBehaviour // TypeDefIndex: 5658
     public MainMenu()
     {
         this.isfirstTime = true;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

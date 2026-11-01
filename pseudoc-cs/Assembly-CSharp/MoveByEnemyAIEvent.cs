@@ -36,8 +36,8 @@ public class MoveByEnemyAIEvent : MonoBehaviour // TypeDefIndex: 5674
             param2_00 = 0;
             param1_00 = System.Delegate.Combine(param1,value,0);
             param2 = System_Action_MoveByEnemyAIEvent__TypeInfo;
-            if ((param1_00 != 0) && (param2_00 = unnamed_function_1112(param1_00,System_Action_MoveByEnemyAIEvent__TypeInfo), param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&this.OnMoveByEnemyAI,param2_00,param1);
+            if ((param1_00 != 0) && (param2_00 = (param1_00 as System_Action_MoveByEnemyAIEvent_), param2_00 == 0)) break;
+            pAVar2 = (Action)Interlocked.CompareExchange(ref this.OnMoveByEnemyAI, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -66,8 +66,8 @@ public class MoveByEnemyAIEvent : MonoBehaviour // TypeDefIndex: 5674
             param2_00 = 0;
             param1_00 = System.Delegate.Remove(param1,value,0);
             param2 = System_Action_MoveByEnemyAIEvent__TypeInfo;
-            if ((param1_00 != 0) && (param2_00 = unnamed_function_1112(param1_00,System_Action_MoveByEnemyAIEvent__TypeInfo), param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&this.OnMoveByEnemyAI,param2_00,param1);
+            if ((param1_00 != 0) && (param2_00 = (param1_00 as System_Action_MoveByEnemyAIEvent_), param2_00 == 0)) break;
+            pAVar2 = (Action)Interlocked.CompareExchange(ref this.OnMoveByEnemyAI, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -94,6 +94,6 @@ public class MoveByEnemyAIEvent : MonoBehaviour // TypeDefIndex: 5674
     // RVA: 0x395A Offset: 0x395A VA: 0x395A
     public MoveByEnemyAIEvent()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

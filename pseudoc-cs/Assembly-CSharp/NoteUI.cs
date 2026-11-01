@@ -119,6 +119,6 @@ public class NoteUI : MonoBehaviour // TypeDefIndex: 5686
     // RVA: 0x3994 Offset: 0x3994 VA: 0x3994
     public NoteUI()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

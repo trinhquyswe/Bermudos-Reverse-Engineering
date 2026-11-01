@@ -50,6 +50,6 @@ public class IsHealthLow : Conditional // TypeDefIndex: 5568
     {
         this.isFirstEnd = true;
         this.healthThreshold = 0.5;
-        unnamed_function_51834(this,0);
+        /* candidates: BehaviorDesigner.Runtime.Tasks.Action.ctor | BehaviorDesigner.Runtime.Tasks.BehaviorReference.ctor (+6) */ unnamed_function_51834(this,0);
     }
 }

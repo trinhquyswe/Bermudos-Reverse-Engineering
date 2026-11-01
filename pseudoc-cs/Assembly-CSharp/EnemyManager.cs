@@ -33,22 +33,18 @@ public class EnemyManager : MonoBehaviour // TypeDefIndex: 5590
 
         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         uVar1 = Esper.ESave.SaveFileSetup.GetSaveFile(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar3 + 0x5c)) + 0x18),0);
         iVar3 = Esper.ESave.SaveFile.HasData(uVar1,this.enemyManagerDetailsSO.enemyManagerDataKey,0);
         if (iVar3 != 0) {
             iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                iVar3 = unnamed_function_95087(iVar3);
             }
             iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                iVar3 = unnamed_function_95087(iVar3);
             }
             uVar1 = Esper.ESave.SaveFileSetup.GetSaveFile(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar3 + 0x5c)) + 0x18),0);
             pEVar2 = (EnemyManagerData) Esper.ESave.SaveFile.GetData<object>(uVar1,this.enemyManagerDetailsSO.enemyManagerDataKey,0,DAT_ram_0056c1bc);
@@ -132,7 +128,7 @@ public class EnemyManager : MonoBehaviour // TypeDefIndex: 5590
         local_70 = 0;
         if (onBuildNavMeshEventArgs.isBuildWhenMapChanged != false) {
             local_44 = 0;
-            unnamed_function_9774(&local_10,this.enemyManagerData.enemieStateList,DAT_ram_00562b54);
+            /* candidates: System.Collections.Generic.List<bool>.GetEnumerator | System.Collections.Generic.List<byte>.GetEnumerator (+1) */ unnamed_function_9774(&local_10,this.enemyManagerData.enemieStateList,DAT_ram_00562b54);
             local_50 = local_8;
             local_58 = local_10;
             local_88 = ZEXT48(&local_58) << 0x20;
@@ -236,7 +232,7 @@ public class EnemyManager : MonoBehaviour // TypeDefIndex: 5590
         }
         code_r0x81a51fb4: if (this.enemyList[3]._opaque < 1) {
             code_r0x81a521ad: local_5c = 0;
-            unnamed_function_9774(&local_10,this.enemyManagerData.enemieStateList,DAT_ram_00562b54);
+            /* candidates: System.Collections.Generic.List<bool>.GetEnumerator | System.Collections.Generic.List<byte>.GetEnumerator (+1) */ unnamed_function_9774(&local_10,this.enemyManagerData.enemieStateList,DAT_ram_00562b54);
             local_50 = local_8;
             local_58 = local_10;
             local_78 = 0;
@@ -357,7 +353,7 @@ public class EnemyManager : MonoBehaviour // TypeDefIndex: 5590
             import_env_invoke_ii(s___Scripting__UnityEngine__Sphere_ram_00003642 + 0x2d,&local_78);
         }
         else {
-            unnamed_function_6549(&local_10,this.enemyList,DAT_ram_00563088);
+            /* candidates: System.Collections.Generic.List<Color32>.GetEnumerator | System.Collections.Generic.List<EasingFunction>.GetEnumerator (+9) */ unnamed_function_6549(&local_10,this.enemyList,DAT_ram_00563088);
             local_68 = local_8;
             local_70 = local_10;
             local_10 = ZEXT48(&local_70) << 0x20;
@@ -455,8 +451,8 @@ public class EnemyManager : MonoBehaviour // TypeDefIndex: 5590
         List param1 = default;
 
         param1 = (List)new System_Collections_Generic_List_GameObject_();
-        unnamed_function_5132(param1,DAT_ram_00563074);
+        /* candidates: System.Collections.Generic.List<AdditionalLightsShadowCasterPass.ShadowResolutionRequest>..ctor | System.Collections.Generic.List<AnimationOutputWeightProcessor.WeightInfo>..ctor (+167) */ unnamed_function_5132(param1,DAT_ram_00563074);
         this.enemyList = param1;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

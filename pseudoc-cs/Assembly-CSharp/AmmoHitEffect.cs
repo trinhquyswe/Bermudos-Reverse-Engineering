@@ -53,14 +53,14 @@ public class AmmoHitEffect : MonoBehaviour // TypeDefIndex: 5538
         local_40._4_4_ = ammoHitEffectType.a;
         local_48._0_4_ = ammoHitEffectType.r;
         local_48._4_4_ = ammoHitEffectType.g;
-        unnamed_function_86814(&local_38,&local_48,0);
+        /* candidates: UnityEngine.ParticleSystem.MinMaxGradient.ctor | UnityEngine.ParticleSystem.MinMaxGradient.op_Implicit */ unnamed_function_86814(&local_38,&local_48,0);
         local_50 = local_10;
         local_58 = local_18;
         local_60 = local_20;
         local_68 = local_28;
         local_70 = local_30;
         local_78 = local_38;
-        unnamed_function_86787(local_8,&local_78,0);
+        /* candidates: UnityEngine.ParticleSystem.MainModule.set_startColor | UnityEngine.ParticleSystem.MainModule.set_startColor_Injected */ unnamed_function_86787(local_8,&local_78,0);
         param1 = UnityEngine.Component.get_gameObject(this,0);
         UnityEngine.GameObject.SetActive(param1,1,0);
     }
@@ -68,6 +68,6 @@ public class AmmoHitEffect : MonoBehaviour // TypeDefIndex: 5538
     // RVA: 0x3691 Offset: 0x3691 VA: 0x3691
     public AmmoHitEffect()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

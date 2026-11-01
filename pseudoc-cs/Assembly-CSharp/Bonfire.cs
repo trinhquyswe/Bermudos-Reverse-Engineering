@@ -95,11 +95,9 @@ public class Bonfire : MonoBehaviour // TypeDefIndex: 5555
             this.SaveCheckPointAtBonfire();
             iVar1 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
             if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-                iVar1 = unnamed_function_95087(iVar1);
             }
             iVar1 = Raw.Read<int>(Raw.Read<int>(iVar1 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-                iVar1 = unnamed_function_95087(iVar1);
             }
             ((SoundEffectManager)Raw.Deref(Raw.Read<object>(iVar1 + 0x5c))).PlaySoundEffect(this.restSoundEffect);
         }
@@ -113,21 +111,17 @@ public class Bonfire : MonoBehaviour // TypeDefIndex: 5555
 
         iVar2 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         iVar2 = Raw.Read<int>(Raw.Read<int>(iVar2 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         uVar1 = Esper.ESave.SaveFileSetup.GetSaveFile(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar2 + 0x5c)) + 0x18),0);
         Esper.ESave.SaveFile.AddOrUpdateData<object>(uVar1,"Checkpoint","The Forest",DAT_ram_0056c1b0);
         iVar2 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         iVar2 = Raw.Read<int>(Raw.Read<int>(iVar2 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         uVar1 = Esper.ESave.SaveFileSetup.GetSaveFile(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar2 + 0x5c)) + 0x18),0);
         Esper.ESave.SaveFile.Save(uVar1,0,0);
@@ -139,6 +133,6 @@ public class Bonfire : MonoBehaviour // TypeDefIndex: 5555
     // RVA: 0x36F2 Offset: 0x36F2 VA: 0x36F2
     public Bonfire()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

@@ -51,11 +51,9 @@ public class BossManager : MonoBehaviour // TypeDefIndex: 5559
             UnityEngine.GameObject.SetActive(this.bossHealthBar,0,0);
             iVar1 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-                iVar1 = unnamed_function_95087(iVar1);
             }
             iVar1 = Raw.Read<int>(Raw.Read<int>(iVar1 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-                iVar1 = unnamed_function_95087(iVar1);
             }
             iVar1 = Raw.Deref(Raw.Read<object>(iVar1 + 0x5c));
             Raw.Write<int>(iVar1 + 0x1c, 3);
@@ -120,7 +118,7 @@ public class BossManager : MonoBehaviour // TypeDefIndex: 5559
     // RVA: 0x370C Offset: 0x370C VA: 0x370C
     public BossManager()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 
     [CompilerGenerated]

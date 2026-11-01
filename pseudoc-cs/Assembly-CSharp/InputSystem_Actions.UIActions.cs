@@ -170,7 +170,7 @@ public struct InputSystem_Actions_UIActions // TypeDefIndex: 5635
                 Raw.Write<object>(Raw.Read<int>(iVar1 + 8) + uVar3 * 4 + 0x10, instance);
             }
             else {
-                unnamed_function_6534 (iVar1,instance,Raw.Read<int>(Raw.Read<int>(Raw.Read<int>(iVar5 + 0x10) + 0x60) + 0x38));
+                /* candidates: System.Collections.Generic.List<EasingFunction>.AddWithResize | System.Collections.Generic.List<InputEventPtr>.AddWithResize (+6) */ unnamed_function_6534 (iVar1,instance,Raw.Read<int>(Raw.Read<int>(Raw.Read<int>(iVar5 + 0x10) + 0x60) + 0x38));
             }
             uVar4 = Raw.Read<int>((int)this.klass + 0x38);
             uVar3 = 0;
@@ -1463,7 +1463,7 @@ public struct InputSystem_Actions_UIActions // TypeDefIndex: 5635
         byte[] auStack_20 = new byte[16];
         local_8 = 0;
         local_10 = 0;
-        unnamed_function_6549(&local_10,Raw.Read<int>((int)this.klass + 0x34),DAT_ram_00564714);
+        /* candidates: System.Collections.Generic.List<Color32>.GetEnumerator | System.Collections.Generic.List<EasingFunction>.GetEnumerator (+9) */ unnamed_function_6549(&local_10,Raw.Read<int>((int)this.klass + 0x34),DAT_ram_00564714);
         auStack_20._8_4_ = 0;
         auStack_20._12_4_ = &local_10;
         do {

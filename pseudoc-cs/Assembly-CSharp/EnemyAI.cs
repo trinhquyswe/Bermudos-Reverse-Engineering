@@ -92,8 +92,8 @@ public class EnemyAI : MonoBehaviour // TypeDefIndex: 5588
             iVar3 = 0;
             iVar4 = System.Delegate.Combine(pAVar7,uVar2,0);
             param2 = System_Action_PoiseEvent__PoiseEventArgs__TypeInfo;
-            if ((iVar4 != 0) && (iVar3 = unnamed_function_1112(iVar4,System_Action_PoiseEvent__PoiseEventArgs__TypeInfo), iVar3 == 0)) break;
-            pAVar5 = (Action)unnamed_function_1144(&pPVar8.OnPoise,iVar3,pAVar7);
+            if ((iVar4 != 0) && (iVar3 = (iVar4 as System_Action_PoiseEvent__PoiseEventArgs_), iVar3 == 0)) break;
+            pAVar5 = (Action)Interlocked.CompareExchange(ref pPVar8.OnPoise, iVar3, pAVar7);
             bVar1 = pAVar7 == pAVar5;
             pAVar7 = pAVar5;
             if (bVar1) {
@@ -154,8 +154,8 @@ public class EnemyAI : MonoBehaviour // TypeDefIndex: 5588
             iVar3 = 0;
             iVar4 = System.Delegate.Combine(pAVar7,uVar2,0);
             param2 = System_Action_PoiseEvent__PoiseEventArgs__TypeInfo;
-            if ((iVar4 != 0) && (iVar3 = unnamed_function_1112(iVar4,System_Action_PoiseEvent__PoiseEventArgs__TypeInfo), iVar3 == 0)) break;
-            pAVar5 = (Action)unnamed_function_1144(&pPVar8.OnPoise,iVar3,pAVar7);
+            if ((iVar4 != 0) && (iVar3 = (iVar4 as System_Action_PoiseEvent__PoiseEventArgs_), iVar3 == 0)) break;
+            pAVar5 = (Action)Interlocked.CompareExchange(ref pPVar8.OnPoise, iVar3, pAVar7);
             bVar1 = pAVar7 == pAVar5;
             pAVar7 = pAVar5;
             if (bVar1) {
@@ -263,6 +263,6 @@ public class EnemyAI : MonoBehaviour // TypeDefIndex: 5588
     public EnemyAI()
     {
         this.isAttack = true;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

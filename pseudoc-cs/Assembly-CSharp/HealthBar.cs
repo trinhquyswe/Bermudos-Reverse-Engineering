@@ -36,11 +36,9 @@ public class HealthBar : MonoBehaviour // TypeDefIndex: 5621
 
         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar3 + 0x5c)) + 0x10) + 0x2c);
         param1_00 = new System_Action_HealthEvent__HealthEventArgs_();
@@ -77,11 +75,9 @@ public class HealthBar : MonoBehaviour // TypeDefIndex: 5621
 
         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar3 + 0x5c)) + 0x10) + 0x2c);
         param1_00 = new System_Action_HealthEvent__HealthEventArgs_();
@@ -151,6 +147,6 @@ public class HealthBar : MonoBehaviour // TypeDefIndex: 5621
     public HealthBar()
     {
         this.lerpSpeed = 0.05;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

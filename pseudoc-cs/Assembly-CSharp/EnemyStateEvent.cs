@@ -36,6 +36,6 @@ public class EnemyStateEvent : MonoBehaviour // TypeDefIndex: 5595
     // RVA: 0x37D6 Offset: 0x37D6 VA: 0x37D6
     public EnemyStateEvent()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

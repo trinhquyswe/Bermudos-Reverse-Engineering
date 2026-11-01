@@ -38,11 +38,11 @@ public class AudioManager : MonoBehaviour // TypeDefIndex: 5710
         iVar1 = this.musicSlider[0x34]._opaque;
         uVar2 = new UnityEngine_Events_UnityAction_float_();
         UnityEngine.Events.UnityAction<float>.__ctor(uVar2,this,DAT_ram_0056758c,0);
-        unnamed_function_71922(iVar1,uVar2,DAT_ram_005667e4);
+        /* candidates: UnityEngine.Events.UnityEvent<Color>.AddListener | UnityEngine.Events.UnityEvent<InputAction.CallbackContext>.AddListener (+6) */ unnamed_function_71922(iVar1,uVar2,DAT_ram_005667e4);
         iVar1 = this.sfxSlider[0x34]._opaque;
         uVar2 = new UnityEngine_Events_UnityAction_float_();
         UnityEngine.Events.UnityAction<float>.__ctor(uVar2,this,DAT_ram_00567590,0);
-        unnamed_function_71922(iVar1,uVar2,DAT_ram_005667e4);
+        /* candidates: UnityEngine.Events.UnityEvent<Color>.AddListener | UnityEngine.Events.UnityEvent<InputAction.CallbackContext>.AddListener (+6) */ unnamed_function_71922(iVar1,uVar2,DAT_ram_005667e4);
     }
 
     [IteratorStateMachine(typeof(AudioManager._SetVolumeCoroutine_d__4))]
@@ -61,7 +61,7 @@ public class AudioManager : MonoBehaviour // TypeDefIndex: 5710
     public AudioManager()
     {
         this.normalizedValue = 20.0;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 
     [CompilerGenerated]
@@ -83,11 +83,9 @@ public class AudioManager : MonoBehaviour // TypeDefIndex: 5710
 
         iVar2 = Raw.Read<int>(DAT_ram_00565d58 + 0x10);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         iVar2 = Raw.Read<int>(Raw.Read<int>(iVar2 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         linear = this.normalizedValue * value;
         if (linear < 20.0) {
@@ -114,11 +112,9 @@ public class AudioManager : MonoBehaviour // TypeDefIndex: 5710
 
         iVar2 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         iVar2 = Raw.Read<int>(Raw.Read<int>(iVar2 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         linear = this.normalizedValue * value;
         if (linear < 20.0) {

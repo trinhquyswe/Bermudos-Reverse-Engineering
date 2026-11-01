@@ -42,7 +42,7 @@ public class IsReceiveDamage : Conditional // TypeDefIndex: 5569
             param1_01 = System.Delegate.Combine(param1,param1_00,0);
             param2 = System_Action_HealthEvent__HealthEventArgs__TypeInfo;
             if ((param1_01 != 0) && (param2_00 = unnamed_function_1112 (param1_01,System_Action_HealthEvent__HealthEventArgs__TypeInfo), param2_00 == 0)) break;
-            pAVar3 = (Action)unnamed_function_1144(&pHVar2.OnHealthChanged,param2_00,param1);
+            pAVar3 = (Action)Interlocked.CompareExchange(ref pHVar2.OnHealthChanged, param2_00, param1);
             bVar1 = param1 == pAVar3;
             param1 = pAVar3;
             if (bVar1) {
@@ -76,6 +76,6 @@ public class IsReceiveDamage : Conditional // TypeDefIndex: 5569
     // RVA: 0x3737 Offset: 0x3737 VA: 0x3737
     public IsReceiveDamage()
     {
-        unnamed_function_51834(this,0);
+        /* candidates: BehaviorDesigner.Runtime.Tasks.Action.ctor | BehaviorDesigner.Runtime.Tasks.BehaviorReference.ctor (+6) */ unnamed_function_51834(this,0);
     }
 }

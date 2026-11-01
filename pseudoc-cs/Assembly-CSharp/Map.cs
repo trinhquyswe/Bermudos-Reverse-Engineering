@@ -46,7 +46,7 @@ public class Map : MonoBehaviour // TypeDefIndex: 5664
             *(Map)&__this_00.map = this;
             Raw.VCall((ulong)Raw.Read<uint>(iVar4 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar4 + 0x20),__this_00,Raw.Read<int>(iVar4 + 0x14));
         }
-        unnamed_function_6549(&local_10,this.enviroments,DAT_ram_00562f7c);
+        /* candidates: System.Collections.Generic.List<Color32>.GetEnumerator | System.Collections.Generic.List<EasingFunction>.GetEnumerator (+9) */ unnamed_function_6549(&local_10,this.enviroments,DAT_ram_00562f7c);
         local_18 = 0;
         local_14 = &local_10;
         do {
@@ -141,7 +141,6 @@ public class Map : MonoBehaviour // TypeDefIndex: 5664
         UnityEngine.MonoBehaviour.CancelInvoke(this,"PlayFlowingWaterSoundEffect",0);
         param1 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
         if ((Raw.Read<byte>(param1 + 0xbd) & 1) == 0) {
-            param1 = unnamed_function_95087(param1);
         }
         method_00 = *(MethodInfo)(Raw.Read<int>(param1 + 0x60) + 8);
         if ((method_00[5].field_0x1d & 1) == 0) {
@@ -162,7 +161,6 @@ public class Map : MonoBehaviour // TypeDefIndex: 5664
 
         param1 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
         if ((Raw.Read<byte>(param1 + 0xbd) & 1) == 0) {
-            param1 = unnamed_function_95087(param1);
         }
         method_00 = *(MethodInfo)(Raw.Read<int>(param1 + 0x60) + 8);
         if ((method_00[5].field_0x1d & 1) == 0) {
@@ -191,6 +189,6 @@ public class Map : MonoBehaviour // TypeDefIndex: 5664
         this.pad_8[0xd] = 0;
         this.pad_8[0xe] = 0x20;
         this.pad_8[0xf] = 0x41;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

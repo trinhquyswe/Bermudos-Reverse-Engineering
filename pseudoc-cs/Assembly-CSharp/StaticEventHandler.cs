@@ -71,7 +71,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             iVar2 = 0;
             param1_00 = System.Delegate.Combine(param1,value,0);
             param2 = System_Action_MapChangedEventArgs__TypeInfo;
-            if ((param1_00 != 0) && (iVar2 = unnamed_function_1112(param1_00,System_Action_MapChangedEventArgs__TypeInfo), iVar2 == 0)) break;
+            if ((param1_00 != 0) && (iVar2 = (param1_00 as System_Action_MapChangedEventArgs_), iVar2 == 0)) break;
             iVar2 = unnamed_function_1144(Raw.Read<int>(StaticEventHandler_TypeInfo + 0x5c),iVar2,param1);
             bVar1 = param1 == iVar2;
             param1 = iVar2;
@@ -100,7 +100,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             iVar2 = 0;
             param1_00 = System.Delegate.Remove(param1,value,0);
             param2 = System_Action_MapChangedEventArgs__TypeInfo;
-            if ((param1_00 != 0) && (iVar2 = unnamed_function_1112(param1_00,System_Action_MapChangedEventArgs__TypeInfo), iVar2 == 0)) break;
+            if ((param1_00 != 0) && (iVar2 = (param1_00 as System_Action_MapChangedEventArgs_), iVar2 == 0)) break;
             iVar2 = unnamed_function_1144(Raw.Read<int>(StaticEventHandler_TypeInfo + 0x5c),iVar2,param1);
             bVar1 = param1 == iVar2;
             param1 = iVar2;
@@ -203,7 +203,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             iVar2 = 0;
             param1_00 = System.Delegate.Combine(param1,value,0);
             param2 = System_Action_OnNoteOpenedEventArgs__TypeInfo;
-            if ((param1_00 != 0) && (iVar2 = unnamed_function_1112(param1_00,System_Action_OnNoteOpenedEventArgs__TypeInfo), iVar2 == 0)) break;
+            if ((param1_00 != 0) && (iVar2 = (param1_00 as System_Action_OnNoteOpenedEventArgs_), iVar2 == 0)) break;
             iVar2 = unnamed_function_1144(Raw.Read<int>(StaticEventHandler_TypeInfo + 0x5c) + 8,iVar2,param1);
             bVar1 = param1 == iVar2;
             param1 = iVar2;
@@ -232,7 +232,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             iVar2 = 0;
             param1_00 = System.Delegate.Remove(param1,value,0);
             param2 = System_Action_OnNoteOpenedEventArgs__TypeInfo;
-            if ((param1_00 != 0) && (iVar2 = unnamed_function_1112(param1_00,System_Action_OnNoteOpenedEventArgs__TypeInfo), iVar2 == 0)) break;
+            if ((param1_00 != 0) && (iVar2 = (param1_00 as System_Action_OnNoteOpenedEventArgs_), iVar2 == 0)) break;
             iVar2 = unnamed_function_1144(Raw.Read<int>(StaticEventHandler_TypeInfo + 0x5c) + 8,iVar2,param1);
             bVar1 = param1 == iVar2;
             param1 = iVar2;
@@ -277,7 +277,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             iVar2 = 0;
             param1_00 = System.Delegate.Combine(param1,value,0);
             param2 = System_Action_OnPlayerChangedEventArgs__TypeInfo;
-            if ((param1_00 != 0) && (iVar2 = unnamed_function_1112(param1_00,System_Action_OnPlayerChangedEventArgs__TypeInfo), iVar2 == 0)) break;
+            if ((param1_00 != 0) && (iVar2 = (param1_00 as System_Action_OnPlayerChangedEventArgs_), iVar2 == 0)) break;
             iVar2 = unnamed_function_1144(Raw.Read<int>(StaticEventHandler_TypeInfo + 0x5c) + 0xc,iVar2,param1);
             bVar1 = param1 == iVar2;
             param1 = iVar2;
@@ -306,7 +306,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             iVar2 = 0;
             param1_00 = System.Delegate.Remove(param1,value,0);
             param2 = System_Action_OnPlayerChangedEventArgs__TypeInfo;
-            if ((param1_00 != 0) && (iVar2 = unnamed_function_1112(param1_00,System_Action_OnPlayerChangedEventArgs__TypeInfo), iVar2 == 0)) break;
+            if ((param1_00 != 0) && (iVar2 = (param1_00 as System_Action_OnPlayerChangedEventArgs_), iVar2 == 0)) break;
             iVar2 = unnamed_function_1144(Raw.Read<int>(StaticEventHandler_TypeInfo + 0x5c) + 0xc,iVar2,param1);
             bVar1 = param1 == iVar2;
             param1 = iVar2;
@@ -350,7 +350,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             iVar2 = 0;
             param1_00 = System.Delegate.Combine(param1,value,0);
             param2 = System_Action_OnBossChangedEventArgs__TypeInfo;
-            if ((param1_00 != 0) && (iVar2 = unnamed_function_1112(param1_00,System_Action_OnBossChangedEventArgs__TypeInfo), iVar2 == 0)) break;
+            if ((param1_00 != 0) && (iVar2 = (param1_00 as System_Action_OnBossChangedEventArgs_), iVar2 == 0)) break;
             iVar2 = unnamed_function_1144(Raw.Read<int>(StaticEventHandler_TypeInfo + 0x5c) + 0x10,iVar2,param1);
             bVar1 = param1 == iVar2;
             param1 = iVar2;
@@ -379,7 +379,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             iVar2 = 0;
             param1_00 = System.Delegate.Remove(param1,value,0);
             param2 = System_Action_OnBossChangedEventArgs__TypeInfo;
-            if ((param1_00 != 0) && (iVar2 = unnamed_function_1112(param1_00,System_Action_OnBossChangedEventArgs__TypeInfo), iVar2 == 0)) break;
+            if ((param1_00 != 0) && (iVar2 = (param1_00 as System_Action_OnBossChangedEventArgs_), iVar2 == 0)) break;
             iVar2 = unnamed_function_1144(Raw.Read<int>(StaticEventHandler_TypeInfo + 0x5c) + 0x10,iVar2,param1);
             bVar1 = param1 == iVar2;
             param1 = iVar2;
@@ -423,7 +423,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             iVar2 = 0;
             param1_00 = System.Delegate.Combine(param1,value,0);
             param2 = System_Action_OnBuildNavMeshEventArgs__TypeInfo;
-            if ((param1_00 != 0) && (iVar2 = unnamed_function_1112(param1_00,System_Action_OnBuildNavMeshEventArgs__TypeInfo), iVar2 == 0)) break;
+            if ((param1_00 != 0) && (iVar2 = (param1_00 as System_Action_OnBuildNavMeshEventArgs_), iVar2 == 0)) break;
             iVar2 = unnamed_function_1144(Raw.Read<int>(StaticEventHandler_TypeInfo + 0x5c) + 0x14,iVar2,param1);
             bVar1 = param1 == iVar2;
             param1 = iVar2;
@@ -452,7 +452,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             iVar2 = 0;
             param1_00 = System.Delegate.Remove(param1,value,0);
             param2 = System_Action_OnBuildNavMeshEventArgs__TypeInfo;
-            if ((param1_00 != 0) && (iVar2 = unnamed_function_1112(param1_00,System_Action_OnBuildNavMeshEventArgs__TypeInfo), iVar2 == 0)) break;
+            if ((param1_00 != 0) && (iVar2 = (param1_00 as System_Action_OnBuildNavMeshEventArgs_), iVar2 == 0)) break;
             iVar2 = unnamed_function_1144(Raw.Read<int>(StaticEventHandler_TypeInfo + 0x5c) + 0x14,iVar2,param1);
             bVar1 = param1 == iVar2;
             param1 = iVar2;
@@ -864,7 +864,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             iVar2 = 0;
             param1_00 = System.Delegate.Combine(param1,value,0);
             param2 = System_Action_OnInventoryChangedEventArgs__TypeInfo;
-            if ((param1_00 != 0) && (iVar2 = unnamed_function_1112(param1_00,System_Action_OnInventoryChangedEventArgs__TypeInfo) , iVar2 == 0)) break;
+            if ((param1_00 != 0) && (iVar2 = (param1_00 as System_Action_OnInventoryChangedEventArgs_) , iVar2 == 0)) break;
             iVar2 = unnamed_function_1144(Raw.Read<int>(StaticEventHandler_TypeInfo + 0x5c) + 0x30,iVar2,param1);
             bVar1 = param1 == iVar2;
             param1 = iVar2;
@@ -893,7 +893,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             iVar2 = 0;
             param1_00 = System.Delegate.Remove(param1,value,0);
             param2 = System_Action_OnInventoryChangedEventArgs__TypeInfo;
-            if ((param1_00 != 0) && (iVar2 = unnamed_function_1112(param1_00,System_Action_OnInventoryChangedEventArgs__TypeInfo) , iVar2 == 0)) break;
+            if ((param1_00 != 0) && (iVar2 = (param1_00 as System_Action_OnInventoryChangedEventArgs_) , iVar2 == 0)) break;
             iVar2 = unnamed_function_1144(Raw.Read<int>(StaticEventHandler_TypeInfo + 0x5c) + 0x30,iVar2,param1);
             bVar1 = param1 == iVar2;
             param1 = iVar2;
@@ -937,7 +937,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             iVar2 = 0;
             param1_00 = System.Delegate.Combine(param1,value,0);
             param2 = System_Action_OnItemUIChangedEventArgs__TypeInfo;
-            if ((param1_00 != 0) && (iVar2 = unnamed_function_1112(param1_00,System_Action_OnItemUIChangedEventArgs__TypeInfo), iVar2 == 0)) break;
+            if ((param1_00 != 0) && (iVar2 = (param1_00 as System_Action_OnItemUIChangedEventArgs_), iVar2 == 0)) break;
             iVar2 = unnamed_function_1144(Raw.Read<int>(StaticEventHandler_TypeInfo + 0x5c) + 0x34,iVar2,param1);
             bVar1 = param1 == iVar2;
             param1 = iVar2;
@@ -966,7 +966,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             iVar2 = 0;
             param1_00 = System.Delegate.Remove(param1,value,0);
             param2 = System_Action_OnItemUIChangedEventArgs__TypeInfo;
-            if ((param1_00 != 0) && (iVar2 = unnamed_function_1112(param1_00,System_Action_OnItemUIChangedEventArgs__TypeInfo), iVar2 == 0)) break;
+            if ((param1_00 != 0) && (iVar2 = (param1_00 as System_Action_OnItemUIChangedEventArgs_), iVar2 == 0)) break;
             iVar2 = unnamed_function_1144(Raw.Read<int>(StaticEventHandler_TypeInfo + 0x5c) + 0x34,iVar2,param1);
             bVar1 = param1 == iVar2;
             param1 = iVar2;
@@ -1010,7 +1010,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             iVar2 = 0;
             param1_00 = System.Delegate.Combine(param1,value,0);
             param2 = System_Action_OnItemUIChangedEventArgs__TypeInfo;
-            if ((param1_00 != 0) && (iVar2 = unnamed_function_1112(param1_00,System_Action_OnItemUIChangedEventArgs__TypeInfo), iVar2 == 0)) break;
+            if ((param1_00 != 0) && (iVar2 = (param1_00 as System_Action_OnItemUIChangedEventArgs_), iVar2 == 0)) break;
             iVar2 = unnamed_function_1144(Raw.Read<int>(StaticEventHandler_TypeInfo + 0x5c) + 0x38,iVar2,param1);
             bVar1 = param1 == iVar2;
             param1 = iVar2;
@@ -1039,7 +1039,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             iVar2 = 0;
             param1_00 = System.Delegate.Remove(param1,value,0);
             param2 = System_Action_OnItemUIChangedEventArgs__TypeInfo;
-            if ((param1_00 != 0) && (iVar2 = unnamed_function_1112(param1_00,System_Action_OnItemUIChangedEventArgs__TypeInfo), iVar2 == 0)) break;
+            if ((param1_00 != 0) && (iVar2 = (param1_00 as System_Action_OnItemUIChangedEventArgs_), iVar2 == 0)) break;
             iVar2 = unnamed_function_1144(Raw.Read<int>(StaticEventHandler_TypeInfo + 0x5c) + 0x38,iVar2,param1);
             bVar1 = param1 == iVar2;
             param1 = iVar2;
@@ -1083,7 +1083,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             iVar2 = 0;
             param1_00 = System.Delegate.Combine(param1,value,0);
             param2 = System_Action_OnItemUIChangedEventArgs__TypeInfo;
-            if ((param1_00 != 0) && (iVar2 = unnamed_function_1112(param1_00,System_Action_OnItemUIChangedEventArgs__TypeInfo), iVar2 == 0)) break;
+            if ((param1_00 != 0) && (iVar2 = (param1_00 as System_Action_OnItemUIChangedEventArgs_), iVar2 == 0)) break;
             iVar2 = unnamed_function_1144(Raw.Read<int>(StaticEventHandler_TypeInfo + 0x5c) + 0x3c,iVar2,param1);
             bVar1 = param1 == iVar2;
             param1 = iVar2;
@@ -1112,7 +1112,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             iVar2 = 0;
             param1_00 = System.Delegate.Remove(param1,value,0);
             param2 = System_Action_OnItemUIChangedEventArgs__TypeInfo;
-            if ((param1_00 != 0) && (iVar2 = unnamed_function_1112(param1_00,System_Action_OnItemUIChangedEventArgs__TypeInfo), iVar2 == 0)) break;
+            if ((param1_00 != 0) && (iVar2 = (param1_00 as System_Action_OnItemUIChangedEventArgs_), iVar2 == 0)) break;
             iVar2 = unnamed_function_1144(Raw.Read<int>(StaticEventHandler_TypeInfo + 0x5c) + 0x3c,iVar2,param1);
             bVar1 = param1 == iVar2;
             param1 = iVar2;
@@ -1302,7 +1302,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             iVar2 = 0;
             param1_00 = System.Delegate.Combine(param1,value,0);
             param2 = System_Action_string__int__bool__TypeInfo;
-            if ((param1_00 != 0) && (iVar2 = unnamed_function_1112(param1_00,System_Action_string__int__bool__TypeInfo), iVar2 == 0)) break;
+            if ((param1_00 != 0) && (iVar2 = (param1_00 as System_Action_string__int__bool_), iVar2 == 0)) break;
             iVar2 = unnamed_function_1144(Raw.Read<int>(StaticEventHandler_TypeInfo + 0x5c) + 0x48,iVar2,param1);
             bVar1 = param1 == iVar2;
             param1 = iVar2;
@@ -1331,7 +1331,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             iVar2 = 0;
             param1_00 = System.Delegate.Remove(param1,value,0);
             param2 = System_Action_string__int__bool__TypeInfo;
-            if ((param1_00 != 0) && (iVar2 = unnamed_function_1112(param1_00,System_Action_string__int__bool__TypeInfo), iVar2 == 0)) break;
+            if ((param1_00 != 0) && (iVar2 = (param1_00 as System_Action_string__int__bool_), iVar2 == 0)) break;
             iVar2 = unnamed_function_1144(Raw.Read<int>(StaticEventHandler_TypeInfo + 0x5c) + 0x48,iVar2,param1);
             bVar1 = param1 == iVar2;
             param1 = iVar2;

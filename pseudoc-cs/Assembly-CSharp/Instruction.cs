@@ -55,7 +55,7 @@ public class Instruction : MonoBehaviour // TypeDefIndex: 5654
         local_10 = (float)(Raw.Read<float>(iVar2 + 0xc) + Raw.Read<float>(iVar2 + 0xc));
         local_20 = CONCAT44(local_c,local_10);
         local_8 = (float)local_18;
-        unnamed_function_44982(uVar1,&local_20,0);
+        /* candidates: UnityEngine.Transform.set_localScale | UnityEngine.Transform.set_localScale_Injected */ unnamed_function_44982(uVar1,&local_20,0);
         uVar1 = UnityEngine.Component.get_transform(this,0);
         local_28 = Raw.Read<int>(Raw.Read<int>(UnityEngine_Vector3_TypeInfo + 0x5c) + 0x14);
         local_30 = Raw.Read<long>(Raw.Read<int>(UnityEngine_Vector3_TypeInfo + 0x5c) + 0xc);
@@ -110,7 +110,7 @@ public class Instruction : MonoBehaviour // TypeDefIndex: 5654
                 local_10 = (float)(Raw.Read<float>(iVar2 + 0xc) + Raw.Read<float>(iVar2 + 0xc));
                 local_20 = CONCAT44(local_c,local_10);
                 local_8 = (float)local_18;
-                unnamed_function_44982(uVar1,&local_20,0);
+                /* candidates: UnityEngine.Transform.set_localScale | UnityEngine.Transform.set_localScale_Injected */ unnamed_function_44982(uVar1,&local_20,0);
                 uVar1 = UnityEngine.Component.get_transform(this,0);
                 local_28 = Raw.Read<int>(Raw.Read<int>(UnityEngine_Vector3_TypeInfo + 0x5c) + 0x14);
                 local_30 = Raw.Read<long>(Raw.Read<int>(UnityEngine_Vector3_TypeInfo + 0x5c) + 0xc);
@@ -141,6 +141,6 @@ public class Instruction : MonoBehaviour // TypeDefIndex: 5654
     // RVA: 0x38FC Offset: 0x38FC VA: 0x38FC
     public Instruction()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

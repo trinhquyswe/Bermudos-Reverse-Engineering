@@ -61,13 +61,13 @@ public class Health : MonoBehaviour // TypeDefIndex: 5620
                 iVar2 = 0;
                 param1_01 = System.Delegate.Combine(param1,param1_00,0);
                 param2 = System_Action_DieEvent__TypeInfo;
-                if ((param1_01 != 0) && (iVar2 = unnamed_function_1112(param1_01,System_Action_DieEvent__TypeInfo), iVar2 == 0)) {
+                if ((param1_01 != 0) && (iVar2 = (param1_01 as System_Action_DieEvent_), iVar2 == 0)) {
                     unnamed_function_1116(param1_01,param2);
                     do {
                         throw null;
                     } while( true );
                 }
-                pAVar3 = (Action)unnamed_function_1144(&pDVar4.OnDie,iVar2,param1);
+                pAVar3 = (Action)Interlocked.CompareExchange(ref pDVar4.OnDie, iVar2, param1);
                 bVar1 = param1 != pAVar3;
                 param1 = pAVar3;
             } while (bVar1);
@@ -101,13 +101,13 @@ public class Health : MonoBehaviour // TypeDefIndex: 5620
                 iVar2 = 0;
                 param1_01 = System.Delegate.Remove(param1,param1_00,0);
                 param2 = System_Action_DieEvent__TypeInfo;
-                if ((param1_01 != 0) && (iVar2 = unnamed_function_1112(param1_01,System_Action_DieEvent__TypeInfo), iVar2 == 0)) {
+                if ((param1_01 != 0) && (iVar2 = (param1_01 as System_Action_DieEvent_), iVar2 == 0)) {
                     unnamed_function_1116(param1_01,param2);
                     do {
                         throw null;
                     } while( true );
                 }
-                pAVar3 = (Action)unnamed_function_1144(&pDVar4.OnDie,iVar2,param1);
+                pAVar3 = (Action)Interlocked.CompareExchange(ref pDVar4.OnDie, iVar2, param1);
                 bVar1 = param1 != pAVar3;
                 param1 = pAVar3;
             } while (bVar1);
@@ -160,11 +160,9 @@ public class Health : MonoBehaviour // TypeDefIndex: 5620
         param1_00 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
         if (iVar1 == 0) {
             if ((Raw.Read<ushort>(param1_00 + 0xbd) & 1) == 0) {
-                param1_00 = unnamed_function_95087(param1_00);
             }
             iVar1 = Raw.Read<int>(Raw.Read<int>(param1_00 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-                iVar1 = unnamed_function_95087(iVar1);
             }
             __this_00 = (SoundEffectManager)Raw.Deref(Raw.Read<object>(iVar1 + 0x5c));
             pGVar2 = GameResources.Instance;
@@ -172,11 +170,9 @@ public class Health : MonoBehaviour // TypeDefIndex: 5620
         }
         else {
             if ((Raw.Read<ushort>(param1_00 + 0xbd) & 1) == 0) {
-                param1_00 = unnamed_function_95087(param1_00);
             }
             iVar1 = Raw.Read<int>(Raw.Read<int>(param1_00 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-                iVar1 = unnamed_function_95087(iVar1);
             }
             __this_00 = (SoundEffectManager)Raw.Deref(Raw.Read<object>(iVar1 + 0x5c));
             pGVar2 = GameResources.Instance;
@@ -206,6 +202,6 @@ public class Health : MonoBehaviour // TypeDefIndex: 5620
     // RVA: 0x382F Offset: 0x382F VA: 0x382F
     public Health()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

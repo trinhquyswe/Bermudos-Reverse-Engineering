@@ -41,13 +41,13 @@ public class AmmoAnimation : MonoBehaviour // TypeDefIndex: 5536
         param2 = UnityEngine.Animator.get_runtimeAnimatorController(this.animator,0);
         param1 = new UnityEngine_AnimatorOverrideController();
         UnityEngine.AnimatorOverrideController.__ctor(param1,param2,0);
-        unnamed_function_45474(param1,"MagickShoot",this.ammo.ammoDetailsSO.enemyAmmoType,0);
+        /* candidates: UnityEngine.AnimatorOverrideController.Internal_SetClipByName | UnityEngine.AnimatorOverrideController.set_Item */ unnamed_function_45474(param1,"MagickShoot",this.ammo.ammoDetailsSO.enemyAmmoType,0);
         UnityEngine.Animator.set_runtimeAnimatorController(this.animator,param1,0);
     }
 
     // RVA: 0x368D Offset: 0x368D VA: 0x368D
     public AmmoAnimation()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

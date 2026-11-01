@@ -78,9 +78,9 @@ public class ItemDropper : MonoBehaviour // TypeDefIndex: 5648
         long local_10 = default;
         int local_8 = default;
 
-        uVar1 = unnamed_function_44584(0,this.itemSOList[3]._opaque,0);
-        iVar2 = unnamed_function_6529(this.itemSOList,uVar1,DAT_ram_0056343c);
-        iVar3 = unnamed_function_44584(0,100,0);
+        uVar1 = /* candidates: UnityEngine.Random.RandomRangeInt | UnityEngine.Random.Range */ unnamed_function_44584(0,this.itemSOList[3]._opaque,0);
+        iVar2 = /* candidates: System.Collections.Generic.List<EasingFunction>.get_Item | System.Collections.Generic.List<InputEventPtr>.get_Item (+7) */ unnamed_function_6529(this.itemSOList,uVar1,DAT_ram_0056343c);
+        iVar3 = /* candidates: UnityEngine.Random.RandomRangeInt | UnityEngine.Random.Range */ unnamed_function_44584(0,100,0);
         if ((float)iVar3 < Raw.Read<float>(iVar2 + 0x1c)) {
             param1 = Raw.Read<int>(iVar2 + 0x10);
             uVar1 = UnityEngine.Component.get_transform(this,0);
@@ -100,6 +100,6 @@ public class ItemDropper : MonoBehaviour // TypeDefIndex: 5648
     // RVA: 0x38E6 Offset: 0x38E6 VA: 0x38E6
     public ItemDropper()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

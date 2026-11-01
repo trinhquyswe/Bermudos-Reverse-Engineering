@@ -77,7 +77,7 @@ public class Boss : MonoBehaviour // TypeDefIndex: 5558
             param1_01 = System.Delegate.Combine(param1,param1_00,0);
             param2 = System_Action_HealthEvent__HealthEventArgs__TypeInfo;
             if ((param1_01 != 0) && (param2_00 = unnamed_function_1112 (param1_01,System_Action_HealthEvent__HealthEventArgs__TypeInfo), param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&pHVar3.OnHealthChanged,param2_00,param1);
+            pAVar2 = (Action)Interlocked.CompareExchange(ref pHVar3.OnHealthChanged, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -111,7 +111,7 @@ public class Boss : MonoBehaviour // TypeDefIndex: 5558
             param1_01 = System.Delegate.Remove(param1,param1_00,0);
             param2 = System_Action_HealthEvent__HealthEventArgs__TypeInfo;
             if ((param1_01 != 0) && (param2_00 = unnamed_function_1112 (param1_01,System_Action_HealthEvent__HealthEventArgs__TypeInfo), param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&pHVar3.OnHealthChanged,param2_00,param1);
+            pAVar2 = (Action)Interlocked.CompareExchange(ref pHVar3.OnHealthChanged, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -172,7 +172,7 @@ public class Boss : MonoBehaviour // TypeDefIndex: 5558
                         throw null;
                     } while( true );
                 }
-                pAVar2 = (Action)unnamed_function_1144(&healthEvent.OnHealthChanged,param2_00,param1);
+                pAVar2 = (Action)Interlocked.CompareExchange(ref healthEvent.OnHealthChanged, param2_00, param1);
                 bVar1 = param1 != pAVar2;
                 param1 = pAVar2;
             } while (bVar1);
@@ -198,6 +198,6 @@ public class Boss : MonoBehaviour // TypeDefIndex: 5558
     // RVA: 0x3701 Offset: 0x3701 VA: 0x3701
     public Boss()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

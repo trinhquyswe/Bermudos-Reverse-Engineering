@@ -46,6 +46,6 @@ public class ReceiveContactDamage : MonoBehaviour // TypeDefIndex: 5553
     // RVA: 0x36E7 Offset: 0x36E7 VA: 0x36E7
     public ReceiveContactDamage()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

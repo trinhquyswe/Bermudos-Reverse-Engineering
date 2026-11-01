@@ -75,6 +75,6 @@ public class GameNameMovement : MonoBehaviour // TypeDefIndex: 5653
         this.easeType = InOutSine;
         this.moveDistance = 5.0;
         this.duration = 1.0;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

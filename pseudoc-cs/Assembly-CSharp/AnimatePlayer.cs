@@ -32,7 +32,7 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
         pPVar1 = (Player)UnityEngine.Component.GetComponent<object>(this,DAT_ram_00567ef0);
         this.player = pPVar1;
         param1 = pPVar1.animator;
-        unnamed_function_45420(param1,Settings.aimDown,1,0);
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420(param1,Settings.aimDown,1,0);
         pDVar2 = (DieEvent)UnityEngine.Component.GetComponent<object>(this,DAT_ram_00567e74);
         this.dieEvent = pDVar2;
     }
@@ -65,13 +65,13 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
             iVar3 = 0;
             iVar5 = System.Delegate.Combine(pAVar2,uVar4,0);
             uVar12 = System_Action_AnimateEvent__AnimateEventArgs__TypeInfo;
-            if ((iVar5 != 0) && (iVar3 = unnamed_function_1112(iVar5,System_Action_AnimateEvent__AnimateEventArgs__TypeInfo), iVar3 == 0)) {
+            if ((iVar5 != 0) && (iVar3 = (iVar5 as System_Action_AnimateEvent__AnimateEventArgs_), iVar3 == 0)) {
                 unnamed_function_1116(iVar5,uVar12);
                 do {
                     throw null;
                 } while( true );
             }
-            pAVar6 = (Action)unnamed_function_1144(&pAVar8.OnAnimate,iVar3,pAVar2);
+            pAVar6 = (Action)Interlocked.CompareExchange(ref pAVar8.OnAnimate, iVar3, pAVar2);
             bVar1 = pAVar2 != pAVar6;
             pAVar2 = pAVar6;
         } while (bVar1);
@@ -91,13 +91,13 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
             iVar3 = 0;
             iVar5 = System.Delegate.Combine(pAVar2,uVar4,0);
             uVar12 = System_Action_AttackEvent__TypeInfo;
-            if ((iVar5 != 0) && (iVar3 = unnamed_function_1112(iVar5,System_Action_AttackEvent__TypeInfo), iVar3 == 0)) {
+            if ((iVar5 != 0) && (iVar3 = (iVar5 as System_Action_AttackEvent_), iVar3 == 0)) {
                 unnamed_function_1116(iVar5,uVar12);
                 do {
                     throw null;
                 } while( true );
             }
-            pAVar6 = (Action)unnamed_function_1144(&pAVar9.OnAttack,iVar3,pAVar2);
+            pAVar6 = (Action)Interlocked.CompareExchange(ref pAVar9.OnAttack, iVar3, pAVar2);
             bVar1 = pAVar2 != pAVar6;
             pAVar2 = pAVar6;
         } while (bVar1);
@@ -115,7 +115,7 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
                     throw null;
                 } while( true );
             }
-            pAVar6 = (Action)unnamed_function_1144(&pDVar10.OnDestroyed,iVar3,pAVar2);
+            pAVar6 = (Action)Interlocked.CompareExchange(ref pDVar10.OnDestroyed, iVar3, pAVar2);
             bVar1 = pAVar2 != pAVar6;
             pAVar2 = pAVar6;
         } while (bVar1);
@@ -127,23 +127,21 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
             iVar3 = 0;
             iVar5 = System.Delegate.Combine(pAVar2,uVar4,0);
             uVar12 = System_Action_DieEvent__TypeInfo;
-            if ((iVar5 != 0) && (iVar3 = unnamed_function_1112(iVar5,System_Action_DieEvent__TypeInfo), iVar3 == 0)) {
+            if ((iVar5 != 0) && (iVar3 = (iVar5 as System_Action_DieEvent_), iVar3 == 0)) {
                 unnamed_function_1116(iVar5,uVar12);
                 do {
                     throw null;
                 } while( true );
             }
-            pAVar6 = (Action)unnamed_function_1144(&pDVar11.OnDie,iVar3,pAVar2);
+            pAVar6 = (Action)Interlocked.CompareExchange(ref pDVar11.OnDie, iVar3, pAVar2);
             bVar1 = pAVar2 != pAVar6;
             pAVar2 = pAVar6;
         } while (bVar1);
         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar5 = Raw.Deref(Raw.Read<object>(iVar3 + 0x5c));
         uVar12 = Raw.Read<int>(iVar5 + 0x20);
@@ -152,7 +150,7 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
         iVar3 = System.Delegate.Combine(uVar12,uVar4,0);
         uVar4 = System_Action_GameState__TypeInfo;
         if (iVar3 != 0) {
-            iVar7 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+            iVar7 = (iVar3 as System_Action_GameState_);
             if (iVar7 == 0) {
                 unnamed_function_1116(iVar3,uVar4);
                 do {
@@ -161,7 +159,7 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
             }
             Raw.Write<int>(iVar5 + 0x20, iVar7);
             uVar4 = System_Action_GameState__TypeInfo;
-            iVar5 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+            iVar5 = (iVar3 as System_Action_GameState_);
             if (iVar5 != 0) {
                 return;
             }
@@ -200,8 +198,8 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
             iVar4 = 0;
             iVar6 = System.Delegate.Remove(pAVar3,uVar5,0);
             uVar2 = System_Action_AnimateEvent__AnimateEventArgs__TypeInfo;
-            if ((iVar6 != 0) && (iVar4 = unnamed_function_1112(iVar6,System_Action_AnimateEvent__AnimateEventArgs__TypeInfo), iVar4 == 0)) break;
-            pAVar7 = (Action)unnamed_function_1144(&pAVar8.OnAnimate,iVar4,pAVar3);
+            if ((iVar6 != 0) && (iVar4 = (iVar6 as System_Action_AnimateEvent__AnimateEventArgs_), iVar4 == 0)) break;
+            pAVar7 = (Action)Interlocked.CompareExchange(ref pAVar8.OnAnimate, iVar4, pAVar3);
             bVar1 = pAVar3 == pAVar7;
             pAVar3 = pAVar7;
             if (bVar1) {
@@ -221,8 +219,8 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
                     iVar4 = 0;
                     iVar6 = System.Delegate.Remove(pAVar3,uVar5,0);
                     uVar2 = System_Action_AttackEvent__TypeInfo;
-                    if ((iVar6 != 0) && (iVar4 = unnamed_function_1112(iVar6,System_Action_AttackEvent__TypeInfo), iVar4 == 0)) break;
-                    pAVar7 = (Action)unnamed_function_1144(&pAVar9.OnAttack,iVar4,pAVar3);
+                    if ((iVar6 != 0) && (iVar4 = (iVar6 as System_Action_AttackEvent_), iVar4 == 0)) break;
+                    pAVar7 = (Action)Interlocked.CompareExchange(ref pAVar9.OnAttack, iVar4, pAVar3);
                     bVar1 = pAVar3 == pAVar7;
                     pAVar3 = pAVar7;
                     if (bVar1) {
@@ -234,8 +232,8 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
                             iVar4 = 0;
                             iVar6 = System.Delegate.Remove(pAVar3,uVar5,0);
                             uVar2 = System_Action_DieEvent__TypeInfo;
-                            if ((iVar6 != 0) && (iVar4 = unnamed_function_1112(iVar6,System_Action_DieEvent__TypeInfo), iVar4 == 0)) break;
-                            pAVar7 = (Action)unnamed_function_1144(&pDVar10.OnDie,iVar4,pAVar3);
+                            if ((iVar6 != 0) && (iVar4 = (iVar6 as System_Action_DieEvent_), iVar4 == 0)) break;
+                            pAVar7 = (Action)Interlocked.CompareExchange(ref pDVar10.OnDie, iVar4, pAVar3);
                             bVar1 = pAVar3 == pAVar7;
                             pAVar3 = pAVar7;
                             if (bVar1) {
@@ -248,7 +246,7 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
                                     iVar6 = System.Delegate.Remove(pAVar3,uVar5,0);
                                     uVar2 = System_Action_DestroyedEvent__DestroyedEventArgs__TypeInfo;
                                     if ((iVar6 != 0) && (iVar4 = unnamed_function_1112 (iVar6, System_Action_DestroyedEvent__DestroyedEventArgs__TypeInfo), iVar4 == 0)) break;
-                                    pAVar7 = (Action)unnamed_function_1144(&pDVar11.OnDestroyed,iVar4,pAVar3);
+                                    pAVar7 = (Action)Interlocked.CompareExchange(ref pDVar11.OnDestroyed, iVar4, pAVar3);
                                     bVar1 = pAVar3 == pAVar7;
                                     pAVar3 = pAVar7;
                                     if (bVar1) {
@@ -317,8 +315,8 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
                 iVar3 = 0;
                 iVar7 = System.Delegate.Remove(pAVar2,uVar6,0);
                 uVar14 = System_Action_AttackEvent__TypeInfo;
-                if ((iVar7 != 0) && (iVar3 = unnamed_function_1112(iVar7,System_Action_AttackEvent__TypeInfo), iVar3 == 0)) break;
-                pAVar8 = (Action)unnamed_function_1144(&pAVar12.OnAttack,iVar3,pAVar2);
+                if ((iVar7 != 0) && (iVar3 = (iVar7 as System_Action_AttackEvent_), iVar3 == 0)) break;
+                pAVar8 = (Action)Interlocked.CompareExchange(ref pAVar12.OnAttack, iVar3, pAVar2);
                 bVar1 = pAVar2 == pAVar8;
                 pAVar2 = pAVar8;
                 if (bVar1) {
@@ -331,13 +329,13 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
                         iVar7 = System.Delegate.Remove(param1,uVar6,0);
                         uVar14 = System_Action_DestroyedEvent__DestroyedEventArgs__TypeInfo;
                         if ((iVar7 != 0) && (iVar3 = unnamed_function_1112 (iVar7,System_Action_DestroyedEvent__DestroyedEventArgs__TypeInfo), iVar3 == 0)) break;
-                        method_00 = unnamed_function_1144(&pDVar13.OnDestroyed,iVar3,param1);
+                        method_00 = Interlocked.CompareExchange(ref pDVar13.OnDestroyed, iVar3, param1);
                         bVar1 = param1 == method_00;
                         param1 = method_00;
                         if (bVar1) {
                             this.InitializeStateAnimationParameters(method_00);
                             param1_00 = this.player.animator;
-                            unnamed_function_45420 (param1_00,Settings.isFaint,1,0);
+                            /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420 (param1_00,Settings.isFaint,1,0);
                             return;
                         }
                     }
@@ -369,13 +367,13 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
                 iVar3 = 0;
                 iVar7 = System.Delegate.Combine(pAVar2,uVar6,0);
                 uVar14 = System_Action_AttackEvent__TypeInfo;
-                if ((iVar7 != 0) && (iVar3 = unnamed_function_1112(iVar7,System_Action_AttackEvent__TypeInfo), iVar3 == 0)) {
+                if ((iVar7 != 0) && (iVar3 = (iVar7 as System_Action_AttackEvent_), iVar3 == 0)) {
                     unnamed_function_1116(iVar7,uVar14);
                     do {
                         throw null;
                     } while( true );
                 }
-                pAVar8 = (Action)unnamed_function_1144(&pAVar12.OnAttack,iVar3,pAVar2);
+                pAVar8 = (Action)Interlocked.CompareExchange(ref pAVar12.OnAttack, iVar3, pAVar2);
                 bVar1 = pAVar2 != pAVar8;
                 pAVar2 = pAVar8;
             } while (bVar1);
@@ -393,17 +391,15 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
                         throw null;
                     } while( true );
                 }
-                pAVar8 = (Action)unnamed_function_1144(&pDVar13.OnDestroyed,iVar3,pAVar2);
+                pAVar8 = (Action)Interlocked.CompareExchange(ref pDVar13.OnDestroyed, iVar3, pAVar2);
                 bVar1 = pAVar2 != pAVar8;
                 pAVar2 = pAVar8;
             } while (bVar1);
             iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                iVar3 = unnamed_function_95087(iVar3);
             }
             iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                iVar3 = unnamed_function_95087(iVar3);
             }
             iVar7 = Raw.Deref(Raw.Read<object>(iVar3 + 0x5c));
             uVar14 = Raw.Read<int>(iVar7 + 0x20);
@@ -415,7 +411,7 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
                 Raw.Write<int>(iVar7 + 0x20, 0);
                 return;
             }
-            iVar9 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+            iVar9 = (iVar3 as System_Action_GameState_);
             if (iVar9 == 0) {
                 unnamed_function_1116(iVar3,uVar6);
                 do {
@@ -424,7 +420,7 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
             }
             Raw.Write<int>(iVar7 + 0x20, iVar9);
             uVar6 = System_Action_GameState__TypeInfo;
-            iVar7 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+            iVar7 = (iVar3 as System_Action_GameState_);
             if (iVar7 == 0) {
                 unnamed_function_1116(iVar3,uVar6);
                 do {
@@ -449,7 +445,7 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
         if (this.attackAnimationCoroutine == (Coroutine)0x0) {
             this.InitializeStateAnimationParameters();
             param1 = this.player.animator;
-            unnamed_function_45420(param1,Raw.Deref(Raw.Read<object>(Settings_TypeInfo + 0x5c)),1,0);
+            /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420(param1,Raw.Deref(Raw.Read<object>(Settings_TypeInfo + 0x5c)),1,0);
         }
     }
 
@@ -461,7 +457,7 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
         if (this.attackAnimationCoroutine == (Coroutine)0x0) {
             this.InitializeStateAnimationParameters();
             param1 = this.player.animator;
-            unnamed_function_45420(param1,Settings.isMoving,1,0);
+            /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420(param1,Settings.isMoving,1,0);
         }
     }
 
@@ -498,14 +494,14 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
             param2_00 = 0;
             param1_01 = System.Delegate.Remove(param1,param1_00,0);
             param2 = System_Action_AttackEvent__TypeInfo;
-            if ((param1_01 != 0) && (param2_00 = unnamed_function_1112(param1_01,System_Action_AttackEvent__TypeInfo), param2_00 == 0)) break;
-            method_00 = unnamed_function_1144(&pAVar2.OnAttack,param2_00,param1);
+            if ((param1_01 != 0) && (param2_00 = (param1_01 as System_Action_AttackEvent_), param2_00 == 0)) break;
+            method_00 = Interlocked.CompareExchange(ref pAVar2.OnAttack, param2_00, param1);
             bVar1 = param1 == method_00;
             param1 = method_00;
             if (bVar1) {
                 this.InitializeStateAnimationParameters(method_00);
                 param1_02 = this.player.animator;
-                unnamed_function_45420 (param1_02,Settings.isFaint,1,0);
+                /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420 (param1_02,Settings.isFaint,1,0);
                 return;
             }
         }
@@ -524,7 +520,7 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
 
         this.InitializeStateAnimationParameters();
         param1 = this.player.animator;
-        unnamed_function_45420(param1,Settings.isAttack,1,0);
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420(param1,Settings.isAttack,1,0);
         if (this.attackAnimationCoroutine != (Coroutine)0x0) {
             UnityEngine.MonoBehaviour.StopCoroutine(this,this.attackAnimationCoroutine,0);
         }
@@ -567,8 +563,8 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
             param2_00 = 0;
             param1_01 = System.Delegate.Combine(param1,param1_00,0);
             param2 = System_Action_AttackEvent__TypeInfo;
-            if ((param1_01 != 0) && (param2_00 = unnamed_function_1112(param1_01,System_Action_AttackEvent__TypeInfo), param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&pAVar3.OnAttack,param2_00,param1);
+            if ((param1_01 != 0) && (param2_00 = (param1_01 as System_Action_AttackEvent_), param2_00 == 0)) break;
+            pAVar2 = (Action)Interlocked.CompareExchange(ref pAVar3.OnAttack, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -587,14 +583,14 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
         Animator param1 = default;
 
         param1 = this.player.animator;
-        unnamed_function_45420(param1,Settings.aimUp,0,0);
-        unnamed_function_45420 (this.player.animator,Settings.aimUpRight,0,0 );
-        unnamed_function_45420 (this.player.animator,Settings.aimUpLeft,0,0 );
-        unnamed_function_45420 (this.player.animator,Settings.aimRight,0,0 );
-        unnamed_function_45420 (this.player.animator,Settings.aimLeft,0,0 );
-        unnamed_function_45420 (this.player.animator,Settings.aimDown,0,0 );
-        unnamed_function_45420 (this.player.animator,Settings.aimDownRight,0,0 );
-        unnamed_function_45420 (this.player.animator,Settings.aimDownLeft,0,0 );
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420(param1,Settings.aimUp,0,0);
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420 (this.player.animator,Settings.aimUpRight,0,0 );
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420 (this.player.animator,Settings.aimUpLeft,0,0 );
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420 (this.player.animator,Settings.aimRight,0,0 );
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420 (this.player.animator,Settings.aimLeft,0,0 );
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420 (this.player.animator,Settings.aimDown,0,0 );
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420 (this.player.animator,Settings.aimDownRight,0,0 );
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420 (this.player.animator,Settings.aimDownLeft,0,0 );
     }
 
     // RVA: 0x36C0 Offset: 0x36C0 VA: 0x36C0
@@ -603,10 +599,10 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
         Animator param1 = default;
 
         param1 = this.player.animator;
-        unnamed_function_45420(param1,Raw.Deref(Raw.Read<object>(Settings_TypeInfo + 0x5c)),0,0);
-        unnamed_function_45420 (this.player.animator,Settings.isMoving,0,0);
-        unnamed_function_45420 (this.player.animator,Settings.isAttack,0,0);
-        unnamed_function_45420 (this.player.animator,Settings.isFaint,0,0);
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420(param1,Raw.Deref(Raw.Read<object>(Settings_TypeInfo + 0x5c)),0,0);
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420 (this.player.animator,Settings.isMoving,0,0);
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420 (this.player.animator,Settings.isAttack,0,0);
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420 (this.player.animator,Settings.isFaint,0,0);
     }
 
     // RVA: 0x36C1 Offset: 0x36C1 VA: 0x36C1
@@ -661,7 +657,7 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
         }
         if (iVar2 == 0) {
         }
-        unnamed_function_45420(param1,Raw.Read<int>(Raw.Read<int>(Settings_TypeInfo + 0x5c) + iVar1),1,0);
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420(param1,Raw.Read<int>(Raw.Read<int>(Settings_TypeInfo + 0x5c) + iVar1),1,0);
     }
 
     // RVA: 0x36C2 Offset: 0x36C2 VA: 0x36C2
@@ -695,6 +691,6 @@ public class AnimatePlayer : MonoBehaviour // TypeDefIndex: 5547
     // RVA: 0x36C4 Offset: 0x36C4 VA: 0x36C4
     public AnimatePlayer()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

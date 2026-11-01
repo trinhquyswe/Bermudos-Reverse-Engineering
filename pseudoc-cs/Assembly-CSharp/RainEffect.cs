@@ -31,12 +31,12 @@ public class RainEffect : MonoBehaviour // TypeDefIndex: 5585
         local_8[0] = 0;
         uVar1 = UnityEngine.Component.get_gameObject(this,0);
         UnityEngine.GameObject.SetActive(uVar1,0,0);
-        iVar2 = unnamed_function_44584(0,3,0);
+        iVar2 = /* candidates: UnityEngine.Random.RandomRangeInt | UnityEngine.Random.Range */ unnamed_function_44584(0,3,0);
         this.appearanceRate = iVar2;
         if (iVar2 != 0) {
             local_8[0] = UnityEngine.SceneManagement.SceneManager.GetSceneAt(0,0);
             uVar1 = UnityEngine.SceneManagement.Scene.get_name(local_8,0);
-            iVar2 = unnamed_function_81494(uVar1,"MainMenu",0);
+            iVar2 = /* candidates: System.String.Equals | System.String.op_Equality */ unnamed_function_81494(uVar1,"MainMenu",0);
             if (iVar2 == 0) {
                 return;
             }
@@ -45,11 +45,9 @@ public class RainEffect : MonoBehaviour // TypeDefIndex: 5585
         UnityEngine.GameObject.SetActive(uVar1,1,0);
         iVar2 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         iVar2 = Raw.Read<int>(Raw.Read<int>(iVar2 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         ((SoundEffectManager)Raw.Deref(Raw.Read<object>(iVar2 + 0x5c))).PlaySoundEffectPersistent(this.rainEffect, true);
     }
@@ -61,11 +59,9 @@ public class RainEffect : MonoBehaviour // TypeDefIndex: 5585
 
         iVar1 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
         if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-            iVar1 = unnamed_function_95087(iVar1);
         }
         iVar1 = Raw.Read<int>(Raw.Read<int>(iVar1 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-            iVar1 = unnamed_function_95087(iVar1);
         }
         ((SoundEffectManager)Raw.Deref(Raw.Read<object>(iVar1 + 0x5c))).StopSoundEffectLoop(this.rainEffect);
     }
@@ -73,6 +69,6 @@ public class RainEffect : MonoBehaviour // TypeDefIndex: 5585
     // RVA: 0x379C Offset: 0x379C VA: 0x379C
     public RainEffect()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

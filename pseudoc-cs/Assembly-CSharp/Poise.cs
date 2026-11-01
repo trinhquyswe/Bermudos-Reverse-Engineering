@@ -68,6 +68,6 @@ public class Poise : MonoBehaviour // TypeDefIndex: 5624
     // RVA: 0x383D Offset: 0x383D VA: 0x383D
     public Poise()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

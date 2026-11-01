@@ -52,11 +52,9 @@ public class EndPhase1 : Action // TypeDefIndex: 5562
 
         iVar1 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
         if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-            iVar1 = unnamed_function_95087(iVar1);
         }
         iVar1 = Raw.Read<int>(Raw.Read<int>(iVar1 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-            iVar1 = unnamed_function_95087(iVar1);
         }
         ((SoundEffectManager)Raw.Deref(Raw.Read<object>(iVar1 + 0x5c))).PlaySoundEffect(this.transitionSoundEffect);
         UnityEngine.MonoBehaviour.StopAllCoroutines(this.rangedSkills,0);
@@ -86,7 +84,7 @@ public class EndPhase1 : Action // TypeDefIndex: 5562
                 fVar2 = Raw.Read<float>(this + 0x34);
                 fVar1 = UnityEngine.Time.get_deltaTime(0);
                 Raw.Write<float>(this + 0x34, fVar2 - fVar1);
-                param1 = unnamed_function_61203(Raw.Read<int>(this + 0x30),DAT_ram_00565ccc);
+                param1 = /* candidates: BehaviorDesigner.Runtime.SharedVariable<Int32Enum>.get_Value | BehaviorDesigner.Runtime.SharedVariable<LayerMask>.get_Value (+4) */ unnamed_function_61203(Raw.Read<int>(this + 0x30),DAT_ram_00565ccc);
                 UnityEngine.Material.SetFloat(param1,"_FadeAmount",Raw.Read<float>(this + 0x38),0);
             }
             return;
@@ -110,6 +108,6 @@ public class EndPhase1 : Action // TypeDefIndex: 5562
     public EndPhase1()
     {
         this.transitionTime = 1.0;
-        unnamed_function_51834(this,0);
+        /* candidates: BehaviorDesigner.Runtime.Tasks.Action.ctor | BehaviorDesigner.Runtime.Tasks.BehaviorReference.ctor (+6) */ unnamed_function_51834(this,0);
     }
 }

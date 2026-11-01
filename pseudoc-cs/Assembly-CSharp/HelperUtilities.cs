@@ -26,7 +26,7 @@ public static class HelperUtilities // TypeDefIndex: 5730
         object piVar2 = default; // int*
         int uVar3 = default;
 
-        iVar1 = unnamed_function_81494(stringToCheck,"",0);
+        iVar1 = /* candidates: System.String.Equals | System.String.op_Equality */ unnamed_function_81494(stringToCheck,"",0);
         if (iVar1 != 0) {
             piVar2 = (object)UnityEngine.Object.get_name(thisObject,0);
             uVar3 = Raw.VCall((ulong)Raw.Read<uint>(*piVar2 + 0xd8) * 4) /* virtual */ (piVar2,Raw.Read<int>(*piVar2 + 0xdc));
@@ -186,7 +186,7 @@ public static class HelperUtilities // TypeDefIndex: 5730
             iVar7 = DAT_ram_005ddf34;
             if (iVar7 != 1) {
                 code_r0x81a22ae0: DAT_ram_005ddf34 = 0;
-                local_8 = unnamed_function_1112(local_4,System_IDisposable_TypeInfo);
+                local_8 = (local_4 as System_IDisposable);
                 piVar8 = (object)*local_10;
                 if (piVar8 != (object)0x0) {
                     iVar7 = *piVar8;

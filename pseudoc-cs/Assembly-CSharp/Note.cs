@@ -110,6 +110,6 @@ public class Note : MonoBehaviour // TypeDefIndex: 5685
     // RVA: 0x398E Offset: 0x398E VA: 0x398E
     public Note()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

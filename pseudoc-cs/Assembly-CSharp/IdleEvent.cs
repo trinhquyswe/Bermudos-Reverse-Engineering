@@ -36,8 +36,8 @@ public class IdleEvent : MonoBehaviour // TypeDefIndex: 5673
             param2_00 = 0;
             param1_00 = System.Delegate.Combine(param1,value,0);
             param2 = System_Action_IdleEvent__TypeInfo;
-            if ((param1_00 != 0) && (param2_00 = unnamed_function_1112(param1_00,System_Action_IdleEvent__TypeInfo), param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&this.OnIdle,param2_00,param1);
+            if ((param1_00 != 0) && (param2_00 = (param1_00 as System_Action_IdleEvent_), param2_00 == 0)) break;
+            pAVar2 = (Action)Interlocked.CompareExchange(ref this.OnIdle, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -66,8 +66,8 @@ public class IdleEvent : MonoBehaviour // TypeDefIndex: 5673
             param2_00 = 0;
             param1_00 = System.Delegate.Remove(param1,value,0);
             param2 = System_Action_IdleEvent__TypeInfo;
-            if ((param1_00 != 0) && (param2_00 = unnamed_function_1112(param1_00,System_Action_IdleEvent__TypeInfo), param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&this.OnIdle,param2_00,param1);
+            if ((param1_00 != 0) && (param2_00 = (param1_00 as System_Action_IdleEvent_), param2_00 == 0)) break;
+            pAVar2 = (Action)Interlocked.CompareExchange(ref this.OnIdle, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -94,6 +94,6 @@ public class IdleEvent : MonoBehaviour // TypeDefIndex: 5673
     // RVA: 0x3956 Offset: 0x3956 VA: 0x3956
     public IdleEvent()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

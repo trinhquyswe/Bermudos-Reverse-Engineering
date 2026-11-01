@@ -56,7 +56,7 @@ public class SoundEffect : MonoBehaviour // TypeDefIndex: 5716
 
         UnityEngine.AudioSource.set_volume(this.audioSource,soundEffect.soundEffectVolume,0);
         UnityEngine.AudioSource.set_clip(this.audioSource,soundEffect.soundEffectClip,0);
-        unnamed_function_63125(this.audioSource,soundEffect.soundEffectPitch,0);
+        /* candidates: UnityEngine.AudioSource.SetPitch | UnityEngine.AudioSource.set_pitch */ unnamed_function_63125(this.audioSource,soundEffect.soundEffectPitch,0);
         this.soundEffect = soundEffect;
         UnityEngine.AudioSource.set_loop(this.audioSource,CONCAT31(in_register_20000021,isLoop),0);
     }
@@ -64,6 +64,6 @@ public class SoundEffect : MonoBehaviour // TypeDefIndex: 5716
     // RVA: 0x3A56 Offset: 0x3A56 VA: 0x3A56
     public SoundEffect()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

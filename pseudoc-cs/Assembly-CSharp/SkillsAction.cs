@@ -93,8 +93,8 @@ public class SkillsAction : Action // TypeDefIndex: 5572
         Animator param1 = default;
 
         param1 = this.animator;
-        param2 = unnamed_function_77425 (this.bossAnimationStateDic,this.bossAnimationState,DAT_ram_0055fd54);
-        unnamed_function_45425(param1,param2,0);
+        param2 = /* candidates: System.Collections.Generic.Dictionary<Int32Enum, Int32Enum>.get_Item | System.Collections.Generic.Dictionary<Int32Enum, int>.get_Item (+1) */ unnamed_function_77425 (this.bossAnimationStateDic,this.bossAnimationState,DAT_ram_0055fd54);
+        /* candidates: UnityEngine.Animator.SetTrigger | UnityEngine.Animator.SetTriggerID */ unnamed_function_45425(param1,param2,0);
         this.isFirstUpdate = true;
     }
 
@@ -183,8 +183,8 @@ public class SkillsAction : Action // TypeDefIndex: 5572
         iVar1 = UnityEngine.Animator.StringToHash("spinny2",0);
         this.spinny2 = iVar1;
         param1 = (Dictionary) unnamed_function_95402 (System_Collections_Generic_Dictionary_BossAnimationState__int__TypeInfo);
-        unnamed_function_77380(param1,DAT_ram_0055fd4c);
+        /* candidates: System.Collections.Generic.Dictionary<Int32Enum, Int32Enum>..ctor | System.Collections.Generic.Dictionary<Int32Enum, bool>..ctor (+2) */ unnamed_function_77380(param1,DAT_ram_0055fd4c);
         this.bossAnimationStateDic = param1;
-        unnamed_function_51834(this,0);
+        /* candidates: BehaviorDesigner.Runtime.Tasks.Action.ctor | BehaviorDesigner.Runtime.Tasks.BehaviorReference.ctor (+6) */ unnamed_function_51834(this,0);
     }
 }

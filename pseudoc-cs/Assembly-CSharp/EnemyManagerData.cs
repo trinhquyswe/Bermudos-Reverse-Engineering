@@ -27,7 +27,7 @@ public class EnemyManagerData // TypeDefIndex: 5591
         List param1 = default;
 
         param1 = (List)new System_Collections_Generic_List_bool_();
-        unnamed_function_5132(param1,DAT_ram_00562b48);
+        /* candidates: System.Collections.Generic.List<AdditionalLightsShadowCasterPass.ShadowResolutionRequest>..ctor | System.Collections.Generic.List<AnimationOutputWeightProcessor.WeightInfo>..ctor (+167) */ unnamed_function_5132(param1,DAT_ram_00562b48);
         this.enemieStateList = param1;
         this.enemyCount = enemyCount;
         this.enemyName = (string)enemyName;
@@ -57,7 +57,7 @@ public class EnemyManagerData // TypeDefIndex: 5591
                         Raw.Write<byte>(uVar2 + iVar3 + 0x10, 0);
                     }
                     else {
-                        unnamed_function_9759 (param1,0,Raw.Read<int>(Raw.Read<int>(Raw.Read<int>(iVar1 + 0x10) + 0x60) + 0x38));
+                        /* candidates: System.Collections.Generic.List<bool>.AddWithResize | System.Collections.Generic.List<byte>.AddWithResize (+1) */ unnamed_function_9759 (param1,0,Raw.Read<int>(Raw.Read<int>(Raw.Read<int>(iVar1 + 0x10) + 0x60) + 0x38));
                     }
                 }
                 else if (uVar2 < Raw.Read<uint>(iVar3 + 0xc)) {
@@ -65,7 +65,7 @@ public class EnemyManagerData // TypeDefIndex: 5591
                     Raw.Write<byte>(uVar2 + iVar3 + 0x10, 1);
                 }
                 else {
-                    unnamed_function_9759 (param1,1,Raw.Read<int>(Raw.Read<int>(Raw.Read<int>(iVar1 + 0x10) + 0x60) + 0x38));
+                    /* candidates: System.Collections.Generic.List<bool>.AddWithResize | System.Collections.Generic.List<byte>.AddWithResize (+1) */ unnamed_function_9759 (param1,1,Raw.Read<int>(Raw.Read<int>(Raw.Read<int>(iVar1 + 0x10) + 0x60) + 0x38));
                 }
                 iVar4 = iVar4 + 1;
             } while (iVar4 < this.enemyCount);

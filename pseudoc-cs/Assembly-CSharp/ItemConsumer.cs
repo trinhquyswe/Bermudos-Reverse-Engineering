@@ -101,14 +101,14 @@ public class ItemConsumer : MonoBehaviour // TypeDefIndex: 5647
             }
             else {
                 pSVar1 = this.inventoryManager.HotBarItem;
-                pIVar2 = (InventoryItem)unnamed_function_6529(pSVar1,0,DAT_ram_0056342c);
+                pIVar2 = (InventoryItem)/* candidates: System.Collections.Generic.List<EasingFunction>.get_Item | System.Collections.Generic.List<InputEventPtr>.get_Item (+7) */ unnamed_function_6529(pSVar1,0,DAT_ram_0056342c);
                 this.currentInventoryItem = pIVar2;
             }
             if (pIVar2 == (InventoryItem)0x0) {
                 return;
             }
         }
-        unnamed_function_6549(&local_20,this.inventoryManager.inventoryItemList,DAT_ram_00563420);
+        /* candidates: System.Collections.Generic.List<Color32>.GetEnumerator | System.Collections.Generic.List<EasingFunction>.GetEnumerator (+9) */ unnamed_function_6549(&local_20,this.inventoryManager.inventoryItemList,DAT_ram_00563420);
         local_20._24_8_ = local_20._8_8_;
         local_20._opaque0 = 0;
         local_20._opaque1 = (int)&local_20.field_0x10;
@@ -225,23 +225,21 @@ public class ItemConsumer : MonoBehaviour // TypeDefIndex: 5647
 
         iVar2 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         iVar2 = Raw.Read<int>(Raw.Read<int>(iVar2 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         ((SoundEffectManager)Raw.Deref(Raw.Read<object>(iVar2 + 0x5c))).PlaySoundEffect(this.useItemSoundEffect);
-        iVar2 = unnamed_function_81494(potionName,"Attack Potion",0);
+        iVar2 = /* candidates: System.String.Equals | System.String.op_Equality */ unnamed_function_81494(potionName,"Attack Potion",0);
         if (iVar2 == 0) {
-            iVar2 = unnamed_function_81494(potionName,"Big Hp Potion",0);
+            iVar2 = /* candidates: System.String.Equals | System.String.op_Equality */ unnamed_function_81494(potionName,"Big Hp Potion",0);
             if (iVar2 != 0) {
                 this.health.IncreaseHealth(this.bigHealthPotionAmount);
                 return;
             }
-            iVar2 = unnamed_function_81494(potionName,"Small Hp Potion",0);
+            iVar2 = /* candidates: System.String.Equals | System.String.op_Equality */ unnamed_function_81494(potionName,"Small Hp Potion",0);
             if (iVar2 == 0) {
-                iVar2 = unnamed_function_81494(potionName,"Rage Potion",0);
+                iVar2 = /* candidates: System.String.Equals | System.String.op_Equality */ unnamed_function_81494(potionName,"Rage Potion",0);
                 if (iVar2 != 0) {
                     this.rage.IncreaseRage((float)this.ragePotionAmount);
                     return;
@@ -317,6 +315,6 @@ public class ItemConsumer : MonoBehaviour // TypeDefIndex: 5647
         this.ragePotionAmount = 2;
         this.attackPotionMultiplier = 1.25;
         this.bigHealthPotionAmount = 0x32;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

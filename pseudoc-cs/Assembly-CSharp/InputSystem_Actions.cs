@@ -79,10 +79,10 @@ public class InputSystem_Actions : IInputActionCollection2, IInputActionCollecti
         InputAction pIVar3 = default;
 
         pLVar1 = (List) unnamed_function_95402 (System_Collections_Generic_List_InputSystem_Actions_IPlayerActions__TypeInfo);
-        unnamed_function_5132(pLVar1,DAT_ram_005646ec);
+        /* candidates: System.Collections.Generic.List<AdditionalLightsShadowCasterPass.ShadowResolutionRequest>..ctor | System.Collections.Generic.List<AnimationOutputWeightProcessor.WeightInfo>..ctor (+167) */ unnamed_function_5132(pLVar1,DAT_ram_005646ec);
         this.m_PlayerActionsCallbackInterfaces = pLVar1;
         pLVar1 = (List) unnamed_function_95402 (System_Collections_Generic_List_InputSystem_Actions_IUIActions__TypeInfo);
-        unnamed_function_5132(pLVar1,DAT_ram_00564704);
+        /* candidates: System.Collections.Generic.List<AdditionalLightsShadowCasterPass.ShadowResolutionRequest>..ctor | System.Collections.Generic.List<AnimationOutputWeightProcessor.WeightInfo>..ctor (+167) */ unnamed_function_5132(pLVar1,DAT_ram_00564704);
         this.m_KeyboardMouseSchemeIndex = -1;
         this.m_GamepadSchemeIndex = -1;
         this.m_UIActionsCallbackInterfaces = pLVar1;
@@ -235,7 +235,7 @@ public class InputSystem_Actions : IInputActionCollection2, IInputActionCollecti
     {
         System.Collections.Generic.IEnumerator.InputAction pSVar1 = default;
 
-        pSVar1 = (System.Collections.Generic.IEnumerator.InputAction) unnamed_function_49014(Raw.Read<int>(this).pad_8,0);
+        pSVar1 = (System.Collections.Generic.IEnumerator.InputAction) /* candidates: UnityEngine.InputSystem.InputActionAsset.GetEnumerator | UnityEngine.InputSystem.InputActionAsset.System.Collections.IEnumerable.GetEnumerator */ unnamed_function_49014(Raw.Read<int>(this).pad_8,0);
         return pSVar1;
     }
 
@@ -244,7 +244,7 @@ public class InputSystem_Actions : IInputActionCollection2, IInputActionCollecti
     {
         System.Collections.Generic.IEnumerator.InputAction pSVar1 = default;
 
-        pSVar1 = (System.Collections.Generic.IEnumerator.InputAction) unnamed_function_49014(Raw.Read<int>(this).pad_8,0);
+        pSVar1 = (System.Collections.Generic.IEnumerator.InputAction) /* candidates: UnityEngine.InputSystem.InputActionAsset.GetEnumerator | UnityEngine.InputSystem.InputActionAsset.System.Collections.IEnumerable.GetEnumerator */ unnamed_function_49014(Raw.Read<int>(this).pad_8,0);
         return pSVar1;
     }
 

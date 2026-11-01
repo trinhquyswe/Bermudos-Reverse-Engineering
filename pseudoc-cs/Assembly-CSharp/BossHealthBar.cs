@@ -67,7 +67,7 @@ public class BossHealthBar : MonoBehaviour // TypeDefIndex: 5614
                         throw null;
                     } while( true );
                 }
-                pAVar3 = (Action)unnamed_function_1144(&pHVar4.OnHealthChanged,iVar2,param1);
+                pAVar3 = (Action)Interlocked.CompareExchange(ref pHVar4.OnHealthChanged, iVar2, param1);
                 bVar1 = param1 != pAVar3;
                 param1 = pAVar3;
             } while (bVar1);
@@ -96,7 +96,7 @@ public class BossHealthBar : MonoBehaviour // TypeDefIndex: 5614
             param1_01 = System.Delegate.Combine(param1,param1_00,0);
             param2 = System_Action_HealthEvent__HealthEventArgs__TypeInfo;
             if ((param1_01 != 0) && (param2_00 = unnamed_function_1112 (param1_01,System_Action_HealthEvent__HealthEventArgs__TypeInfo), param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&pHVar3.OnHealthChanged,param2_00,param1);
+            pAVar2 = (Action)Interlocked.CompareExchange(ref pHVar3.OnHealthChanged, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -155,6 +155,6 @@ public class BossHealthBar : MonoBehaviour // TypeDefIndex: 5614
     public BossHealthBar()
     {
         this.lerpSpeed = 0.05;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

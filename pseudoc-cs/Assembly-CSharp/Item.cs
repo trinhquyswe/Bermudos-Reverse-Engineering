@@ -85,11 +85,9 @@ public class Item : MonoBehaviour // TypeDefIndex: 5645
         if ((0 < (int)(uVar3 & 1 << (uVar2 & 0x1f))) && (this.isColliding != false)) {
             iVar4 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
             if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-                iVar4 = unnamed_function_95087(iVar4);
             }
             iVar4 = Raw.Read<int>(Raw.Read<int>(iVar4 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-                iVar4 = unnamed_function_95087(iVar4);
             }
             ((SoundEffectManager)Raw.Deref(Raw.Read<object>(iVar4 + 0x5c))).PlaySoundEffect(this.dropItemSoundEffect);
             __this_00 = (InventoryManager)UnityEngine.Component.GetComponent<object>(collision,DAT_ram_00567eb4);
@@ -135,11 +133,9 @@ public class Item : MonoBehaviour // TypeDefIndex: 5645
         fVar1 = local_10;
         iVar13 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar13 + 0xbd) & 1) == 0) {
-            iVar13 = unnamed_function_95087(iVar13);
         }
         iVar13 = Raw.Read<int>(Raw.Read<int>(iVar13 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar13 + 0xbd) & 1) == 0) {
-            iVar13 = unnamed_function_95087(iVar13);
         }
         uVar7 = UnityEngine.Component.get_transform(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar13 + 0x5c)) + 0x10),0);
         UnityEngine.Transform.get_position(&local_10,uVar7,0);
@@ -186,7 +182,7 @@ public class Item : MonoBehaviour // TypeDefIndex: 5645
         this.jumDuration = 0.5;
         this.numJumps = 2;
         this.timeToDestroy = 10.0;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 
     [CompilerGenerated]

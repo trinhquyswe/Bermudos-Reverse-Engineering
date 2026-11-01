@@ -81,11 +81,9 @@ public class Ammo : MonoBehaviour, IFireable // TypeDefIndex: 5535
         if (this.isFirstOnEnable == false) {
             iVar1 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
             if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-                iVar1 = unnamed_function_95087(iVar1);
             }
             iVar1 = Raw.Read<int>(Raw.Read<int>(iVar1 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-                iVar1 = unnamed_function_95087(iVar1);
             }
             ((SoundEffectManager)Raw.Deref(Raw.Read<object>(iVar1 + 0x5c))).PlaySoundEffect(this.shootSoundEffect);
         }
@@ -211,7 +209,7 @@ public class Ammo : MonoBehaviour, IFireable // TypeDefIndex: 5535
         local_30 = CONCAT44(fVar7,fVar4);
         local_20 = (float)fVar4;
         local_1c = (float)fVar7;
-        unnamed_function_44962(uVar2,&local_30,0);
+        /* candidates: UnityEngine.Transform.set_position | UnityEngine.Transform.set_position_Injected */ unnamed_function_44962(uVar2,&local_30,0);
         if (0.996 < param2) {
             this.ammoState = Linear;
         }
@@ -274,7 +272,7 @@ public class Ammo : MonoBehaviour, IFireable // TypeDefIndex: 5535
         local_30 = CONCAT44(fVar4,fVar6);
         local_20 = (float)fVar6;
         local_1c = (float)fVar4;
-        unnamed_function_44962(uVar2,&local_30,0);
+        /* candidates: UnityEngine.Transform.set_position | UnityEngine.Transform.set_position_Injected */ unnamed_function_44962(uVar2,&local_30,0);
         if (0.996 < param2) {
             this.ammoState = Linear;
         }
@@ -335,7 +333,7 @@ public class Ammo : MonoBehaviour, IFireable // TypeDefIndex: 5535
         local_20 = (float)((float)local_10 + fVar3 * fVar2 * fVar4);
         local_30 = CONCAT44(local_1c,local_20);
         local_18 = (float)local_28;
-        unnamed_function_44962(param2,&local_30,0);
+        /* candidates: UnityEngine.Transform.set_position | UnityEngine.Transform.set_position_Injected */ unnamed_function_44962(param2,&local_30,0);
     }
 
     // RVA: 0x3681 Offset: 0x3681 VA: 0x3681
@@ -574,7 +572,7 @@ public class Ammo : MonoBehaviour, IFireable // TypeDefIndex: 5535
                     if (cVar1 == '\0') {
                         iVar2 = 0x38;
                     }
-                    unnamed_function_45425(uVar3,Raw.Read<int>(Raw.Read<int>(Settings_TypeInfo + 0x5c) + iVar2),0);
+                    /* candidates: UnityEngine.Animator.SetTrigger | UnityEngine.Animator.SetTriggerID */ unnamed_function_45425(uVar3,Raw.Read<int>(Raw.Read<int>(Settings_TypeInfo + 0x5c) + iVar2),0);
                 }
             }
             this.AmmoHitEffect();
@@ -614,11 +612,9 @@ public class Ammo : MonoBehaviour, IFireable // TypeDefIndex: 5535
         int[] local_8 = new int[2];
         iVar3 = Raw.Read<int>(DAT_ram_00565d64 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         __this_00 = (PoolManager)Raw.Deref(Raw.Read<object>(iVar3 + 0x5c));
         pGVar1 = GameResources.get_Instance(&MStack_d0);
@@ -644,14 +640,14 @@ public class Ammo : MonoBehaviour, IFireable // TypeDefIndex: 5535
         local_8[0] = param1[4]._opaque;
         local_48 = local_98;
         local_40 = local_90;
-        unnamed_function_86814(local_38,&local_98,0);
+        /* candidates: UnityEngine.ParticleSystem.MinMaxGradient.ctor | UnityEngine.ParticleSystem.MinMaxGradient.op_Implicit */ unnamed_function_86814(local_38,&local_98,0);
         local_a0 = local_10;
         local_a8 = local_18;
         local_b0 = local_20;
         MStack_d0._24_8_ = local_38[2];
         MStack_d0._16_8_ = local_38[1];
         MStack_d0._8_8_ = local_38[0];
-        unnamed_function_86787(local_8,&MStack_d0.field_0x8,0);
+        /* candidates: UnityEngine.ParticleSystem.MainModule.set_startColor | UnityEngine.ParticleSystem.MainModule.set_startColor_Injected */ unnamed_function_86787(local_8,&MStack_d0.field_0x8,0);
         uVar2 = UnityEngine.Component.get_gameObject(param1,0);
         UnityEngine.GameObject.SetActive(uVar2,1,0);
     }
@@ -688,6 +684,6 @@ public class Ammo : MonoBehaviour, IFireable // TypeDefIndex: 5535
     public Ammo()
     {
         this.isFirstOnEnable = true;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

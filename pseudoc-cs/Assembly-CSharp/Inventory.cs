@@ -58,7 +58,7 @@ public class Inventory : MonoBehaviour // TypeDefIndex: 5640
         local_30._24_4_ = Raw.Read<int>(Raw.Read<object>(UnityEngine_Vector3_TypeInfo + 0x5c) + 1);
         local_10 = local_30._16_8_;
         local_8 = local_30._24_4_;
-        unnamed_function_44982(uVar1,&local_30.field_0x10,0);
+        /* candidates: UnityEngine.Transform.set_localScale | UnityEngine.Transform.set_localScale_Injected */ unnamed_function_44982(uVar1,&local_30.field_0x10,0);
         uVar1 = UnityEngine.Component.get_transform(this,0);
         DG.Tweening.DOTween.Kill(uVar1,0,0);
         uVar1 = UnityEngine.Component.get_transform(this,0);
@@ -116,7 +116,7 @@ public class Inventory : MonoBehaviour // TypeDefIndex: 5640
         long local_10 = default;
         long local_8 = default;
 
-        unnamed_function_6549(&local_20,this.inventorySlotList,DAT_ram_00563448);
+        /* candidates: System.Collections.Generic.List<Color32>.GetEnumerator | System.Collections.Generic.List<EasingFunction>.GetEnumerator (+9) */ unnamed_function_6549(&local_20,this.inventorySlotList,DAT_ram_00563448);
         local_8 = local_18;
         local_10 = CONCAT44(puStack_1c,local_20);
         local_20 = 0;
@@ -167,7 +167,7 @@ public class Inventory : MonoBehaviour // TypeDefIndex: 5640
                 if ((iVar1 != 0) && ((((iVar1 == 1 || (iVar1 == 2)) || (iVar1 == 3)) || ((iVar1 == 4 || (iVar1 != 5)))))) {
                     return;
                 }
-                unnamed_function_6549(&local_20,this.hotBarSlotList,DAT_ram_00563448);
+                /* candidates: System.Collections.Generic.List<Color32>.GetEnumerator | System.Collections.Generic.List<EasingFunction>.GetEnumerator (+9) */ unnamed_function_6549(&local_20,this.hotBarSlotList,DAT_ram_00563448);
                 local_8 = local_18;
                 local_10 = CONCAT44(puStack_1c,local_20);
                 local_20 = 0;
@@ -527,7 +527,7 @@ public class Inventory : MonoBehaviour // TypeDefIndex: 5640
                     Raw.Write<int>(param1_01[2]._opaque + uVar3 * 4 + 0x10, param2_00);
                 }
                 else {
-                    unnamed_function_6534 (param1_01,param2_00, Raw.Read<int>(Raw.Read<int>(Raw.Read<int>(iVar1 + 0x10) + 0x60) + 0x38));
+                    /* candidates: System.Collections.Generic.List<EasingFunction>.AddWithResize | System.Collections.Generic.List<InputEventPtr>.AddWithResize (+6) */ unnamed_function_6534 (param1_01,param2_00, Raw.Read<int>(Raw.Read<int>(Raw.Read<int>(iVar1 + 0x10) + 0x60) + 0x38));
                 }
                 local_4 = local_4 + 1;
             } while (local_4 < quantity);
@@ -571,7 +571,7 @@ public class Inventory : MonoBehaviour // TypeDefIndex: 5640
                     Raw.Write<int>(param1_01[2]._opaque + uVar3 * 4 + 0x10, param2_00);
                 }
                 else {
-                    unnamed_function_6534 (param1_01,param2_00, Raw.Read<int>(Raw.Read<int>(Raw.Read<int>(iVar1 + 0x10) + 0x60) + 0x38));
+                    /* candidates: System.Collections.Generic.List<EasingFunction>.AddWithResize | System.Collections.Generic.List<InputEventPtr>.AddWithResize (+6) */ unnamed_function_6534 (param1_01,param2_00, Raw.Read<int>(Raw.Read<int>(Raw.Read<int>(iVar1 + 0x10) + 0x60) + 0x38));
                 }
                 local_4 = local_4 + 1;
             } while (local_4 < quantity);
@@ -584,11 +584,11 @@ public class Inventory : MonoBehaviour // TypeDefIndex: 5640
         List pLVar1 = default;
 
         pLVar1 = (List)new System_Collections_Generic_List_ItemUI_();
-        unnamed_function_5132(pLVar1,DAT_ram_00563440);
+        /* candidates: System.Collections.Generic.List<AdditionalLightsShadowCasterPass.ShadowResolutionRequest>..ctor | System.Collections.Generic.List<AnimationOutputWeightProcessor.WeightInfo>..ctor (+167) */ unnamed_function_5132(pLVar1,DAT_ram_00563440);
         this.inventorySlotList = pLVar1;
         pLVar1 = (List)new System_Collections_Generic_List_ItemUI_();
-        unnamed_function_5132(pLVar1,DAT_ram_00563440);
+        /* candidates: System.Collections.Generic.List<AdditionalLightsShadowCasterPass.ShadowResolutionRequest>..ctor | System.Collections.Generic.List<AnimationOutputWeightProcessor.WeightInfo>..ctor (+167) */ unnamed_function_5132(pLVar1,DAT_ram_00563440);
         this.hotBarSlotList = pLVar1;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

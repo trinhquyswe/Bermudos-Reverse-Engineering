@@ -51,6 +51,6 @@ public class Rage : MonoBehaviour // TypeDefIndex: 5627
     public Rage()
     {
         this.maxRage = 10.0;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

@@ -190,11 +190,9 @@ public class PlayerEffect : Effect // TypeDefIndex: 5583
         else {
             iVar5 = Raw.Read<int>(DAT_ram_00565d64 + 0x10);
             if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-                iVar5 = unnamed_function_95087(iVar5);
             }
             iVar5 = Raw.Read<int>(Raw.Read<int>(iVar5 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-                iVar5 = unnamed_function_95087(iVar5);
             }
             __this_01 = (PoolManager)Raw.Deref(Raw.Read<object>(iVar5 + 0x5c));
             pGVar2 = GameResources.Instance;
@@ -235,6 +233,6 @@ public class PlayerEffect : Effect // TypeDefIndex: 5583
         this.pad_8[0x2a] = 0x80;
         this.pad_8[0x2b] = 0x3e;
         Raw.Write<int>(this.pad_8 + 0x20, uVar1);
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

@@ -115,7 +115,7 @@ public class Beam : MonoBehaviour // TypeDefIndex: 5693
         local_6c = (float)(fVar3 * fVar4);
         local_70 = local_60;
         local_80 = CONCAT44(local_6c,local_60);
-        unnamed_function_44982(param1,&local_80,0);
+        /* candidates: UnityEngine.Transform.set_localScale | UnityEngine.Transform.set_localScale_Injected */ unnamed_function_44982(param1,&local_80,0);
     }
 
     // RVA: 0x39C1 Offset: 0x39C1 VA: 0x39C1
@@ -133,21 +133,17 @@ public class Beam : MonoBehaviour // TypeDefIndex: 5693
         iVar3 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
         if ((int)(uVar2 & 1 << (uVar1 & 0x1f)) < 1) {
             if ((Raw.Read<ushort>(iVar3 + 0xbd) & 1) == 0) {
-                iVar3 = unnamed_function_95087(iVar3);
             }
             iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                iVar3 = unnamed_function_95087(iVar3);
             }
             method_00 = &this.beamSoundEffect;
         }
         else {
             if ((Raw.Read<ushort>(iVar3 + 0xbd) & 1) == 0) {
-                iVar3 = unnamed_function_95087(iVar3);
             }
             iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                iVar3 = unnamed_function_95087(iVar3);
             }
             method_00 = &this.beamPlayerSoundEffect;
         }
@@ -256,6 +252,6 @@ public class Beam : MonoBehaviour // TypeDefIndex: 5693
     public Beam()
     {
         this.damageBeam = 0x14;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

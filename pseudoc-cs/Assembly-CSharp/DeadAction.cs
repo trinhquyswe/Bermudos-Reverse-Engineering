@@ -33,10 +33,10 @@ public class DeadAction : Action // TypeDefIndex: 5560
         long local_8 = default;
 
         UnityEngine.ColorUtility.TryParseHtmlString("#FFFF00",&this.defaultColor,0);
-        uVar1 = unnamed_function_61203(this.deadMaterial,DAT_ram_00565ccc);
+        uVar1 = /* candidates: BehaviorDesigner.Runtime.SharedVariable<Int32Enum>.get_Value | BehaviorDesigner.Runtime.SharedVariable<LayerMask>.get_Value (+4) */ unnamed_function_61203(this.deadMaterial,DAT_ram_00565ccc);
         UnityEngine.Material.SetFloat(uVar1,"_FadeAmount",this.fadeAmount,0);
         this.fadeTime2 = this.fadeTime;
-        uVar1 = unnamed_function_61203(this.deadMaterial,DAT_ram_00565ccc);
+        uVar1 = /* candidates: BehaviorDesigner.Runtime.SharedVariable<Int32Enum>.get_Value | BehaviorDesigner.Runtime.SharedVariable<LayerMask>.get_Value (+4) */ unnamed_function_61203(this.deadMaterial,DAT_ram_00565ccc);
         local_8._0_4_ = this.fadeColor.b;
         local_8._4_4_ = this.fadeColor.a;
         local_10._0_4_ = this.fadeColor.r;
@@ -58,7 +58,7 @@ public class DeadAction : Action // TypeDefIndex: 5560
             fVar4 = Raw.Read<float>(this + 0x44);
             fVar1 = UnityEngine.Time.get_deltaTime(0);
             Raw.Write<float>(this + 0x44, fVar4 + fVar1 / Raw.Read<float>(this + 0x48));
-            param1 = unnamed_function_61203(Raw.Read<int>(this + 0x2c),DAT_ram_00565ccc);
+            param1 = /* candidates: BehaviorDesigner.Runtime.SharedVariable<Int32Enum>.get_Value | BehaviorDesigner.Runtime.SharedVariable<LayerMask>.get_Value (+4) */ unnamed_function_61203(Raw.Read<int>(this + 0x2c),DAT_ram_00565ccc);
             UnityEngine.Material.SetFloat(param1,"_FadeAmount",Raw.Read<float>(this + 0x44),0);
             fVar4 = Raw.Read<float>(this + 0x40);
             fVar1 = UnityEngine.Time.get_deltaTime(0);
@@ -67,11 +67,9 @@ public class DeadAction : Action // TypeDefIndex: 5560
         }
         iVar2 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         iVar2 = Raw.Read<int>(Raw.Read<int>(iVar2 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         __this_00 = (GameManager)Raw.Deref(Raw.Read<object>(iVar2 + 0x5c));
         __this_00.gameState = Won;
@@ -91,14 +89,14 @@ public class DeadAction : Action // TypeDefIndex: 5560
         long local_10 = default;
         long local_8 = default;
 
-        uVar1 = unnamed_function_61203(this.deadMaterial,DAT_ram_00565ccc);
+        uVar1 = /* candidates: BehaviorDesigner.Runtime.SharedVariable<Int32Enum>.get_Value | BehaviorDesigner.Runtime.SharedVariable<LayerMask>.get_Value (+4) */ unnamed_function_61203(this.deadMaterial,DAT_ram_00565ccc);
         local_8._0_4_ = this.defaultColor.b;
         local_8._4_4_ = this.defaultColor.a;
         local_10._0_4_ = this.defaultColor.r;
         local_10._4_4_ = this.defaultColor.g;
         UnityEngine.Material.SetColor(uVar1,"_FadeBurnColor",&local_10,0);
         UnityEngine.GameObject.SetActive(Raw.Read<int>(this).pad_8,0,0);
-        uVar1 = unnamed_function_61203(this.deadMaterial,DAT_ram_00565ccc);
+        uVar1 = /* candidates: BehaviorDesigner.Runtime.SharedVariable<Int32Enum>.get_Value | BehaviorDesigner.Runtime.SharedVariable<LayerMask>.get_Value (+4) */ unnamed_function_61203(this.deadMaterial,DAT_ram_00565ccc);
         UnityEngine.Material.SetFloat(uVar1,"_FadeAmount",0.0,0);
     }
 
@@ -106,6 +104,6 @@ public class DeadAction : Action // TypeDefIndex: 5560
     public DeadAction()
     {
         this.fadeTime = 3.0;
-        unnamed_function_51834(this,0);
+        /* candidates: BehaviorDesigner.Runtime.Tasks.Action.ctor | BehaviorDesigner.Runtime.Tasks.BehaviorReference.ctor (+6) */ unnamed_function_51834(this,0);
     }
 }

@@ -30,13 +30,11 @@ public class TransitionPoint : MonoBehaviour // TypeDefIndex: 5667
 
         iVar2 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         iVar2 = Raw.Read<int>(Raw.Read<int>(iVar2 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
-        if ((Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar2 + 0x5c)) + 0x1c) == 2) && (iVar2 = unnamed_function_81494 (this.TransitionPointDetailsSO.transitionMap,"North Of The Forest",0), uVar1 = "Complete the instructions to enter this map", iVar2 != 0)) {
+        if ((Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar2 + 0x5c)) + 0x1c) == 2) && (iVar2 = /* candidates: System.String.Equals | System.String.op_Equality */ unnamed_function_81494 (this.TransitionPointDetailsSO.transitionMap,"North Of The Forest",0), uVar1 = "Complete the instructions to enter this map", iVar2 != 0)) {
             iVar2 = StaticEventHandler.OnInstructionChanged;
             if (iVar2 != 0) {
                 Raw.VCall((ulong)Raw.Read<uint>(iVar2 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar2 + 0x20),uVar1,0xffffffff,1,Raw.Read<int>(iVar2 + 0x14));
@@ -75,15 +73,13 @@ public class TransitionPoint : MonoBehaviour // TypeDefIndex: 5667
         int iVar1 = default;
         int param1 = default;
 
-        iVar1 = unnamed_function_81494 (this.TransitionPointDetailsSO.transitionMap,"North Of The Forest",0);
+        iVar1 = /* candidates: System.String.Equals | System.String.op_Equality */ unnamed_function_81494 (this.TransitionPointDetailsSO.transitionMap,"North Of The Forest",0);
         if (iVar1 != 0) {
             iVar1 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-                iVar1 = unnamed_function_95087(iVar1);
             }
             iVar1 = Raw.Read<int>(Raw.Read<int>(iVar1 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-                iVar1 = unnamed_function_95087(iVar1);
             }
             ((GameManager)Raw.Deref(Raw.Read<object>(iVar1 + 0x5c))).HandleGameState(EngagedBoss);
         }
@@ -98,8 +94,8 @@ public class TransitionPoint : MonoBehaviour // TypeDefIndex: 5667
         WaitForSeconds param1 = default;
 
         param1 = (WaitForSeconds)new UnityEngine_WaitForSeconds();
-        unnamed_function_9208(param1,0.1,0);
+        /* candidates: DG.Tweening.DOVirtual.__c__DisplayClass0_0._Float_b__1 | TMPEffects.Components.TMPWriter.Delays.SetDelay (+13) */ unnamed_function_9208(param1,0.1,0);
         this.waitForSeconds = param1;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

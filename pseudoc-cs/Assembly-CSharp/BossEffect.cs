@@ -58,7 +58,7 @@ public class BossEffect : Effect // TypeDefIndex: 5575
             param1_01 = System.Delegate.Combine(param1,param1_00,0);
             param2 = System_Action_PoiseEvent__PoiseEventArgs__TypeInfo;
             if ((param1_01 != 0) && (param2_00 = unnamed_function_1112 (param1_01,System_Action_PoiseEvent__PoiseEventArgs__TypeInfo), param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&pPVar3.OnPoise,param2_00,param1);
+            pAVar2 = (Action)Interlocked.CompareExchange(ref pPVar3.OnPoise, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -92,7 +92,7 @@ public class BossEffect : Effect // TypeDefIndex: 5575
             param1_01 = System.Delegate.Remove(param1,param1_00,0);
             param2 = System_Action_PoiseEvent__PoiseEventArgs__TypeInfo;
             if ((param1_01 != 0) && (param2_00 = unnamed_function_1112 (param1_01,System_Action_PoiseEvent__PoiseEventArgs__TypeInfo), param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&pPVar3.OnPoise,param2_00,param1);
+            pAVar2 = (Action)Interlocked.CompareExchange(ref pPVar3.OnPoise, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -111,7 +111,7 @@ public class BossEffect : Effect // TypeDefIndex: 5575
         int[] local_8 = new int[2];
         if (poiseEventArgs.currentPoise <= 0.0) {
             local_8[0] = Raw.Read<int>(this.pad_8 + 0x2c);
-            unnamed_function_86779(local_8,poiseEventArgs.stunTime,0);
+            /* candidates: UnityEngine.ParticleSystem.MainModule.set_startLifetimeMultiplier | UnityEngine.ParticleSystem.MainModule.set_startLifetimeMultiplier_Injected */ unnamed_function_86779(local_8,poiseEventArgs.stunTime,0);
             UnityEngine.ParticleSystem.Play(Raw.Read<int>(this.pad_8 + 0x2c),0);
         }
     }
@@ -196,7 +196,7 @@ public class BossEffect : Effect // TypeDefIndex: 5575
         if (bVar1 == false) {
             iVar2 = 0x38;
         }
-        unnamed_function_45425(param1,Raw.Read<int>(Raw.Read<int>(Settings_TypeInfo + 0x5c) + iVar2),0);
+        /* candidates: UnityEngine.Animator.SetTrigger | UnityEngine.Animator.SetTriggerID */ unnamed_function_45425(param1,Raw.Read<int>(Raw.Read<int>(Settings_TypeInfo + 0x5c) + iVar2),0);
     }
 
     // RVA: 0x3756 Offset: 0x3756 VA: 0x3756
@@ -210,6 +210,6 @@ public class BossEffect : Effect // TypeDefIndex: 5575
         this.pad_8[0x2a] = 0x80;
         this.pad_8[0x2b] = 0x3e;
         Raw.Write<int>(this.pad_8 + 0x20, uVar1);
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

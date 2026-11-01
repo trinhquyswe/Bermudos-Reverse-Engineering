@@ -62,11 +62,9 @@ public class SoundEffectManager : SingletonMonobehaviourPersistent<SoundEffectMa
 
         iVar2 = Raw.Read<int>(DAT_ram_00565d64 + 0x10);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         iVar2 = Raw.Read<int>(Raw.Read<int>(iVar2 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         prefab = (UnityEngine.GameObject)soundEffect.soundPrefab;
         __this_00 = (PoolManager)Raw.Deref(Raw.Read<object>(iVar2 + 0x5c));
@@ -89,7 +87,7 @@ public class SoundEffectManager : SingletonMonobehaviourPersistent<SoundEffectMa
         pUVar3 = param1 + 4;
         UnityEngine.AudioSource.set_volume(pUVar3._opaque,soundEffect.soundEffectVolume,0);
         UnityEngine.AudioSource.set_clip(pUVar3._opaque,soundEffect.soundEffectClip,0);
-        unnamed_function_63125(pUVar3._opaque,soundEffect.soundEffectPitch,0);
+        /* candidates: UnityEngine.AudioSource.SetPitch | UnityEngine.AudioSource.set_pitch */ unnamed_function_63125(pUVar3._opaque,soundEffect.soundEffectPitch,0);
         param1[5]._opaque = (int)soundEffect;
         UnityEngine.AudioSource.set_loop(pUVar3._opaque,0,0);
         param1_00 = UnityEngine.Component.get_gameObject(param1,0);
@@ -120,11 +118,9 @@ public class SoundEffectManager : SingletonMonobehaviourPersistent<SoundEffectMa
 
         iVar1 = Raw.Read<int>(DAT_ram_00565d64 + 0x10);
         if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-            iVar1 = unnamed_function_95087(iVar1);
         }
         iVar1 = Raw.Read<int>(Raw.Read<int>(iVar1 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-            iVar1 = unnamed_function_95087(iVar1);
         }
         prefab = (UnityEngine.GameObject)soundEffect.soundPrefab;
         __this_00 = (PoolManager)Raw.Deref(Raw.Read<object>(iVar1 + 0x5c));
@@ -147,7 +143,7 @@ public class SoundEffectManager : SingletonMonobehaviourPersistent<SoundEffectMa
         pUVar2 = param1 + 4;
         UnityEngine.AudioSource.set_volume(pUVar2._opaque,soundEffect.soundEffectVolume,0);
         UnityEngine.AudioSource.set_clip(pUVar2._opaque,soundEffect.soundEffectClip,0);
-        unnamed_function_63125(pUVar2._opaque,soundEffect.soundEffectPitch,0);
+        /* candidates: UnityEngine.AudioSource.SetPitch | UnityEngine.AudioSource.set_pitch */ unnamed_function_63125(pUVar2._opaque,soundEffect.soundEffectPitch,0);
         param1[5]._opaque = (int)soundEffect;
         UnityEngine.AudioSource.set_loop(pUVar2._opaque,CONCAT31(in_register_20000021,isLoop),0);
         param1_00 = UnityEngine.Component.get_gameObject(param1,0);
@@ -161,7 +157,7 @@ public class SoundEffectManager : SingletonMonobehaviourPersistent<SoundEffectMa
             Raw.Write<object>(param1_01[2]._opaque + uVar3 * 4 + 0x10, param1);
         }
         else {
-            unnamed_function_6534 (param1_01,param1,Raw.Read<int>(Raw.Read<int>(Raw.Read<int>(iVar1 + 0x10) + 0x60) + 0x38));
+            /* candidates: System.Collections.Generic.List<EasingFunction>.AddWithResize | System.Collections.Generic.List<InputEventPtr>.AddWithResize (+6) */ unnamed_function_6534 (param1_01,param1,Raw.Read<int>(Raw.Read<int>(Raw.Read<int>(iVar1 + 0x10) + 0x60) + 0x38));
         }
     }
 
@@ -180,7 +176,7 @@ public class SoundEffectManager : SingletonMonobehaviourPersistent<SoundEffectMa
 
         local_8 = 0;
         local_10 = 0;
-        unnamed_function_6549(&local_10,this.soundEffects,DAT_ram_00563b40);
+        /* candidates: System.Collections.Generic.List<Color32>.GetEnumerator | System.Collections.Generic.List<EasingFunction>.GetEnumerator (+9) */ unnamed_function_6549(&local_10,this.soundEffects,DAT_ram_00563b40);
         local_18 = 0;
         local_14 = &local_10;
         do {
@@ -315,7 +311,7 @@ public class SoundEffectManager : SingletonMonobehaviourPersistent<SoundEffectMa
 
         this.soundsVolume = 10.0;
         param1 = (List)new System_Collections_Generic_List_SoundEffect_();
-        unnamed_function_5132(param1,DAT_ram_00563b38);
+        /* candidates: System.Collections.Generic.List<AdditionalLightsShadowCasterPass.ShadowResolutionRequest>..ctor | System.Collections.Generic.List<AnimationOutputWeightProcessor.WeightInfo>..ctor (+167) */ unnamed_function_5132(param1,DAT_ram_00563b38);
         this.soundEffects = param1;
         new AmmoAnimation(DAT_ram_00565d68);
     }

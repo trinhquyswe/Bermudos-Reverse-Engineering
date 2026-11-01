@@ -84,11 +84,9 @@ public class Spinny : Action // TypeDefIndex: 5573
         param1 = this.boxCollider2D;
         iVar5 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-            iVar5 = unnamed_function_95087(iVar5);
         }
         iVar5 = Raw.Read<int>(Raw.Read<int>(iVar5 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-            iVar5 = unnamed_function_95087(iVar5);
         }
         uVar4 = UnityEngine.Component.GetComponent<object>(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar5 + 0x5c)) + 0x10),DAT_ram_00567e38);
         UnityEngine.Physics2D.IgnoreCollision(param1,uVar4,0);
@@ -97,18 +95,16 @@ public class Spinny : Action // TypeDefIndex: 5573
         local_28 = 0x3fc00000;
         local_10 = 0x3fc000003fc00000;
         local_30 = 0x3fc000003fc00000;
-        unnamed_function_44982(uVar4,&local_30,0);
+        /* candidates: UnityEngine.Transform.set_localScale | UnityEngine.Transform.set_localScale_Injected */ unnamed_function_44982(uVar4,&local_30,0);
         this.dealContactDamage.isRemoved = false;
         this.isColliding = false;
         param1_00 = this.animator;
-        unnamed_function_45425(param1_00,Settings.spinny2,0);
+        /* candidates: UnityEngine.Animator.SetTrigger | UnityEngine.Animator.SetTriggerID */ unnamed_function_45425(param1_00,Settings.spinny2,0);
         iVar5 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-            iVar5 = unnamed_function_95087(iVar5);
         }
         iVar5 = Raw.Read<int>(Raw.Read<int>(iVar5 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-            iVar5 = unnamed_function_95087(iVar5);
         }
         uVar4 = UnityEngine.Component.get_transform(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar5 + 0x5c)) + 0x10),0);
         UnityEngine.Transform.get_position(&local_20,uVar4,0);
@@ -133,11 +129,9 @@ public class Spinny : Action // TypeDefIndex: 5573
         this.dealContactDamage.contactDamageAmount = this.damage;
         iVar5 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
         if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-            iVar5 = unnamed_function_95087(iVar5);
         }
         iVar5 = Raw.Read<int>(Raw.Read<int>(iVar5 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-            iVar5 = unnamed_function_95087(iVar5);
         }
         ((SoundEffectManager)Raw.Deref(Raw.Read<object>(iVar5 + 0x5c))).PlaySoundEffectPersistent(this.spinnySoundEffect, true);
         this.spinnyTime = 5.0;
@@ -151,7 +145,7 @@ public class Spinny : Action // TypeDefIndex: 5573
 
         local_10 = CONCAT44(this.speed * this.direction.y,this.speed * this.direction.x);
         local_8 = local_10;
-        unnamed_function_16392(this.rb,&local_10,0);
+        /* candidates: UnityEngine.Rigidbody2D.set_velocity | UnityEngine.Rigidbody2D.set_velocity_Injected */ unnamed_function_16392(this.rb,&local_10,0);
     }
 
     // RVA: 0x374A Offset: 0x374A VA: 0x374A Slot: 6
@@ -204,36 +198,32 @@ public class Spinny : Action // TypeDefIndex: 5573
 
         iVar2 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         iVar2 = Raw.Read<int>(Raw.Read<int>(iVar2 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         ((SoundEffectManager)Raw.Deref(Raw.Read<object>(iVar2 + 0x5c))).StopSoundEffectLoop(this.spinnySoundEffect);
         UnityEngine.Rigidbody2D.set_drag(this.rb,100000.0,0);
         param1 = this.boxCollider2D;
         iVar2 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         iVar2 = Raw.Read<int>(Raw.Read<int>(iVar2 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         uVar1 = UnityEngine.Component.GetComponent<object>(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar2 + 0x5c)) + 0x10),DAT_ram_00567e38);
         UnityEngine.Physics2D.IgnoreCollision(param1,uVar1,0,0);
         param1_00 = this.rb;
         local_20 = Raw.Deref(Raw.Read<object>(UnityEngine_Vector2_TypeInfo + 0x5c));
         local_8 = local_20;
-        unnamed_function_16392(param1_00,&local_20,0);
+        /* candidates: UnityEngine.Rigidbody2D.set_velocity | UnityEngine.Rigidbody2D.set_velocity_Injected */ unnamed_function_16392(param1_00,&local_20,0);
         this.dealContactDamage.isRemoved = true;
         uVar1 = UnityEngine.GameObject.get_transform(Raw.Read<int>(this).pad_8,0);
         local_10 = 0x40400000;
         local_28 = 0x40400000;
         local_18 = 0x4040000040400000;
         local_30 = 0x4040000040400000;
-        unnamed_function_44982(uVar1,&local_30,0);
+        /* candidates: UnityEngine.Transform.set_localScale | UnityEngine.Transform.set_localScale_Injected */ unnamed_function_44982(uVar1,&local_30,0);
     }
 
     // RVA: 0x374E Offset: 0x374E VA: 0x374E
@@ -242,6 +232,6 @@ public class Spinny : Action // TypeDefIndex: 5573
         this.spinnyTime = 5.0;
         this.speed = 5.0;
         this.damage = 10;
-        unnamed_function_51834(this,0);
+        /* candidates: BehaviorDesigner.Runtime.Tasks.Action.ctor | BehaviorDesigner.Runtime.Tasks.BehaviorReference.ctor (+6) */ unnamed_function_51834(this,0);
     }
 }

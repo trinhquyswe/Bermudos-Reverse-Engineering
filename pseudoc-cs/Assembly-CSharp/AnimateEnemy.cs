@@ -55,8 +55,8 @@ public class AnimateEnemy : MonoBehaviour // TypeDefIndex: 5543
             iVar4 = 0;
             iVar6 = System.Delegate.Combine(pAVar3,uVar5,0);
             uVar2 = System_Action_AnimateEvent__AnimateEventArgs__TypeInfo;
-            if ((iVar6 != 0) && (iVar4 = unnamed_function_1112(iVar6,System_Action_AnimateEvent__AnimateEventArgs__TypeInfo), iVar4 == 0)) break;
-            pAVar7 = (Action)unnamed_function_1144(&pAVar8.OnAnimate,iVar4,pAVar3);
+            if ((iVar6 != 0) && (iVar4 = (iVar6 as System_Action_AnimateEvent__AnimateEventArgs_), iVar4 == 0)) break;
+            pAVar7 = (Action)Interlocked.CompareExchange(ref pAVar8.OnAnimate, iVar4, pAVar3);
             bVar1 = pAVar3 == pAVar7;
             pAVar3 = pAVar7;
             if (bVar1) {
@@ -76,8 +76,8 @@ public class AnimateEnemy : MonoBehaviour // TypeDefIndex: 5543
                     iVar4 = 0;
                     iVar6 = System.Delegate.Combine(pAVar3,uVar5,0);
                     uVar2 = System_Action_AttackEvent__TypeInfo;
-                    if ((iVar6 != 0) && (iVar4 = unnamed_function_1112(iVar6,System_Action_AttackEvent__TypeInfo), iVar4 == 0)) break;
-                    pAVar7 = (Action)unnamed_function_1144(&pAVar9.OnAttack,iVar4,pAVar3);
+                    if ((iVar6 != 0) && (iVar4 = (iVar6 as System_Action_AttackEvent_), iVar4 == 0)) break;
+                    pAVar7 = (Action)Interlocked.CompareExchange(ref pAVar9.OnAttack, iVar4, pAVar3);
                     bVar1 = pAVar3 == pAVar7;
                     pAVar3 = pAVar7;
                     if (bVar1) {
@@ -121,8 +121,8 @@ public class AnimateEnemy : MonoBehaviour // TypeDefIndex: 5543
             iVar4 = 0;
             iVar6 = System.Delegate.Remove(pAVar3,uVar5,0);
             uVar2 = System_Action_AnimateEvent__AnimateEventArgs__TypeInfo;
-            if ((iVar6 != 0) && (iVar4 = unnamed_function_1112(iVar6,System_Action_AnimateEvent__AnimateEventArgs__TypeInfo), iVar4 == 0)) break;
-            pAVar7 = (Action)unnamed_function_1144(&pAVar8.OnAnimate,iVar4,pAVar3);
+            if ((iVar6 != 0) && (iVar4 = (iVar6 as System_Action_AnimateEvent__AnimateEventArgs_), iVar4 == 0)) break;
+            pAVar7 = (Action)Interlocked.CompareExchange(ref pAVar8.OnAnimate, iVar4, pAVar3);
             bVar1 = pAVar3 == pAVar7;
             pAVar3 = pAVar7;
             if (bVar1) {
@@ -142,8 +142,8 @@ public class AnimateEnemy : MonoBehaviour // TypeDefIndex: 5543
                     iVar4 = 0;
                     iVar6 = System.Delegate.Remove(pAVar3,uVar5,0);
                     uVar2 = System_Action_AttackEvent__TypeInfo;
-                    if ((iVar6 != 0) && (iVar4 = unnamed_function_1112(iVar6,System_Action_AttackEvent__TypeInfo), iVar4 == 0)) break;
-                    pAVar7 = (Action)unnamed_function_1144(&pAVar9.OnAttack,iVar4,pAVar3);
+                    if ((iVar6 != 0) && (iVar4 = (iVar6 as System_Action_AttackEvent_), iVar4 == 0)) break;
+                    pAVar7 = (Action)Interlocked.CompareExchange(ref pAVar9.OnAttack, iVar4, pAVar3);
                     bVar1 = pAVar3 == pAVar7;
                     pAVar3 = pAVar7;
                     if (bVar1) {
@@ -170,7 +170,7 @@ public class AnimateEnemy : MonoBehaviour // TypeDefIndex: 5543
         if ((this.attackAnimationCoroutine == (Coroutine)0x0) && (this.enemy.animationEnemyType - IdleAndRun < 2)) {
             this.InitializeStateAnimationParameters();
             param1 = this.enemy.animator;
-            unnamed_function_45420(param1,Settings.isMoving,1,0);
+            /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420(param1,Settings.isMoving,1,0);
         }
     }
 
@@ -182,7 +182,7 @@ public class AnimateEnemy : MonoBehaviour // TypeDefIndex: 5543
         if (this.enemy.animationEnemyType - IdleAndRun < 2) {
             this.InitializeStateAnimationParameters();
             param1 = this.enemy.animator;
-            unnamed_function_45420(param1,Raw.Deref(Raw.Read<object>(Settings_TypeInfo + 0x5c)),1,0);
+            /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420(param1,Raw.Deref(Raw.Read<object>(Settings_TypeInfo + 0x5c)),1,0);
         }
     }
 
@@ -204,7 +204,7 @@ public class AnimateEnemy : MonoBehaviour // TypeDefIndex: 5543
             this.attackAnimationCoroutine = pCVar1;
             this.InitializeStateAnimationParameters();
             param1 = this.enemy.animator;
-            unnamed_function_45425(param1,Settings.isAttack,0);
+            /* candidates: UnityEngine.Animator.SetTrigger | UnityEngine.Animator.SetTriggerID */ unnamed_function_45425(param1,Settings.isAttack,0);
         }
     }
 
@@ -245,7 +245,7 @@ public class AnimateEnemy : MonoBehaviour // TypeDefIndex: 5543
 
         param1 = this.enemy.animator;
         if (this.enemy.animationEnemyType == IdleRunAndAttack) {
-            unnamed_function_45420(param1,Raw.Deref(Raw.Read<object>(Settings_TypeInfo + 0x5c)),0,0);
+            /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420(param1,Raw.Deref(Raw.Read<object>(Settings_TypeInfo + 0x5c)),0,0);
             puVar1 = (object)(Raw.Read<int>(Settings_TypeInfo + 0x5c) + 4);
             param1 = this.enemy.animator;
             iVar2 = 8;
@@ -254,8 +254,8 @@ public class AnimateEnemy : MonoBehaviour // TypeDefIndex: 5543
             puVar1 = Raw.Read<object>(Settings_TypeInfo + 0x5c);
             iVar2 = 4;
         }
-        unnamed_function_45420(param1,*puVar1,0,0);
-        unnamed_function_45420 (this.enemy.animator,Raw.Read<int>(Raw.Read<int>(Settings_TypeInfo + 0x5c) + iVar2),0,0 );
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420(param1,*puVar1,0,0);
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420 (this.enemy.animator,Raw.Read<int>(Raw.Read<int>(Settings_TypeInfo + 0x5c) + iVar2),0,0 );
     }
 
     // RVA: 0x36A6 Offset: 0x36A6 VA: 0x36A6
@@ -272,10 +272,10 @@ public class AnimateEnemy : MonoBehaviour // TypeDefIndex: 5543
         Animator param1 = default;
 
         param1 = this.enemy.animator;
-        unnamed_function_45420(param1,Settings.aimDown,0,0);
-        unnamed_function_45420 (this.enemy.animator,Settings.aimUp,0,0);
-        unnamed_function_45420 (this.enemy.animator,Settings.aimRight,0,0);
-        unnamed_function_45420 (this.enemy.animator,Settings.aimLeft,0,0);
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420(param1,Settings.aimDown,0,0);
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420 (this.enemy.animator,Settings.aimUp,0,0);
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420 (this.enemy.animator,Settings.aimRight,0,0);
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420 (this.enemy.animator,Settings.aimLeft,0,0);
     }
 
     // RVA: 0x36A8 Offset: 0x36A8 VA: 0x36A8
@@ -318,12 +318,12 @@ public class AnimateEnemy : MonoBehaviour // TypeDefIndex: 5543
         }
         if (iVar2 == 0) {
         }
-        unnamed_function_45420(param1,Raw.Read<int>(Raw.Read<int>(Settings_TypeInfo + 0x5c) + iVar1),1,0);
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420(param1,Raw.Read<int>(Raw.Read<int>(Settings_TypeInfo + 0x5c) + iVar1),1,0);
     }
 
     // RVA: 0x36A9 Offset: 0x36A9 VA: 0x36A9
     public AnimateEnemy()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

@@ -62,7 +62,7 @@ public class AmmoVisual : MonoBehaviour // TypeDefIndex: 5539
         UnityEngine.Quaternion.Internal_FromEulerRad(&local_20,&local_30,0);
         local_38 = local_18;
         local_40 = local_20;
-        unnamed_function_44967(param1,&local_40,0);
+        /* candidates: UnityEngine.Transform.set_rotation | UnityEngine.Transform.set_rotation_Injected */ unnamed_function_44967(param1,&local_40,0);
     }
 
     // RVA: 0x3695 Offset: 0x3695 VA: 0x3695
@@ -92,7 +92,7 @@ public class AmmoVisual : MonoBehaviour // TypeDefIndex: 5539
         UnityEngine.Quaternion.Internal_FromEulerRad(&local_20,&local_30,0);
         local_38 = local_18;
         local_40 = local_20;
-        unnamed_function_44967(param1,&local_40,0);
+        /* candidates: UnityEngine.Transform.set_rotation | UnityEngine.Transform.set_rotation_Injected */ unnamed_function_44967(param1,&local_40,0);
     }
 
     // RVA: 0x3696 Offset: 0x3696 VA: 0x3696
@@ -104,6 +104,6 @@ public class AmmoVisual : MonoBehaviour // TypeDefIndex: 5539
     // RVA: 0x3697 Offset: 0x3697 VA: 0x3697
     public AmmoVisual()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

@@ -89,7 +89,6 @@ public class MeleeSkills : MonoBehaviour // TypeDefIndex: 5695
         this.weapon.GetWeaponCollider();
         iVar6 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
         if ((Raw.Read<byte>(iVar6 + 0xbd) & 1) == 0) {
-            iVar6 = unnamed_function_95087(iVar6);
         }
         method_00 = *(MethodInfo)(Raw.Read<int>(iVar6 + 0x60) + 8);
         if ((method_00[5].field_0x1d & 1) == 0) {
@@ -108,7 +107,7 @@ public class MeleeSkills : MonoBehaviour // TypeDefIndex: 5695
         local_38 = local_10;
         local_40 = local_18;
         local_48 = local_20;
-        iVar2 = unnamed_function_16341(param1,&local_48,iVar6,0);
+        iVar2 = /* candidates: UnityEngine.Physics2D.OverlapCollider | UnityEngine.PhysicsScene2D.OverlapCollider */ unnamed_function_16341(param1,&local_48,iVar6,0);
         if (0 < iVar2) {
             iVar1 = 0;
             do {
@@ -206,6 +205,6 @@ public class MeleeSkills : MonoBehaviour // TypeDefIndex: 5695
         this.minDistance = 2.0;
         pWVar1 = (WaitForFixedUpdate)new UnityEngine_WaitForFixedUpdate();
         this.waitForFixedUpdate = pWVar1;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

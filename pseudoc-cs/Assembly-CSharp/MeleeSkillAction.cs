@@ -37,7 +37,7 @@ public class MeleeSkillAction : SkillsAction // TypeDefIndex: 5570
 
         this.pad_8[0x30] = 1;
         __this_00 = this.meleeSkills;
-        skill = unnamed_function_77425 (Raw.Read<int>(this.pad_8 + 0x9c),Raw.Read<int>(this.pad_8 + 0x28), DAT_ram_0055fd54);
+        skill = /* candidates: System.Collections.Generic.Dictionary<Int32Enum, Int32Enum>.get_Item | System.Collections.Generic.Dictionary<Int32Enum, int>.get_Item (+1) */ unnamed_function_77425 (Raw.Read<int>(this.pad_8 + 0x9c),Raw.Read<int>(this.pad_8 + 0x28), DAT_ram_0055fd54);
         __this_00.PlayActiveSkill(skill);
     }
 

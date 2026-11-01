@@ -85,11 +85,9 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
 
         iVar4 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-            iVar4 = unnamed_function_95087(iVar4);
         }
         iVar4 = Raw.Read<int>(Raw.Read<int>(iVar4 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-            iVar4 = unnamed_function_95087(iVar4);
         }
         iVar5 = Raw.Deref(Raw.Read<object>(iVar4 + 0x5c));
         param1_00 = Raw.Read<int>(iVar5 + 0x20);
@@ -101,7 +99,7 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
             Raw.Write<int>(iVar5 + 0x20, 0);
         }
         else {
-            iVar3 = unnamed_function_1112(iVar4,System_Action_GameState__TypeInfo);
+            iVar3 = (iVar4 as System_Action_GameState_);
             if (iVar3 == 0) {
                 unnamed_function_1116(iVar4,uVar2);
                 do {
@@ -110,7 +108,7 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
             }
             Raw.Write<int>(iVar5 + 0x20, iVar3);
             uVar2 = System_Action_GameState__TypeInfo;
-            iVar5 = unnamed_function_1112(iVar4,System_Action_GameState__TypeInfo);
+            iVar5 = (iVar4 as System_Action_GameState_);
             if (iVar5 == 0) {
                 unnamed_function_1116(iVar4,uVar2);
                 do {
@@ -152,11 +150,9 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
 
         iVar4 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-            iVar4 = unnamed_function_95087(iVar4);
         }
         iVar4 = Raw.Read<int>(Raw.Read<int>(iVar4 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-            iVar4 = unnamed_function_95087(iVar4);
         }
         iVar5 = Raw.Deref(Raw.Read<object>(iVar4 + 0x5c));
         param1_00 = Raw.Read<int>(iVar5 + 0x20);
@@ -168,7 +164,7 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
             Raw.Write<int>(iVar5 + 0x20, 0);
         }
         else {
-            iVar3 = unnamed_function_1112(iVar4,System_Action_GameState__TypeInfo);
+            iVar3 = (iVar4 as System_Action_GameState_);
             if (iVar3 == 0) {
                 unnamed_function_1116(iVar4,uVar2);
                 do {
@@ -177,7 +173,7 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
             }
             Raw.Write<int>(iVar5 + 0x20, iVar3);
             uVar2 = System_Action_GameState__TypeInfo;
-            iVar5 = unnamed_function_1112(iVar4,System_Action_GameState__TypeInfo);
+            iVar5 = (iVar4 as System_Action_GameState_);
             if (iVar5 == 0) {
                 unnamed_function_1116(iVar4,uVar2);
                 do {
@@ -218,11 +214,9 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
             this.isInstruction = true;
             iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                iVar3 = unnamed_function_95087(iVar3);
             }
             iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                iVar3 = unnamed_function_95087(iVar3);
             }
             iVar3 = Raw.Deref(Raw.Read<object>(iVar3 + 0x5c));
             uVar4 = Raw.Read<int>(iVar3 + 0x20);
@@ -232,7 +226,7 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
             iVar3 = System.Delegate.Remove(uVar4,uVar1,0);
             uVar1 = System_Action_GameState__TypeInfo;
             if (iVar3 != 0) {
-                iVar2 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+                iVar2 = (iVar3 as System_Action_GameState_);
                 if (iVar2 == 0) {
                     unnamed_function_1116(iVar3,uVar1);
                     do {
@@ -241,7 +235,7 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
                 }
                 *piVar5 = iVar2;
                 uVar1 = System_Action_GameState__TypeInfo;
-                iVar2 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+                iVar2 = (iVar3 as System_Action_GameState_);
                 if (iVar2 != 0) {
                     return;
                 }
@@ -258,11 +252,9 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
             this.LoadItemFromJson();
             iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                iVar3 = unnamed_function_95087(iVar3);
             }
             iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                iVar3 = unnamed_function_95087(iVar3);
             }
             iVar3 = Raw.Deref(Raw.Read<object>(iVar3 + 0x5c));
             uVar4 = Raw.Read<int>(iVar3 + 0x20);
@@ -272,7 +264,7 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
             iVar3 = System.Delegate.Remove(uVar4,uVar1,0);
             uVar1 = System_Action_GameState__TypeInfo;
             if (iVar3 != 0) {
-                iVar2 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+                iVar2 = (iVar3 as System_Action_GameState_);
                 if (iVar2 == 0) {
                     unnamed_function_1116(iVar3,uVar1);
                     do {
@@ -281,7 +273,7 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
                 }
                 *piVar5 = iVar2;
                 uVar1 = System_Action_GameState__TypeInfo;
-                iVar2 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+                iVar2 = (iVar3 as System_Action_GameState_);
                 if (iVar2 != 0) {
                     return;
                 }
@@ -375,10 +367,10 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
         pLVar6 = this.inventoryItemList;
         if (0 < pLVar6[3]._opaque) {
             do {
-                iVar1 = unnamed_function_6529(pLVar6,iVar7,DAT_ram_0056342c);
+                iVar1 = /* candidates: System.Collections.Generic.List<EasingFunction>.get_Item | System.Collections.Generic.List<InputEventPtr>.get_Item (+7) */ unnamed_function_6529(pLVar6,iVar7,DAT_ram_0056342c);
                 pLVar6 = this.inventory.inventorySlotList;
                 if (Raw.Read<int>(iVar1 + 0x10) < 0) {
-                    unnamed_function_6549(&local_20,pLVar6,DAT_ram_00563448);
+                    /* candidates: System.Collections.Generic.List<Color32>.GetEnumerator | System.Collections.Generic.List<EasingFunction>.GetEnumerator (+9) */ unnamed_function_6549(&local_20,pLVar6,DAT_ram_00563448);
                     local_8 = local_18;
                     local_10 = CONCAT44(puStack_1c,local_20);
                     local_20 = 0;
@@ -457,7 +449,7 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
                     }
                 }
                 else {
-                    iVar4 = unnamed_function_6529(pLVar6,Raw.Read<int>(iVar1 + 0x10),DAT_ram_0056344c);
+                    iVar4 = /* candidates: System.Collections.Generic.List<EasingFunction>.get_Item | System.Collections.Generic.List<InputEventPtr>.get_Item (+7) */ unnamed_function_6529(pLVar6,Raw.Read<int>(iVar1 + 0x10),DAT_ram_0056344c);
                     uVar3 = UnityEngine.Component.get_gameObject(Raw.Read<int>(iVar4 + 0x18),0);
                     UnityEngine.GameObject.SetActive(uVar3,1,0);
                     uVar3 = UnityEngine.Component.get_gameObject(Raw.Read<int>(iVar4 + 0x1c),0);
@@ -471,7 +463,7 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
                     Raw.Write<int>(iVar4 + 0x20, iVar1);
                 }
                 code_r0x81a33ef8: if (-1 < Raw.Read<int>(iVar1 + 0x14)) {
-                    iVar4 = unnamed_function_6529 (this.inventory.hotBarSlotList,Raw.Read<int>(iVar1 + 0x14),DAT_ram_0056344c );
+                    iVar4 = /* candidates: System.Collections.Generic.List<EasingFunction>.get_Item | System.Collections.Generic.List<InputEventPtr>.get_Item (+7) */ unnamed_function_6529 (this.inventory.hotBarSlotList,Raw.Read<int>(iVar1 + 0x14),DAT_ram_0056344c );
                     uVar3 = UnityEngine.Component.get_gameObject(Raw.Read<int>(iVar4 + 0x18),0);
                     UnityEngine.GameObject.SetActive(uVar3,1,0);
                     uVar3 = UnityEngine.Component.get_gameObject(Raw.Read<int>(iVar4 + 0x1c),0);
@@ -525,7 +517,7 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
         if (0 < pLVar4[3]._opaque) {
             iVar1 = 0;
             do {
-                pIVar2 = (InventoryItem)unnamed_function_6529(pLVar4,iVar1,DAT_ram_0056342c);
+                pIVar2 = (InventoryItem)/* candidates: System.Collections.Generic.List<EasingFunction>.get_Item | System.Collections.Generic.List<InputEventPtr>.get_Item (+7) */ unnamed_function_6529(pLVar4,iVar1,DAT_ram_0056342c);
                 param1 = pIVar2.itemSO;
                 iVar3 = UnityEngine.Object.op_Equality(param1,itemSO,0);
                 if (iVar3 != 0) {
@@ -556,7 +548,7 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
         pLVar4[4]._opaque = pLVar4[4]._opaque + 1;
         uVar5 = pLVar4[3]._opaque;
         if (Raw.Read<uint>(pLVar4[2]._opaque + 0xc) <= uVar5) {
-            unnamed_function_6534 (pLVar4,iVar3,Raw.Read<int>(Raw.Read<int>(Raw.Read<int>(iVar1 + 0x10) + 0x60) + 0x38));
+            /* candidates: System.Collections.Generic.List<EasingFunction>.AddWithResize | System.Collections.Generic.List<InputEventPtr>.AddWithResize (+6) */ unnamed_function_6534 (pLVar4,iVar3,Raw.Read<int>(Raw.Read<int>(Raw.Read<int>(iVar1 + 0x10) + 0x60) + 0x38));
             return;
         }
         pLVar4[3]._opaque = uVar5 + 1;
@@ -580,7 +572,7 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
 
         local_8 = 0;
         local_10 = 0;
-        unnamed_function_6549(&local_10,this.itemSOList,DAT_ram_00563434);
+        /* candidates: System.Collections.Generic.List<Color32>.GetEnumerator | System.Collections.Generic.List<EasingFunction>.GetEnumerator (+9) */ unnamed_function_6549(&local_10,this.itemSOList,DAT_ram_00563434);
         local_18 = 0;
         local_14 = &local_10;
         while( true ) {
@@ -685,7 +677,7 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
         pLVar4 = this.inventoryItemList;
         if (0 < pLVar4[3]._opaque) {
             do {
-                iVar2 = unnamed_function_6529(pLVar4,iVar6,DAT_ram_0056342c);
+                iVar2 = /* candidates: System.Collections.Generic.List<EasingFunction>.get_Item | System.Collections.Generic.List<InputEventPtr>.get_Item (+7) */ unnamed_function_6529(pLVar4,iVar6,DAT_ram_0056342c);
                 uVar7 = Raw.Read<long>(iVar2 + 0xc);
                 uVar5 = Raw.Read<int>(iVar2 + 0x14);
                 uVar1 = Raw.Read<byte>(iVar2 + 0x18);
@@ -703,7 +695,7 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
         pLVar4 = this.inventoryItemList;
         if (0 < pLVar4[3]._opaque) {
             do {
-                iVar2 = unnamed_function_6529(pLVar4,iVar6,DAT_ram_0056342c);
+                iVar2 = /* candidates: System.Collections.Generic.List<EasingFunction>.get_Item | System.Collections.Generic.List<InputEventPtr>.get_Item (+7) */ unnamed_function_6529(pLVar4,iVar6,DAT_ram_0056342c);
                 uVar7 = Raw.Read<long>(iVar2 + 0xc);
                 uVar5 = Raw.Read<int>(iVar2 + 0x14);
                 uVar1 = Raw.Read<byte>(iVar2 + 0x18);
@@ -737,12 +729,12 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
         List pLVar1 = default;
 
         pLVar1 = (List)new System_Collections_Generic_List_InventoryItem_();
-        unnamed_function_5132(pLVar1,DAT_ram_00563414);
+        /* candidates: System.Collections.Generic.List<AdditionalLightsShadowCasterPass.ShadowResolutionRequest>..ctor | System.Collections.Generic.List<AnimationOutputWeightProcessor.WeightInfo>..ctor (+167) */ unnamed_function_5132(pLVar1,DAT_ram_00563414);
         this.inventoryItemList = pLVar1;
         pLVar1 = (List)new System_Collections_Generic_List_ItemSO_();
-        unnamed_function_5132(pLVar1,DAT_ram_00563430);
+        /* candidates: System.Collections.Generic.List<AdditionalLightsShadowCasterPass.ShadowResolutionRequest>..ctor | System.Collections.Generic.List<AnimationOutputWeightProcessor.WeightInfo>..ctor (+167) */ unnamed_function_5132(pLVar1,DAT_ram_00563430);
         this.itemSOList = pLVar1;
         this.instructionText = "Drag the item to the hotbar to use it.";
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

@@ -53,7 +53,7 @@ public class MovementToPosition : MonoBehaviour // TypeDefIndex: 5679
             param1_01 = System.Delegate.Combine(param1,param1_00,0);
             param2 = System_Action_MovementToPositionEvent__MovementToPositionArgs__TypeInfo;
             if ((param1_01 != 0) && (param2_00 = unnamed_function_1112 (param1_01, System_Action_MovementToPositionEvent__MovementToPositionArgs__TypeInfo ), param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&pMVar3.OnMovementToPosition,param2_00,param1);
+            pAVar2 = (Action)Interlocked.CompareExchange(ref pMVar3.OnMovementToPosition, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -87,7 +87,7 @@ public class MovementToPosition : MonoBehaviour // TypeDefIndex: 5679
             param1_01 = System.Delegate.Remove(param1,param1_00,0);
             param2 = System_Action_MovementToPositionEvent__MovementToPositionArgs__TypeInfo;
             if ((param1_01 != 0) && (param2_00 = unnamed_function_1112 (param1_01, System_Action_MovementToPositionEvent__MovementToPositionArgs__TypeInfo ), param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&pMVar3.OnMovementToPosition,param2_00,param1);
+            pAVar2 = (Action)Interlocked.CompareExchange(ref pMVar3.OnMovementToPosition, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -152,12 +152,12 @@ public class MovementToPosition : MonoBehaviour // TypeDefIndex: 5679
         fVar1 = UnityEngine.Time.get_fixedDeltaTime(0);
         local_18 = CONCAT44(fVar4 * moveSpeed * fVar1 + local_8._4_4_, fVar6 * moveSpeed * fVar1 + local_8._0_4_);
         local_10 = local_18;
-        unnamed_function_16388(param2,&local_18,0);
+        /* candidates: UnityEngine.Rigidbody2D.MovePosition | UnityEngine.Rigidbody2D.MovePosition_Injected */ unnamed_function_16388(param2,&local_18,0);
     }
 
     // RVA: 0x396F Offset: 0x396F VA: 0x396F
     public MovementToPosition()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

@@ -12,7 +12,7 @@ Each `.c` file combines:
    method that has a body in `build.wasm`, decompiled against **real IL2CPP
    struct types** built from the dump.cs field offsets.
 
-Coverage: 708 types / 3,078 methods from `Assembly-CSharp.dll`, 0 decompile
+Coverage: 149 types (one file each) / 937 methods from `Assembly-CSharp.dll`, 0 decompile
 failures. 2,123 distinct native functions (generic code is shared). The Ghidra
 project now holds 1,233 enums and 951 `/il2cpp` structures.
 
@@ -120,8 +120,9 @@ regenerates this folder from the current project state.
 
 ## pseudo-C# view (`~/pseudoc-cs`)
 
-`tools/infer_cs.py --assembly Assembly-CSharp` rewrites this folder into
+`tools/c2cs.py --assembly Assembly-CSharp` rewrites this folder into
 `pseudoc-cs/Assembly-CSharp/*.cs` — the same methods as readable pseudo-C#.
+It runs the P0 pass in `tools/infer_cs.py` first, then the P1 pass.
 
 This is a **reading aid, not compilable C#**: lambdas, `foreach`, `async`,
 LINQ and generic sharing were already lowered by the AOT compiler, so they
@@ -140,14 +141,21 @@ P0 transformations applied (text-level, no decompilation):
 - `StringLiteral_N` → real literal; `halt_trap()` → `throw null;`
 - sret pattern `*__ret = e; return;` → `return e;`
 - cosmetic: `Ammo_o*` → `Ammo`, continuation lines re-joined
+- standalone class-init statements `X = unnamed_function_95087(X);` removed
+- `unnamed_function_1144(&f, v, c)` → `Interlocked.CompareExchange(ref f, v, c)`
+- `unnamed_function_1112(obj, T_TypeInfo)` → `(obj as T)`
 
 Still visible on purpose (P1/P2 scope): `unnamed_function_N` runtime helpers
 (GetComponent, boxing, delegates...), `DAT_ram_*` TypeInfo globals, raw
 offset derefs `*(int *)(x + 0x14)`, virtual calls `(**(code **)...`, compiler
 temps (`iVar1`, `local_10`).
 
+Native calls with exactly one managed name are renamed to `Type.Method(`.
+Ambiguous ones keep the `unnamed_function_N` name and get a
+`/* candidates: ... */` comment before the call.
+
 ```
-python tools/infer_cs.py --assembly Assembly-CSharp
+python tools/c2cs.py --assembly Assembly-CSharp
 ```
 
 regenerates `pseudoc-cs/` without touching Ghidra or this folder.

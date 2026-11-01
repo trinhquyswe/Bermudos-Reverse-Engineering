@@ -46,11 +46,9 @@ public class BossMap : Map // TypeDefIndex: 5663
 
         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar4 = Raw.Deref(Raw.Read<object>(iVar3 + 0x5c));
         param1 = Raw.Read<int>(iVar4 + 0x20);
@@ -62,7 +60,7 @@ public class BossMap : Map // TypeDefIndex: 5663
             Raw.Write<int>(iVar4 + 0x20, 0);
             return;
         }
-        iVar2 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+        iVar2 = (iVar3 as System_Action_GameState_);
         if (iVar2 == 0) {
             unnamed_function_1116(iVar3,uVar1);
             do {
@@ -71,7 +69,7 @@ public class BossMap : Map // TypeDefIndex: 5663
         }
         Raw.Write<int>(iVar4 + 0x20, iVar2);
         uVar1 = System_Action_GameState__TypeInfo;
-        iVar4 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+        iVar4 = (iVar3 as System_Action_GameState_);
         if (iVar4 != 0) {
             return;
         }
@@ -92,11 +90,9 @@ public class BossMap : Map // TypeDefIndex: 5663
 
         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar4 = Raw.Deref(Raw.Read<object>(iVar3 + 0x5c));
         param1 = Raw.Read<int>(iVar4 + 0x20);
@@ -108,7 +104,7 @@ public class BossMap : Map // TypeDefIndex: 5663
             Raw.Write<int>(iVar4 + 0x20, 0);
             return;
         }
-        iVar2 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+        iVar2 = (iVar3 as System_Action_GameState_);
         if (iVar2 == 0) {
             unnamed_function_1116(iVar3,uVar1);
             do {
@@ -117,7 +113,7 @@ public class BossMap : Map // TypeDefIndex: 5663
         }
         Raw.Write<int>(iVar4 + 0x20, iVar2);
         uVar1 = System_Action_GameState__TypeInfo;
-        iVar4 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+        iVar4 = (iVar3 as System_Action_GameState_);
         if (iVar4 != 0) {
             return;
         }
@@ -164,6 +160,6 @@ public class BossMap : Map // TypeDefIndex: 5663
         this.pad_8[0xd] = 0;
         this.pad_8[0xe] = 0x20;
         this.pad_8[0xf] = 0x41;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

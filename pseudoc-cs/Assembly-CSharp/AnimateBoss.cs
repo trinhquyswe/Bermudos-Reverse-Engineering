@@ -47,11 +47,9 @@ public class AnimateBoss : MonoBehaviour // TypeDefIndex: 5541
         byte[] local_30 = new byte[16];
         iVar5 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-            iVar5 = unnamed_function_95087(iVar5);
         }
         iVar5 = Raw.Read<int>(Raw.Read<int>(iVar5 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-            iVar5 = unnamed_function_95087(iVar5);
         }
         uVar4 = UnityEngine.Component.get_transform(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar5 + 0x5c)) + 0x10),0);
         UnityEngine.Transform.get_position(&local_10,uVar4,0);
@@ -75,10 +73,10 @@ public class AnimateBoss : MonoBehaviour // TypeDefIndex: 5541
         Animator param1 = default;
 
         param1 = this.boss.animator;
-        unnamed_function_45420(param1,Settings.aimUp,0,0);
-        unnamed_function_45420 (this.boss.animator,Settings.aimDown,0,0);
-        unnamed_function_45420 (this.boss.animator,Settings.aimLeft,0,0);
-        unnamed_function_45420 (this.boss.animator,Settings.aimRight,0,0);
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420(param1,Settings.aimUp,0,0);
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420 (this.boss.animator,Settings.aimDown,0,0);
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420 (this.boss.animator,Settings.aimLeft,0,0);
+        /* candidates: UnityEngine.Animator.SetBool | UnityEngine.Animator.SetBoolID */ unnamed_function_45420 (this.boss.animator,Settings.aimRight,0,0);
     }
 
     // RVA: 0x369B Offset: 0x369B VA: 0x369B
@@ -132,13 +130,13 @@ public class AnimateBoss : MonoBehaviour // TypeDefIndex: 5541
         }
         if (iVar3 == 0) {
         }
-        unnamed_function_45425(param1,Raw.Read<int>(Raw.Read<int>(Settings_TypeInfo + 0x5c) + iVar1),0);
+        /* candidates: UnityEngine.Animator.SetTrigger | UnityEngine.Animator.SetTriggerID */ unnamed_function_45425(param1,Raw.Read<int>(Raw.Read<int>(Settings_TypeInfo + 0x5c) + iVar1),0);
         return;
     }
 
     // RVA: 0x369C Offset: 0x369C VA: 0x369C
     public AnimateBoss()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

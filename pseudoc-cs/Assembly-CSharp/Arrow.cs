@@ -105,31 +105,31 @@ public class Arrow : MonoBehaviour // TypeDefIndex: 5699
         local_60 = VVar10;
         local_10 = VVar10.x;
         local_c = VVar10.y;
-        unnamed_function_52759(this.lineRenderer,0,&local_60,0);
+        /* candidates: UnityEngine.LineRenderer.SetPosition | UnityEngine.LineRenderer.SetPosition_Injected */ unnamed_function_52759(this.lineRenderer,0,&local_60,0);
         local_18 = 0;
         local_68 = 0;
         local_70 = CONCAT44(fVar8,fVar9);
         local_20 = (float)fVar9;
         local_1c = (float)fVar8;
-        unnamed_function_52759(this.lineRenderer,1,&local_70,0);
+        /* candidates: UnityEngine.LineRenderer.SetPosition | UnityEngine.LineRenderer.SetPosition_Injected */ unnamed_function_52759(this.lineRenderer,1,&local_70,0);
         local_28 = 0;
         local_78 = 0;
         local_2c = (float)(fVar4 + (fVar8 - fVar6));
         local_30 = (float)(fVar5 + (fVar9 - fVar7));
         local_80 = CONCAT44(local_2c,local_30);
-        unnamed_function_52759(this.lineRenderer,2,&local_80,0);
+        /* candidates: UnityEngine.LineRenderer.SetPosition | UnityEngine.LineRenderer.SetPosition_Injected */ unnamed_function_52759(this.lineRenderer,2,&local_80,0);
         local_38 = 0;
         local_88 = 0;
         local_90 = CONCAT44(fVar8,fVar9);
         local_40 = (float)fVar9;
         local_3c = (float)fVar8;
-        unnamed_function_52759(this.lineRenderer,3,&local_90,0);
+        /* candidates: UnityEngine.LineRenderer.SetPosition | UnityEngine.LineRenderer.SetPosition_Injected */ unnamed_function_52759(this.lineRenderer,3,&local_90,0);
         local_48 = 0;
         local_98 = 0;
         local_4c = (float)((fVar8 - fVar1) - fVar4);
         local_50 = (float)((fVar9 - fVar2) - fVar5);
         local_a0 = CONCAT44(local_4c,local_50);
-        unnamed_function_52759(this.lineRenderer,4,&local_a0,0);
+        /* candidates: UnityEngine.LineRenderer.SetPosition | UnityEngine.LineRenderer.SetPosition_Injected */ unnamed_function_52759(this.lineRenderer,4,&local_a0,0);
     }
 
     // RVA: 0x39EC Offset: 0x39EC VA: 0x39EC
@@ -141,6 +141,6 @@ public class Arrow : MonoBehaviour // TypeDefIndex: 5699
     // RVA: 0x39ED Offset: 0x39ED VA: 0x39ED
     public Arrow()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

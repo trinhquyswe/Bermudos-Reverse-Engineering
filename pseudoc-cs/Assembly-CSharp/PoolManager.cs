@@ -64,12 +64,12 @@ public class PoolManager : SingletonMonobehaviourPersistent<PoolManager> // Type
         param1 = new UnityEngine_GameObject();
         UnityEngine.GameObject.__ctor(param1,uVar1,0);
         uVar1 = UnityEngine.GameObject.get_transform(param1,0);
-        unnamed_function_44984(uVar1,this.objectPoolTransform,0);
-        iVar2 = unnamed_function_17516(this.poolDictionary,param2,DAT_ram_00560014);
+        /* candidates: UnityEngine.Transform.SetParent | UnityEngine.Transform.set_parentInternal */ unnamed_function_44984(uVar1,this.objectPoolTransform,0);
+        iVar2 = /* candidates: System.Collections.Generic.Dictionary<int, ByteEnum>.ContainsKey | System.Collections.Generic.Dictionary<int, bool>.ContainsKey (+5) */ unnamed_function_17516(this.poolDictionary,param2,DAT_ram_00560014);
         if (iVar2 == 0) {
             param1_01 = this.poolDictionary;
             uVar1 = new System_Collections_Generic_Queue_Component_();
-            unnamed_function_30856(uVar1,DAT_ram_005657c8);
+            /* candidates: System.Collections.Generic.Queue<EventDispatcher.EventRecord>..ctor | System.Collections.Generic.Queue<int>..ctor (+15) */ unnamed_function_30856(uVar1,DAT_ram_005657c8);
             System.Collections.Generic.Dictionary<int, object>.Add(param1_01,param2,uVar1,DAT_ram_00560010);
             if (0 < poolSize) {
                 iVar2 = 0;
@@ -77,7 +77,7 @@ public class PoolManager : SingletonMonobehaviourPersistent<PoolManager> // Type
                     uVar1 = UnityEngine.GameObject.get_transform(param1,0);
                     uVar1 = UnityEngine.Object.Instantiate<object>(prefab,uVar1,DAT_ram_0056b53c);
                     UnityEngine.GameObject.SetActive(uVar1,0,0);
-                    param1_00 = unnamed_function_78417(this.poolDictionary,param2,DAT_ram_00560018);
+                    param1_00 = /* candidates: System.Collections.Generic.Dictionary<int, int>.get_Item | System.Collections.Generic.Dictionary<int, object>.get_Item */ unnamed_function_78417(this.poolDictionary,param2,DAT_ram_00560018);
                     param2_00 = unnamed_function_1131(componentType,DAT_ram_0056d44c,DAT_ram_0056b9bc);
                     uVar1 = UnityEngine.GameObject.GetComponent(uVar1,param2_00,0);
                     System.Collections.Generic.Queue<object>.Enqueue(param1_00,uVar1,DAT_ram_005657d0);
@@ -103,7 +103,7 @@ public class PoolManager : SingletonMonobehaviourPersistent<PoolManager> // Type
 
         long[] local_10 = new long[2];
         poolKey = UnityEngine.Object.GetInstanceID(prefab,0);
-        iVar1 = unnamed_function_17516(this.poolDictionary,poolKey,DAT_ram_00560014);
+        iVar1 = /* candidates: System.Collections.Generic.Dictionary<int, ByteEnum>.ContainsKey | System.Collections.Generic.Dictionary<int, bool>.ContainsKey (+5) */ unnamed_function_17516(this.poolDictionary,poolKey,DAT_ram_00560014);
         uVar3 = "No object pool for ";
         if (iVar1 == 0) {
             if (prefab == (UnityEngine.GameObject)0x0) {
@@ -126,11 +126,11 @@ public class PoolManager : SingletonMonobehaviourPersistent<PoolManager> // Type
             local_28 = position.z;
             local_30._0_4_ = position.x;
             local_30._4_4_ = position.y;
-            unnamed_function_44962(uVar3,&local_30,0);
+            /* candidates: UnityEngine.Transform.set_position | UnityEngine.Transform.set_position_Injected */ unnamed_function_44962(uVar3,&local_30,0);
             uVar3 = UnityEngine.Component.get_transform(param1,0);
             local_50._24_8_ = local_18;
             local_50._16_8_ = local_20;
-            unnamed_function_44967(uVar3,&local_50.field_0x10,0);
+            /* candidates: UnityEngine.Transform.set_rotation | UnityEngine.Transform.set_rotation_Injected */ unnamed_function_44967(uVar3,&local_50.field_0x10,0);
             uVar3 = UnityEngine.Component.get_gameObject(param1,0);
             uVar3 = UnityEngine.GameObject.get_transform(uVar3,0);
             uVar2 = UnityEngine.GameObject.get_transform(prefab,0);
@@ -138,7 +138,7 @@ public class PoolManager : SingletonMonobehaviourPersistent<PoolManager> // Type
             local_50._8_4_ = (int)local_10[1];
             local_50._opaque0 = (int)local_10[0];
             local_50._opaque1 = local_10[0]._4_4_;
-            unnamed_function_44982(uVar3,&local_50,0);
+            /* candidates: UnityEngine.Transform.set_localScale | UnityEngine.Transform.set_localScale_Injected */ unnamed_function_44982(uVar3,&local_50,0);
         }
         return param1;
     }
@@ -150,9 +150,9 @@ public class PoolManager : SingletonMonobehaviourPersistent<PoolManager> // Type
         UnityEngine.Component param2 = default;
         int iVar2 = default;
 
-        uVar1 = unnamed_function_78417(this.poolDictionary,poolKey,DAT_ram_00560018);
+        uVar1 = /* candidates: System.Collections.Generic.Dictionary<int, int>.get_Item | System.Collections.Generic.Dictionary<int, object>.get_Item */ unnamed_function_78417(this.poolDictionary,poolKey,DAT_ram_00560018);
         param2 = (UnityEngine.Component)System.Collections.Generic.Queue<object>.Dequeue(uVar1,DAT_ram_005657cc);
-        uVar1 = unnamed_function_78417(this.poolDictionary,poolKey,DAT_ram_00560018);
+        uVar1 = /* candidates: System.Collections.Generic.Dictionary<int, int>.get_Item | System.Collections.Generic.Dictionary<int, object>.get_Item */ unnamed_function_78417(this.poolDictionary,poolKey,DAT_ram_00560018);
         System.Collections.Generic.Queue<object>.Enqueue(uVar1,param2,DAT_ram_005657d0);
         uVar1 = UnityEngine.Component.get_gameObject(param2,0);
         iVar2 = UnityEngine.GameObject.get_activeSelf(uVar1,0);
@@ -181,20 +181,20 @@ public class PoolManager : SingletonMonobehaviourPersistent<PoolManager> // Type
         local_18 = position.z;
         local_20._0_4_ = position.x;
         local_20._4_4_ = position.y;
-        unnamed_function_44962(uVar1,&local_20,0);
+        /* candidates: UnityEngine.Transform.set_position | UnityEngine.Transform.set_position_Injected */ unnamed_function_44962(uVar1,&local_20,0);
         uVar1 = UnityEngine.Component.get_transform(componentToReuse,0);
         local_28._0_4_ = rotation.z;
         local_28._4_4_ = rotation.w;
         local_30._0_4_ = rotation.x;
         local_30._4_4_ = rotation.y;
-        unnamed_function_44967(uVar1,&local_30,0);
+        /* candidates: UnityEngine.Transform.set_rotation | UnityEngine.Transform.set_rotation_Injected */ unnamed_function_44967(uVar1,&local_30,0);
         uVar1 = UnityEngine.Component.get_gameObject(componentToReuse,0);
         uVar1 = UnityEngine.GameObject.get_transform(uVar1,0);
         param2 = UnityEngine.GameObject.get_transform(prefab,0);
         UnityEngine.Transform.get_localScale(&local_10,param2,0);
         local_38 = local_8;
         local_40 = local_10;
-        unnamed_function_44982(uVar1,&local_40,0);
+        /* candidates: UnityEngine.Transform.set_localScale | UnityEngine.Transform.set_localScale_Injected */ unnamed_function_44982(uVar1,&local_40,0);
     }
 
     // RVA: 0x39BE Offset: 0x39BE VA: 0x39BE
@@ -203,7 +203,7 @@ public class PoolManager : SingletonMonobehaviourPersistent<PoolManager> // Type
         Dictionary param1 = default;
 
         param1 = (Dictionary) unnamed_function_95402 (System_Collections_Generic_Dictionary_int__Queue_Component___TypeInfo);
-        unnamed_function_17497(param1,DAT_ram_0056000c);
+        /* candidates: System.Collections.Generic.Dictionary<int, ByteEnum>..ctor | System.Collections.Generic.Dictionary<int, DynamicHeightVirtualizationController.ContentHeightCacheInfo<object>>..ctor (+18) */ unnamed_function_17497(param1,DAT_ram_0056000c);
         this.poolDictionary = param1;
         new AmmoAnimation(DAT_ram_00565d5c);
     }

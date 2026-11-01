@@ -69,6 +69,6 @@ public class InventoryDescription : MonoBehaviour // TypeDefIndex: 5641
     // RVA: 0x38B2 Offset: 0x38B2 VA: 0x38B2
     public InventoryDescription()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

@@ -30,7 +30,7 @@ public class ChatController : MonoBehaviour // TypeDefIndex: 5732
         param1_00 = this.ChatInputField[0x4b]._opaque;
         param1 = new UnityEngine_Events_UnityAction_string_();
         UnityEngine.Events.UnityAction<object>.__ctor(param1,this,DAT_ram_00567b4c,0);
-        unnamed_function_71922(param1_00,param1,DAT_ram_005667f8);
+        /* candidates: UnityEngine.Events.UnityEvent<Color>.AddListener | UnityEngine.Events.UnityEvent<InputAction.CallbackContext>.AddListener (+6) */ unnamed_function_71922(param1_00,param1,DAT_ram_005667f8);
     }
 
     // RVA: 0x3AB7 Offset: 0x3AB7 VA: 0x3AB7
@@ -42,7 +42,7 @@ public class ChatController : MonoBehaviour // TypeDefIndex: 5732
         param1_00 = this.ChatInputField[0x4b]._opaque;
         param1 = new UnityEngine_Events_UnityAction_string_();
         UnityEngine.Events.UnityAction<object>.__ctor(param1,this,DAT_ram_00567b4c,0);
-        unnamed_function_71923(param1_00,param1,DAT_ram_00566800);
+        /* candidates: UnityEngine.Events.UnityEvent<Color>.RemoveListener | UnityEngine.Events.UnityEvent<InputAction.CallbackContext>.RemoveListener (+15) */ unnamed_function_71923(param1_00,param1,DAT_ram_00566800);
     }
 
     // RVA: 0x3AB8 Offset: 0x3AB8 VA: 0x3AB8
@@ -80,7 +80,7 @@ public class ChatController : MonoBehaviour // TypeDefIndex: 5732
         if (iVar1 != 0) {
             iVar1 = this.ChatDisplayOutput._opaque;
             uVar3 = Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0x2c8) * 4) /* virtual */ (this.ChatDisplayOutput,Raw.Read<int>(iVar1 + 0x2cc));
-            iVar1 = unnamed_function_81494(uVar3,Raw.Deref(Raw.Read<object>(string_TypeInfo + 0x5c)),0);
+            iVar1 = /* candidates: System.String.Equals | System.String.op_Equality */ unnamed_function_81494(uVar3,Raw.Deref(Raw.Read<object>(string_TypeInfo + 0x5c)),0);
             pTVar4 = this.ChatDisplayOutput;
             iVar5 = pTVar4._opaque;
             if (iVar1 == 0) {
@@ -99,6 +99,6 @@ public class ChatController : MonoBehaviour // TypeDefIndex: 5732
     // RVA: 0x3AB9 Offset: 0x3AB9 VA: 0x3AB9
     public ChatController()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

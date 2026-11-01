@@ -64,11 +64,9 @@ public class EnemyAttack : MonoBehaviour // TypeDefIndex: 5589
 
         iVar2 = Raw.Read<int>(DAT_ram_00565d64 + 0x10);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         iVar2 = Raw.Read<int>(Raw.Read<int>(iVar2 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         prefab = (UnityEngine.GameObject)this.ammoDetailsSO.ammoPrefab;
         __this_00 = (PoolManager)Raw.Deref(Raw.Read<object>(iVar2 + 0x5c));
@@ -83,7 +81,7 @@ public class EnemyAttack : MonoBehaviour // TypeDefIndex: 5589
         param1 = __this_00.ReuseComponent(prefab, &local_40, &local_50);
         iVar2 = IFireable_TypeInfo;
         if (param1 != (UnityEngine.Component)0x0) {
-            param1_00 = (object)unnamed_function_1112(param1,IFireable_TypeInfo);
+            param1_00 = (object)(param1 as IFireable);
             if (param1_00 == (object)0x0) {
                 unnamed_function_1116(param1,iVar2);
                 do {
@@ -93,11 +91,9 @@ public class EnemyAttack : MonoBehaviour // TypeDefIndex: 5589
             pAVar3 = this.ammoDetailsSO;
             iVar2 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-                iVar2 = unnamed_function_95087(iVar2);
             }
             iVar2 = Raw.Read<int>(Raw.Read<int>(iVar2 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-                iVar2 = unnamed_function_95087(iVar2);
             }
             uVar4 = 0;
             param2 = UnityEngine.Component.get_transform(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar2 + 0x5c)) + 0x10),0);
@@ -135,11 +131,9 @@ public class EnemyAttack : MonoBehaviour // TypeDefIndex: 5589
 
         iVar4 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-            iVar4 = unnamed_function_95087(iVar4);
         }
         iVar4 = Raw.Read<int>(Raw.Read<int>(iVar4 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-            iVar4 = unnamed_function_95087(iVar4);
         }
         uVar3 = UnityEngine.Component.get_transform(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar4 + 0x5c)) + 0x10),0);
         UnityEngine.Transform.get_position(&local_10,uVar3,0);
@@ -156,6 +150,6 @@ public class EnemyAttack : MonoBehaviour // TypeDefIndex: 5589
     public EnemyAttack()
     {
         this.attackDistance = 8.0;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

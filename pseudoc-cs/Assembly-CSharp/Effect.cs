@@ -37,7 +37,7 @@ public abstract class Effect : MonoBehaviour // TypeDefIndex: 5576
     {
         ParticleSystem[] local_8 = new ParticleSystem[2];
         local_8[0] = this.stunEffect;
-        unnamed_function_86779(local_8,stunTime,0);
+        /* candidates: UnityEngine.ParticleSystem.MainModule.set_startLifetimeMultiplier | UnityEngine.ParticleSystem.MainModule.set_startLifetimeMultiplier_Injected */ unnamed_function_86779(local_8,stunTime,0);
         UnityEngine.ParticleSystem.Play(this.stunEffect,0);
     }
 
@@ -52,6 +52,6 @@ public abstract class Effect : MonoBehaviour // TypeDefIndex: 5576
         this.pad_8[0x2a] = 0x80;
         this.pad_8[0x2b] = 0x3e;
         Raw.Write<int>(this.pad_8 + 0x20, uVar1);
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

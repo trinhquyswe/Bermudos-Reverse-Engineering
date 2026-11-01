@@ -66,11 +66,9 @@ public class Bash : MonoBehaviour // TypeDefIndex: 5700
 
         iVar5 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-            iVar5 = unnamed_function_95087(iVar5);
         }
         iVar5 = Raw.Read<int>(Raw.Read<int>(iVar5 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-            iVar5 = unnamed_function_95087(iVar5);
         }
         iVar6 = Raw.Deref(Raw.Read<object>(iVar5 + 0x5c));
         uVar7 = Raw.Read<int>(iVar6 + 0x20);
@@ -82,7 +80,7 @@ public class Bash : MonoBehaviour // TypeDefIndex: 5700
             Raw.Write<int>(iVar6 + 0x20, 0);
         }
         else {
-            iVar3 = unnamed_function_1112(iVar5,System_Action_GameState__TypeInfo);
+            iVar3 = (iVar5 as System_Action_GameState_);
             if (iVar3 == 0) {
                 unnamed_function_1116(iVar5,uVar2);
                 do {
@@ -91,7 +89,7 @@ public class Bash : MonoBehaviour // TypeDefIndex: 5700
             }
             Raw.Write<int>(iVar6 + 0x20, iVar3);
             uVar2 = System_Action_GameState__TypeInfo;
-            iVar6 = unnamed_function_1112(iVar5,System_Action_GameState__TypeInfo);
+            iVar6 = (iVar5 as System_Action_GameState_);
             if (iVar6 == 0) {
                 unnamed_function_1116(iVar5,uVar2);
                 do {
@@ -107,8 +105,8 @@ public class Bash : MonoBehaviour // TypeDefIndex: 5700
             iVar5 = 0;
             iVar6 = System.Delegate.Combine(param1,uVar2,0);
             uVar7 = System_Action_BashEvent__BashEventArgs__TypeInfo;
-            if ((iVar6 != 0) && (iVar5 = unnamed_function_1112(iVar6,System_Action_BashEvent__BashEventArgs__TypeInfo), iVar5 == 0)) break;
-            pAVar4 = (Action)unnamed_function_1144(&pBVar8.OnBash,iVar5,param1);
+            if ((iVar6 != 0) && (iVar5 = (iVar6 as System_Action_BashEvent__BashEventArgs_), iVar5 == 0)) break;
+            pAVar4 = (Action)Interlocked.CompareExchange(ref pBVar8.OnBash, iVar5, param1);
             bVar1 = param1 == pAVar4;
             param1 = pAVar4;
             if (bVar1) {
@@ -142,7 +140,7 @@ public class Bash : MonoBehaviour // TypeDefIndex: 5700
             param1_01 = System.Delegate.Remove(param1,param1_00,0);
             param2 = System_Action_BashEvent__BashEventArgs__TypeInfo;
             if ((param1_01 != 0) && (param2_00 = unnamed_function_1112 (param1_01,System_Action_BashEvent__BashEventArgs__TypeInfo), param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&pBVar3.OnBash,param2_00,param1);
+            pAVar2 = (Action)Interlocked.CompareExchange(ref pBVar3.OnBash, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -168,11 +166,9 @@ public class Bash : MonoBehaviour // TypeDefIndex: 5700
             UnityEngine.MonoBehaviour.InvokeRepeating(this,"InstructBash",0.0,0.15,0);
             iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                iVar3 = unnamed_function_95087(iVar3);
             }
             iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                iVar3 = unnamed_function_95087(iVar3);
             }
             iVar4 = Raw.Deref(Raw.Read<object>(iVar3 + 0x5c));
             param1 = Raw.Read<int>(iVar4 + 0x20);
@@ -184,7 +180,7 @@ public class Bash : MonoBehaviour // TypeDefIndex: 5700
                 Raw.Write<int>(iVar4 + 0x20, 0);
                 return;
             }
-            iVar2 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+            iVar2 = (iVar3 as System_Action_GameState_);
             if (iVar2 == 0) {
                 unnamed_function_1116(iVar3,uVar1);
                 do {
@@ -193,7 +189,7 @@ public class Bash : MonoBehaviour // TypeDefIndex: 5700
             }
             Raw.Write<int>(iVar4 + 0x20, iVar2);
             uVar1 = System_Action_GameState__TypeInfo;
-            iVar4 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+            iVar4 = (iVar3 as System_Action_GameState_);
             if (iVar4 == 0) {
                 unnamed_function_1116(iVar3,uVar1);
                 do {
@@ -218,11 +214,9 @@ public class Bash : MonoBehaviour // TypeDefIndex: 5700
         long[] local_10 = new long[2];
         iVar2 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         iVar2 = Raw.Read<int>(Raw.Read<int>(iVar2 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-            iVar2 = unnamed_function_95087(iVar2);
         }
         if (Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar2 + 0x5c)) + 0x1c) == 2) {
             uVar1 = UnityEngine.Component.get_transform(this,0);
@@ -367,11 +361,9 @@ public class Bash : MonoBehaviour // TypeDefIndex: 5700
                 if (this.isDuringSoundPlaying == false) {
                     iVar4 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
                     if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-                        iVar4 = unnamed_function_95087(iVar4);
                     }
                     iVar4 = Raw.Read<int>(Raw.Read<int>(iVar4 + 0x60) + 8);
                     if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-                        iVar4 = unnamed_function_95087(iVar4);
                     }
                     ((SoundEffectManager)Raw.Deref(Raw.Read<object>(iVar4 + 0x5c))).PlaySoundEffect(this.duringBashSoundEffect);
                     this.isDuringSoundPlaying = true;
@@ -425,11 +417,9 @@ public class Bash : MonoBehaviour // TypeDefIndex: 5700
             if (this.isDuringSoundPlaying != false) {
                 iVar1 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
                 if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-                    iVar1 = unnamed_function_95087(iVar1);
                 }
                 iVar1 = Raw.Read<int>(Raw.Read<int>(iVar1 + 0x60) + 8);
                 if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-                    iVar1 = unnamed_function_95087(iVar1);
                 }
                 ((SoundEffectManager)Raw.Deref(Raw.Read<object>(iVar1 + 0x5c))).PlaySoundEffect(this.releaseBashSoundEffect);
                 this.isDuringSoundPlaying = false;
@@ -480,7 +470,7 @@ public class Bash : MonoBehaviour // TypeDefIndex: 5700
         }
         local_20 = CONCAT44(fVar3 * this.bashForce,fVar4 * this.bashForce);
         local_18 = local_20;
-        unnamed_function_16412(param1,&local_20,1,0);
+        /* candidates: UnityEngine.Rigidbody2D.AddForce | UnityEngine.Rigidbody2D.AddForce_Injected */ unnamed_function_16412(param1,&local_20,1,0);
     }
 
     // RVA: 0x39FB Offset: 0x39FB VA: 0x39FB
@@ -492,11 +482,9 @@ public class Bash : MonoBehaviour // TypeDefIndex: 5700
 
         iVar1 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-            iVar1 = unnamed_function_95087(iVar1);
         }
         iVar1 = Raw.Read<int>(Raw.Read<int>(iVar1 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-            iVar1 = unnamed_function_95087(iVar1);
         }
         if (Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar1 + 0x5c)) + 0x1c) == 2) {
             iVar1 = this.displayCount;
@@ -504,11 +492,9 @@ public class Bash : MonoBehaviour // TypeDefIndex: 5700
                 UnityEngine.MonoBehaviour.CancelInvoke(this,"InstructBash",0);
                 iVar1 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
                 if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-                    iVar1 = unnamed_function_95087(iVar1);
                 }
                 iVar1 = Raw.Read<int>(Raw.Read<int>(iVar1 + 0x60) + 8);
                 if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-                    iVar1 = unnamed_function_95087(iVar1);
                 }
                 ((GameManager)Raw.Deref(Raw.Read<object>(iVar1 + 0x5c))).HandleGameState(Play);
                 iVar1 = this.displayCount;
@@ -528,6 +514,6 @@ public class Bash : MonoBehaviour // TypeDefIndex: 5700
         this.bashRadius = 2.5;
         this.bashForce = 10.0;
         this.bashCost = 10;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

@@ -35,7 +35,7 @@ public static class RageEvent // TypeDefIndex: 5628
             iVar2 = 0;
             param1_00 = System.Delegate.Combine(param1,value,0);
             param2 = System_Action_RageEventArgs__TypeInfo;
-            if ((param1_00 != 0) && (iVar2 = unnamed_function_1112(param1_00,System_Action_RageEventArgs__TypeInfo), iVar2 == 0)) break;
+            if ((param1_00 != 0) && (iVar2 = (param1_00 as System_Action_RageEventArgs_), iVar2 == 0)) break;
             iVar2 = unnamed_function_1144(Raw.Read<int>(RageEvent_TypeInfo + 0x5c),iVar2,param1);
             bVar1 = param1 == iVar2;
             param1 = iVar2;
@@ -64,7 +64,7 @@ public static class RageEvent // TypeDefIndex: 5628
             iVar2 = 0;
             param1_00 = System.Delegate.Remove(param1,value,0);
             param2 = System_Action_RageEventArgs__TypeInfo;
-            if ((param1_00 != 0) && (iVar2 = unnamed_function_1112(param1_00,System_Action_RageEventArgs__TypeInfo), iVar2 == 0)) break;
+            if ((param1_00 != 0) && (iVar2 = (param1_00 as System_Action_RageEventArgs_), iVar2 == 0)) break;
             iVar2 = unnamed_function_1144(Raw.Read<int>(RageEvent_TypeInfo + 0x5c),iVar2,param1);
             bVar1 = param1 == iVar2;
             param1 = iVar2;

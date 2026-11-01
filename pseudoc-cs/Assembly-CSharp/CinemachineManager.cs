@@ -48,11 +48,9 @@ public class CinemachineManager : MonoBehaviour // TypeDefIndex: 5610
         StaticEventHandler.add_OnMapChanged(value);
         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar4 = Raw.Deref(Raw.Read<object>(iVar3 + 0x5c));
         param1 = Raw.Read<int>(iVar4 + 0x20);
@@ -64,7 +62,7 @@ public class CinemachineManager : MonoBehaviour // TypeDefIndex: 5610
             Raw.Write<int>(iVar4 + 0x20, 0);
             return;
         }
-        iVar2 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+        iVar2 = (iVar3 as System_Action_GameState_);
         if (iVar2 == 0) {
             unnamed_function_1116(iVar3,uVar1);
             do {
@@ -73,7 +71,7 @@ public class CinemachineManager : MonoBehaviour // TypeDefIndex: 5610
         }
         Raw.Write<int>(iVar4 + 0x20, iVar2);
         uVar1 = System_Action_GameState__TypeInfo;
-        iVar4 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+        iVar4 = (iVar3 as System_Action_GameState_);
         if (iVar4 != 0) {
             return;
         }
@@ -131,11 +129,9 @@ public class CinemachineManager : MonoBehaviour // TypeDefIndex: 5610
             UnityEngine.GameObject.SetActive(uVar2,1,0);
             iVar1 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-                iVar1 = unnamed_function_95087(iVar1);
             }
             iVar1 = Raw.Read<int>(Raw.Read<int>(iVar1 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-                iVar1 = unnamed_function_95087(iVar1);
             }
             iVar5 = Raw.Deref(Raw.Read<object>(iVar1 + 0x5c));
             uVar3 = Raw.Read<int>(iVar5 + 0x20);
@@ -147,7 +143,7 @@ public class CinemachineManager : MonoBehaviour // TypeDefIndex: 5610
                 Raw.Write<int>(iVar5 + 0x20, 0);
                 return;
             }
-            iVar4 = unnamed_function_1112(iVar1,System_Action_GameState__TypeInfo);
+            iVar4 = (iVar1 as System_Action_GameState_);
             if (iVar4 == 0) {
                 unnamed_function_1116(iVar1,uVar2);
                 do {
@@ -156,7 +152,7 @@ public class CinemachineManager : MonoBehaviour // TypeDefIndex: 5610
             }
             Raw.Write<int>(iVar5 + 0x20, iVar4);
             uVar2 = System_Action_GameState__TypeInfo;
-            iVar5 = unnamed_function_1112(iVar1,System_Action_GameState__TypeInfo);
+            iVar5 = (iVar1 as System_Action_GameState_);
             if (iVar5 == 0) {
                 unnamed_function_1116(iVar1,uVar2);
                 do {
@@ -182,11 +178,9 @@ public class CinemachineManager : MonoBehaviour // TypeDefIndex: 5610
         pCVar2 = this.cinemachineVirtualCamera;
         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         uVar1 = UnityEngine.Component.get_transform(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar3 + 0x5c)) + 0x10),0);
         iVar3 = pCVar2._opaque;
@@ -194,11 +188,9 @@ public class CinemachineManager : MonoBehaviour // TypeDefIndex: 5610
         pCVar2 = this.zoomCamera;
         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         uVar1 = UnityEngine.Component.get_transform(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar3 + 0x5c)) + 0x10),0);
         iVar3 = pCVar2._opaque;
@@ -237,7 +229,7 @@ public class CinemachineManager : MonoBehaviour // TypeDefIndex: 5610
     // RVA: 0x37E6 Offset: 0x37E6 VA: 0x37E6
     public CinemachineManager()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 
     [CompilerGenerated]
@@ -259,11 +251,9 @@ public class CinemachineManager : MonoBehaviour // TypeDefIndex: 5610
         UnityEngine.GameObject.SetActive(uVar1,1,0);
         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar4 = Raw.Deref(Raw.Read<object>(iVar3 + 0x5c));
         param1 = Raw.Read<int>(iVar4 + 0x20);
@@ -275,7 +265,7 @@ public class CinemachineManager : MonoBehaviour // TypeDefIndex: 5610
             Raw.Write<int>(iVar4 + 0x20, 0);
         }
         else {
-            iVar2 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+            iVar2 = (iVar3 as System_Action_GameState_);
             if (iVar2 == 0) {
                 unnamed_function_1116(iVar3,uVar1);
                 do {
@@ -284,7 +274,7 @@ public class CinemachineManager : MonoBehaviour // TypeDefIndex: 5610
             }
             Raw.Write<int>(iVar4 + 0x20, iVar2);
             uVar1 = System_Action_GameState__TypeInfo;
-            iVar4 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+            iVar4 = (iVar3 as System_Action_GameState_);
             if (iVar4 == 0) {
                 unnamed_function_1116(iVar3,uVar1);
                 do {
@@ -294,11 +284,9 @@ public class CinemachineManager : MonoBehaviour // TypeDefIndex: 5610
         }
         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Deref(Raw.Read<object>(iVar3 + 0x5c));
         Raw.Write<int>(iVar3 + 0x1c, 2);

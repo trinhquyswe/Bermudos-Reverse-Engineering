@@ -95,7 +95,7 @@ public class RestUI : MonoBehaviour // TypeDefIndex: 5556
     // RVA: 0x36F8 Offset: 0x36F8 VA: 0x36F8
     public RestUI()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 
     [CompilerGenerated]

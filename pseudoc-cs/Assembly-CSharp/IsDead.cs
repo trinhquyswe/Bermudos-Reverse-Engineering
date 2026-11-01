@@ -37,6 +37,6 @@ public class IsDead : Conditional // TypeDefIndex: 5567
     // RVA: 0x372E Offset: 0x372E VA: 0x372E
     public IsDead()
     {
-        unnamed_function_51834(this,0);
+        /* candidates: BehaviorDesigner.Runtime.Tasks.Action.ctor | BehaviorDesigner.Runtime.Tasks.BehaviorReference.ctor (+6) */ unnamed_function_51834(this,0);
     }
 }

@@ -98,6 +98,6 @@ public class Stamina : MonoBehaviour // TypeDefIndex: 5630
     {
         this.staminaRecoveryRate = 1.0;
         this.staminaRegenAmount = 5.0;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

@@ -50,11 +50,9 @@ public class DealDamage : MonoBehaviour // TypeDefIndex: 5550
 
         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar3 + 0x5c)) + 0x10) + 0x28);
         param1_00 = new System_Action_DealDamageEvent__DealDamageEventAgrs_();
@@ -91,11 +89,9 @@ public class DealDamage : MonoBehaviour // TypeDefIndex: 5550
 
         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar3 + 0x5c)) + 0x10) + 0x28);
         param1_00 = new System_Action_DealDamageEvent__DealDamageEventAgrs_();
@@ -144,11 +140,9 @@ public class DealDamage : MonoBehaviour // TypeDefIndex: 5550
         this.weapon.GetWeaponCollider();
         iVar4 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-            iVar4 = unnamed_function_95087(iVar4);
         }
         iVar4 = Raw.Read<int>(Raw.Read<int>(iVar4 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-            iVar4 = unnamed_function_95087(iVar4);
         }
         pMVar5 = *(MethodInfo)(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar4 + 0x5c)) + 0x10) + 0x40);
         if (0.0 < *(object)&pMVar5.field_0x14) {
@@ -159,20 +153,16 @@ public class DealDamage : MonoBehaviour // TypeDefIndex: 5550
         }
         iVar4 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
         if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-            iVar4 = unnamed_function_95087(iVar4);
         }
         iVar4 = Raw.Read<int>(Raw.Read<int>(iVar4 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-            iVar4 = unnamed_function_95087(iVar4);
         }
         __this_00 = (SoundEffectManager)Raw.Deref(Raw.Read<object>(iVar4 + 0x5c));
         iVar4 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-            iVar4 = unnamed_function_95087(iVar4);
         }
         iVar4 = Raw.Read<int>(Raw.Read<int>(iVar4 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-            iVar4 = unnamed_function_95087(iVar4);
         }
         pMVar5 = null;
         __this_00.PlaySoundEffect(Raw.Read<object>(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar4 + 0x5c)) + 0x10) + 100));
@@ -195,7 +185,7 @@ public class DealDamage : MonoBehaviour // TypeDefIndex: 5550
         local_30 = local_10;
         local_38 = local_18;
         local_40 = local_20;
-        pMVar1 = unnamed_function_16341(param1,&local_40,iVar4,0);
+        pMVar1 = /* candidates: UnityEngine.Physics2D.OverlapCollider | UnityEngine.PhysicsScene2D.OverlapCollider */ unnamed_function_16341(param1,&local_40,iVar4,0);
         if (0 < (int)pMVar1) {
             do {
                 collision = Raw.Read<object>(iVar4 + (int)pMVar5 * 4 + 0x10);
@@ -203,11 +193,9 @@ public class DealDamage : MonoBehaviour // TypeDefIndex: 5550
                 if (iVar2 != 0) {
                     iVar2 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
                     if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-                        iVar2 = unnamed_function_95087(iVar2);
                     }
                     iVar2 = Raw.Read<int>(Raw.Read<int>(iVar2 + 0x60) + 8);
                     if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-                        iVar2 = unnamed_function_95087(iVar2);
                     }
                     iVar2 = Raw.Read<int>(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar2 + 0x5c)) + 0x10) + 0x4c);
                     fVar7 = Raw.Read<float>(iVar2 + 0x14) + 1.0;
@@ -259,11 +247,9 @@ public class DealDamage : MonoBehaviour // TypeDefIndex: 5550
                 __this_00 = (BossEffect)UnityEngine.Component.GetComponent<object>(collision,DAT_ram_00567e34);
                 iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
                 if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                    iVar3 = unnamed_function_95087(iVar3);
                 }
                 iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
                 if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                    iVar3 = unnamed_function_95087(iVar3);
                 }
                 uVar2 = UnityEngine.Component.get_transform(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar3 + 0x5c)) + 0x10),0);
                 UnityEngine.Transform.get_position(&local_10,uVar2,0);
@@ -286,7 +272,7 @@ public class DealDamage : MonoBehaviour // TypeDefIndex: 5550
                 if (cVar1 == '\0') {
                     iVar3 = 0x38;
                 }
-                unnamed_function_45425(uVar2,Raw.Read<int>(Raw.Read<int>(Settings_TypeInfo + 0x5c) + iVar3),0);
+                /* candidates: UnityEngine.Animator.SetTrigger | UnityEngine.Animator.SetTriggerID */ unnamed_function_45425(uVar2,Raw.Read<int>(Raw.Read<int>(Settings_TypeInfo + 0x5c) + iVar3),0);
             }
         }
         else {
@@ -295,11 +281,9 @@ public class DealDamage : MonoBehaviour // TypeDefIndex: 5550
                 __this_01 = Raw.Read<object>(iVar3 + 0x24);
                 iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
                 if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                    iVar3 = unnamed_function_95087(iVar3);
                 }
                 iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
                 if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                    iVar3 = unnamed_function_95087(iVar3);
                 }
                 uVar2 = UnityEngine.Component.get_transform(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar3 + 0x5c)) + 0x10),0);
                 UnityEngine.Transform.get_position(&local_10,uVar2,0);
@@ -344,6 +328,6 @@ public class DealDamage : MonoBehaviour // TypeDefIndex: 5550
     {
         this.damage = 10;
         this.attackCost = 10;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

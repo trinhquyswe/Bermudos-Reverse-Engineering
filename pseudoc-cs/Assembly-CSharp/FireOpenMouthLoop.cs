@@ -40,6 +40,6 @@ public class FireOpenMouthLoop : Action // TypeDefIndex: 5565
     // RVA: 0x3728 Offset: 0x3728 VA: 0x3728
     public FireOpenMouthLoop()
     {
-        unnamed_function_51834(this,0);
+        /* candidates: BehaviorDesigner.Runtime.Tasks.Action.ctor | BehaviorDesigner.Runtime.Tasks.BehaviorReference.ctor (+6) */ unnamed_function_51834(this,0);
     }
 }

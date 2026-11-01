@@ -50,6 +50,6 @@ public class DropdownSample : MonoBehaviour // TypeDefIndex: 5733
     // RVA: 0x3ABB Offset: 0x3ABB VA: 0x3ABB
     public DropdownSample()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

@@ -69,7 +69,7 @@ public class EnterPhase2 : Action // TypeDefIndex: 5563
         this.poise.currentPoise = this.poise.maxPoise;
         this.rangedSkills.ammo = this.rangedSkills.ammoPhase2;
         param1_00 = this.animator;
-        unnamed_function_45425(param1_00,Settings.Idle2,0);
+        /* candidates: UnityEngine.Animator.SetTrigger | UnityEngine.Animator.SetTriggerID */ unnamed_function_45425(param1_00,Settings.Idle2,0);
         this.fadeInTime2 = this.fadeInTime;
         this.dealContactDamage.isRemoved = true;
         UnityEngine.Rigidbody2D.set_constraints(this.rb,4,0);
@@ -89,7 +89,7 @@ public class EnterPhase2 : Action // TypeDefIndex: 5563
             fVar3 = Raw.Read<float>(this + 0x40);
             fVar1 = UnityEngine.Time.get_deltaTime(0);
             Raw.Write<float>(this + 0x40, fVar3 - fVar1 / Raw.Read<float>(this + 0x3c));
-            uVar2 = unnamed_function_61203(Raw.Read<int>(this + 0x34),DAT_ram_00565ccc);
+            uVar2 = /* candidates: BehaviorDesigner.Runtime.SharedVariable<Int32Enum>.get_Value | BehaviorDesigner.Runtime.SharedVariable<LayerMask>.get_Value (+4) */ unnamed_function_61203(Raw.Read<int>(this + 0x34),DAT_ram_00565ccc);
             UnityEngine.Material.SetFloat(uVar2,"_FadeAmount",Raw.Read<float>(this + 0x40),0);
             fVar3 = Raw.Read<float>(this + 0x38);
             fVar1 = UnityEngine.Time.get_deltaTime(0);
@@ -107,6 +107,6 @@ public class EnterPhase2 : Action // TypeDefIndex: 5563
     {
         this.fadeInAmount = 1.0;
         this.fadeInTime = 1.0;
-        unnamed_function_51834(this,0);
+        /* candidates: BehaviorDesigner.Runtime.Tasks.Action.ctor | BehaviorDesigner.Runtime.Tasks.BehaviorReference.ctor (+6) */ unnamed_function_51834(this,0);
     }
 }

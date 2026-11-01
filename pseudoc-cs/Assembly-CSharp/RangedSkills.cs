@@ -51,11 +51,9 @@ public class RangedSkills : MonoBehaviour // TypeDefIndex: 5698
 
         iVar3 = Raw.Read<int>(DAT_ram_00565d64 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         prefab = (UnityEngine.GameObject)ammoDetailsSO.ammoPrefab;
         __this_00 = (PoolManager)Raw.Deref(Raw.Read<object>(iVar3 + 0x5c));
@@ -67,7 +65,7 @@ public class RangedSkills : MonoBehaviour // TypeDefIndex: 5698
         param1 = __this_00.ReuseComponent(prefab, &local_10, &local_20);
         iVar3 = IFireable_TypeInfo;
         if (param1 != (UnityEngine.Component)0x0) {
-            param1_00 = (object)unnamed_function_1112(param1,IFireable_TypeInfo);
+            param1_00 = (object)(param1 as IFireable);
             if (param1_00 == (object)0x0) {
                 unnamed_function_1116(param1,iVar3);
                 do {
@@ -213,11 +211,9 @@ public class RangedSkills : MonoBehaviour // TypeDefIndex: 5698
 
         iVar5 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-            iVar5 = unnamed_function_95087(iVar5);
         }
         iVar5 = Raw.Read<int>(Raw.Read<int>(iVar5 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-            iVar5 = unnamed_function_95087(iVar5);
         }
         uVar3 = UnityEngine.Component.get_transform(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar5 + 0x5c)) + 0x10),0);
         UnityEngine.Transform.get_position(&local_20,uVar3,0);
@@ -299,7 +295,7 @@ public class RangedSkills : MonoBehaviour // TypeDefIndex: 5698
         local_28._28_4_ = 0;
         local_28._16_8_ = 0;
         param2 = this.GetTargetPositionList(&local_70);
-        unnamed_function_5249(&local_28.field_0x10,param2,DAT_ram_00564134);
+        /* candidates: System.Collections.Generic.List<DecalEntityIndexer.DecalEntityItem>.GetEnumerator | System.Collections.Generic.List<HIDParser.HIDReportData>.GetEnumerator (+26) */ unnamed_function_5249(&local_28.field_0x10,param2,DAT_ram_00564134);
         local_30 = 0;
         local_2c = &local_28.field_0x10;
         while( true ) {
@@ -395,11 +391,9 @@ public class RangedSkills : MonoBehaviour // TypeDefIndex: 5698
         iVar8 = 0;
         iVar9 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar9 + 0xbd) & 1) == 0) {
-            iVar9 = unnamed_function_95087(iVar9);
         }
         iVar9 = Raw.Read<int>(Raw.Read<int>(iVar9 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar9 + 0xbd) & 1) == 0) {
-            iVar9 = unnamed_function_95087(iVar9);
         }
         uVar5 = UnityEngine.Component.get_transform(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar9 + 0x5c)) + 0x10),0);
         UnityEngine.Transform.get_position(&local_10,uVar5,0);
@@ -410,7 +404,7 @@ public class RangedSkills : MonoBehaviour // TypeDefIndex: 5698
         fVar4 = local_c;
         fVar2 = local_10;
         param1 = (System.Collections.Generic.List.Vector3) new System_Collections_Generic_List_Vector3_();
-        unnamed_function_5132(param1,DAT_ram_00564120);
+        /* candidates: System.Collections.Generic.List<AdditionalLightsShadowCasterPass.ShadowResolutionRequest>..ctor | System.Collections.Generic.List<AnimationOutputWeightProcessor.WeightInfo>..ctor (+167) */ unnamed_function_5132(param1,DAT_ram_00564120);
         fVar6 = (float)fVar3 - (float)fVar4;
         fVar10 = (float)fVar1 - (float)fVar2;
         if (Mathf.Abs(fVar6) < Mathf.Abs(fVar10)) {
@@ -418,11 +412,9 @@ public class RangedSkills : MonoBehaviour // TypeDefIndex: 5698
                 do {
                     iVar9 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
                     if ((Raw.Read<byte>(iVar9 + 0xbd) & 1) == 0) {
-                        iVar9 = unnamed_function_95087(iVar9);
                     }
                     iVar9 = Raw.Read<int>(Raw.Read<int>(iVar9 + 0x60) + 8);
                     if ((Raw.Read<byte>(iVar9 + 0xbd) & 1) == 0) {
-                        iVar9 = unnamed_function_95087(iVar9);
                     }
                     uVar5 = UnityEngine.Component.get_transform(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar9 + 0x5c)) + 0x10),0);
                     UnityEngine.Transform.get_position(&local_10,uVar5,0);
@@ -441,7 +433,7 @@ public class RangedSkills : MonoBehaviour // TypeDefIndex: 5698
                     else {
                         local_28 = 0;
                         local_30 = CONCAT44(local_c,local_10);
-                        unnamed_function_5234 (param1,&local_30, Raw.Read<int>(Raw.Read<int>(Raw.Read<int>(iVar9 + 0x10) + 0x60) + 0x38));
+                        /* candidates: System.Collections.Generic.List<DecalEntityIndexer.DecalEntityItem>.AddWithResize | System.Collections.Generic.List<HIDParser.HIDReportData>.AddWithResize (+26) */ unnamed_function_5234 (param1,&local_30, Raw.Read<int>(Raw.Read<int>(Raw.Read<int>(iVar9 + 0x10) + 0x60) + 0x38));
                     }
                     iVar8 = iVar8 + 1;
                 } while (iVar8 < this.offsetArr[3]._opaque);
@@ -451,11 +443,9 @@ public class RangedSkills : MonoBehaviour // TypeDefIndex: 5698
             do {
                 iVar9 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
                 if ((Raw.Read<byte>(iVar9 + 0xbd) & 1) == 0) {
-                    iVar9 = unnamed_function_95087(iVar9);
                 }
                 iVar9 = Raw.Read<int>(Raw.Read<int>(iVar9 + 0x60) + 8);
                 if ((Raw.Read<byte>(iVar9 + 0xbd) & 1) == 0) {
-                    iVar9 = unnamed_function_95087(iVar9);
                 }
                 uVar5 = UnityEngine.Component.get_transform(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar9 + 0x5c)) + 0x10),0);
                 UnityEngine.Transform.get_position(&local_10,uVar5,0);
@@ -474,7 +464,7 @@ public class RangedSkills : MonoBehaviour // TypeDefIndex: 5698
                 else {
                     local_18 = 0;
                     local_20 = CONCAT44(local_c,local_10);
-                    unnamed_function_5234 (param1,&local_20,Raw.Read<int>(Raw.Read<int>(Raw.Read<int>(iVar9 + 0x10) + 0x60) + 0x38));
+                    /* candidates: System.Collections.Generic.List<DecalEntityIndexer.DecalEntityItem>.AddWithResize | System.Collections.Generic.List<HIDParser.HIDReportData>.AddWithResize (+26) */ unnamed_function_5234 (param1,&local_20,Raw.Read<int>(Raw.Read<int>(Raw.Read<int>(iVar9 + 0x10) + 0x60) + 0x38));
                 }
                 iVar8 = iVar8 + 1;
             } while (iVar8 < this.offsetArr[3]._opaque);
@@ -512,6 +502,6 @@ public class RangedSkills : MonoBehaviour // TypeDefIndex: 5698
     // RVA: 0x39DD Offset: 0x39DD VA: 0x39DD
     public RangedSkills()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

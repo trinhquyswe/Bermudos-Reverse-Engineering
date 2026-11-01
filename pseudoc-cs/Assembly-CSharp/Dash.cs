@@ -53,7 +53,7 @@ public class Dash : MonoBehaviour // TypeDefIndex: 5705
             param1_01 = System.Delegate.Combine(param1,param1_00,0);
             param2 = System_Action_DashEvent__DashEventArgs__TypeInfo;
             if ((param1_01 != 0) && (param2_00 = unnamed_function_1112 (param1_01,System_Action_DashEvent__DashEventArgs__TypeInfo), param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&pDVar3.OnDashEvent,param2_00,param1);
+            pAVar2 = (Action)Interlocked.CompareExchange(ref pDVar3.OnDashEvent, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -87,7 +87,7 @@ public class Dash : MonoBehaviour // TypeDefIndex: 5705
             param1_01 = System.Delegate.Remove(param1,param1_00,0);
             param2 = System_Action_DashEvent__DashEventArgs__TypeInfo;
             if ((param1_01 != 0) && (param2_00 = unnamed_function_1112 (param1_01,System_Action_DashEvent__DashEventArgs__TypeInfo), param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&pDVar3.OnDashEvent,param2_00,param1);
+            pAVar2 = (Action)Interlocked.CompareExchange(ref pDVar3.OnDashEvent, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -112,11 +112,9 @@ public class Dash : MonoBehaviour // TypeDefIndex: 5705
         if ((this.dashCooldownTimer < fVar1) && ((float)this.dashCost < this.player.stamina.currentStamina)) {
             iVar3 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
             if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                iVar3 = unnamed_function_95087(iVar3);
             }
             iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                iVar3 = unnamed_function_95087(iVar3);
             }
             ((SoundEffectManager)Raw.Deref(Raw.Read<object>(iVar3 + 0x5c))).PlaySoundEffect(this.player.dashSoundEffect);
             VVar4 = dashEventArgs.direction;
@@ -212,6 +210,6 @@ public class Dash : MonoBehaviour // TypeDefIndex: 5705
         pWVar1 = (WaitForFixedUpdate)new UnityEngine_WaitForFixedUpdate();
         this.dashCost = 10;
         this.waitForFixedUpdate = pWVar1;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

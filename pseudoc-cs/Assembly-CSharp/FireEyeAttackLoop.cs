@@ -41,6 +41,6 @@ public class FireEyeAttackLoop : Action // TypeDefIndex: 5564
     // RVA: 0x3725 Offset: 0x3725 VA: 0x3725
     public FireEyeAttackLoop()
     {
-        unnamed_function_51834(this,0);
+        /* candidates: BehaviorDesigner.Runtime.Tasks.Action.ctor | BehaviorDesigner.Runtime.Tasks.BehaviorReference.ctor (+6) */ unnamed_function_51834(this,0);
     }
 }

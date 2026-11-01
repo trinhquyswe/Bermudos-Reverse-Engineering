@@ -105,7 +105,7 @@ public class MenuInGame : MonoBehaviour // TypeDefIndex: 5662
             local_28 = Raw.Read<int>(Raw.Read<object>(UnityEngine_Vector3_TypeInfo + 0x5c) + 1);
             local_10 = local_30;
             local_8 = local_28;
-            unnamed_function_44982(uVar1,&local_30,0);
+            /* candidates: UnityEngine.Transform.set_localScale | UnityEngine.Transform.set_localScale_Injected */ unnamed_function_44982(uVar1,&local_30,0);
             uVar1 = UnityEngine.Component.get_transform(this,0);
             uVar1 = DG.Tweening.ShortcutExtensions.DOScale(uVar1,1.0,0.5,0);
             uVar1 = DG.Tweening.TweenSettingsExtensions.SetEase<object>(uVar1,this.ease,DAT_ram_0056d380);
@@ -115,7 +115,7 @@ public class MenuInGame : MonoBehaviour // TypeDefIndex: 5662
             local_14 = 0;
             local_18 = (float)(float)-iVar2;
             local_38 = (ulong)(uint)local_18;
-            unnamed_function_44936(uVar1,&local_38,0);
+            /* candidates: UnityEngine.RectTransform.set_anchoredPosition | UnityEngine.RectTransform.set_anchoredPosition_Injected */ unnamed_function_44936(uVar1,&local_38,0);
             local_40 = Raw.Deref(Raw.Read<object>(UnityEngine_Vector2_TypeInfo + 0x5c));
             local_20 = local_40;
             uVar1 = DG.Tweening.DOTweenModuleUI.DOAnchorPos(uVar1,&local_40,0.5,0,0);
@@ -203,7 +203,7 @@ public class MenuInGame : MonoBehaviour // TypeDefIndex: 5662
     // RVA: 0x3927 Offset: 0x3927 VA: 0x3927
     public MenuInGame()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 
     [CompilerGenerated]

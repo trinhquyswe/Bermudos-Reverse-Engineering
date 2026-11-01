@@ -58,7 +58,7 @@ public class EnemyMovement : MonoBehaviour // TypeDefIndex: 5594
             param1_01 = System.Delegate.Combine(param1,param1_00,0);
             param2 = System_Action_PoiseEvent__PoiseEventArgs__TypeInfo;
             if ((param1_01 != 0) && (param2_00 = unnamed_function_1112 (param1_01,System_Action_PoiseEvent__PoiseEventArgs__TypeInfo), param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&pPVar3.OnPoise,param2_00,param1);
+            pAVar2 = (Action)Interlocked.CompareExchange(ref pPVar3.OnPoise, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -92,7 +92,7 @@ public class EnemyMovement : MonoBehaviour // TypeDefIndex: 5594
             param1_01 = System.Delegate.Remove(param1,param1_00,0);
             param2 = System_Action_PoiseEvent__PoiseEventArgs__TypeInfo;
             if ((param1_01 != 0) && (param2_00 = unnamed_function_1112 (param1_01,System_Action_PoiseEvent__PoiseEventArgs__TypeInfo), param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&pPVar3.OnPoise,param2_00,param1);
+            pAVar2 = (Action)Interlocked.CompareExchange(ref pPVar3.OnPoise, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -163,7 +163,7 @@ public class EnemyMovement : MonoBehaviour // TypeDefIndex: 5594
         local_8 = 0;
         local_28 = 0;
         local_10 = local_30;
-        unnamed_function_51259(this.navMeshAgent,&local_30,0);
+        /* candidates: UnityEngine.AI.NavMeshAgent.SetDestination | UnityEngine.AI.NavMeshAgent.SetDestination_Injected */ unnamed_function_51259(this.navMeshAgent,&local_30,0);
         UnityEngine.AI.NavMeshAgent.set_stoppingDistance(this.navMeshAgent,1.0,0);
         param2 = UnityEngine.Component.get_transform(this,0);
         UnityEngine.Transform.get_position(&local_20,param2,0);
@@ -192,11 +192,9 @@ public class EnemyMovement : MonoBehaviour // TypeDefIndex: 5594
 
         iVar4 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-            iVar4 = unnamed_function_95087(iVar4);
         }
         iVar4 = Raw.Read<int>(Raw.Read<int>(iVar4 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
-            iVar4 = unnamed_function_95087(iVar4);
         }
         uVar3 = UnityEngine.Component.get_transform(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar4 + 0x5c)) + 0x10),0);
         UnityEngine.Transform.get_position(&local_10,uVar3,0);
@@ -222,11 +220,9 @@ public class EnemyMovement : MonoBehaviour // TypeDefIndex: 5594
 
         iVar1 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-            iVar1 = unnamed_function_95087(iVar1);
         }
         iVar1 = Raw.Read<int>(Raw.Read<int>(iVar1 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-            iVar1 = unnamed_function_95087(iVar1);
         }
         uVar2 = Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar1 + 0x5c)) + 0x10);
         iVar1 = (uVar2 != null);
@@ -235,17 +231,15 @@ public class EnemyMovement : MonoBehaviour // TypeDefIndex: 5594
             param1 = this.navMeshAgent;
             iVar1 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-                iVar1 = unnamed_function_95087(iVar1);
             }
             iVar1 = Raw.Read<int>(Raw.Read<int>(iVar1 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar1 + 0xbd) & 1) == 0) {
-                iVar1 = unnamed_function_95087(iVar1);
             }
             uVar2 = UnityEngine.Component.get_transform(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar1 + 0x5c)) + 0x10),0);
             UnityEngine.Transform.get_position(&local_10,uVar2,0);
             local_18 = local_8;
             local_20 = local_10;
-            unnamed_function_51259(param1,&local_20,0);
+            /* candidates: UnityEngine.AI.NavMeshAgent.SetDestination | UnityEngine.AI.NavMeshAgent.SetDestination_Injected */ unnamed_function_51259(param1,&local_20,0);
         }
     }
 
@@ -296,14 +290,12 @@ public class EnemyMovement : MonoBehaviour // TypeDefIndex: 5594
             local_8 = 0;
             local_28 = 0;
             local_10 = local_30;
-            unnamed_function_51259(this.navMeshAgent,&local_30,0);
+            /* candidates: UnityEngine.AI.NavMeshAgent.SetDestination | UnityEngine.AI.NavMeshAgent.SetDestination_Injected */ unnamed_function_51259(this.navMeshAgent,&local_30,0);
             iVar5 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-                iVar5 = unnamed_function_95087(iVar5);
             }
             iVar5 = Raw.Read<int>(Raw.Read<int>(iVar5 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-                iVar5 = unnamed_function_95087(iVar5);
             }
             uVar6 = UnityEngine.Component.get_transform(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar5 + 0x5c)) + 0x10),0);
             UnityEngine.Transform.get_position(&local_20,uVar6,0);
@@ -377,8 +369,8 @@ public class EnemyMovement : MonoBehaviour // TypeDefIndex: 5594
             local_30 = 0;
             local_50 = 0;
             local_58 = CONCAT44(local_34,local_38);
-            unnamed_function_51304(&local_58,&local_28,10.0,1,0);
-            unnamed_function_15207(local_48,&local_28,0);
+            /* candidates: UnityEngine.AI.NavMesh.SamplePosition | UnityEngine.AI.NavMesh.SamplePosition_Injected */ unnamed_function_51304(&local_58,&local_28,10.0,1,0);
+            /* candidates: System.Collections.Generic.KeyValuePair<Regex.CachedCodeEntryKey, object>.get_Key | System.Collections.Generic.KeyValuePair<TMPEffectTagIndices, object>.get_Key (+26) */ unnamed_function_15207(local_48,&local_28,0);
             *__ret = local_48[0];
         }
         return;
@@ -415,11 +407,9 @@ public class EnemyMovement : MonoBehaviour // TypeDefIndex: 5594
         else {
             iVar7 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar7 + 0xbd) & 1) == 0) {
-                iVar7 = unnamed_function_95087(iVar7);
             }
             iVar7 = Raw.Read<int>(Raw.Read<int>(iVar7 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar7 + 0xbd) & 1) == 0) {
-                iVar7 = unnamed_function_95087(iVar7);
             }
             uVar4 = UnityEngine.Component.get_transform(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar7 + 0x5c)) + 0x10),0);
             UnityEngine.Transform.get_position(&local_10,uVar4,0);
@@ -482,6 +472,6 @@ public class EnemyMovement : MonoBehaviour // TypeDefIndex: 5594
     public EnemyMovement()
     {
         this.maxDistance = 15.0;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

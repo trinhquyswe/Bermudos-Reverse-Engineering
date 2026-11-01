@@ -29,8 +29,8 @@ public class IdleAction : SkillsAction // TypeDefIndex: 5566
         int param1 = default;
 
         param1 = Raw.Read<int>(this + 0x2c);
-        param2 = unnamed_function_77425 (Raw.Read<int>(this + 0xa4),Raw.Read<int>(this + 0x30),DAT_ram_0055fd54);
-        unnamed_function_45425(param1,param2,0);
+        param2 = /* candidates: System.Collections.Generic.Dictionary<Int32Enum, Int32Enum>.get_Item | System.Collections.Generic.Dictionary<Int32Enum, int>.get_Item (+1) */ unnamed_function_77425 (Raw.Read<int>(this + 0xa4),Raw.Read<int>(this + 0x30),DAT_ram_0055fd54);
+        /* candidates: UnityEngine.Animator.SetTrigger | UnityEngine.Animator.SetTriggerID */ unnamed_function_45425(param1,param2,0);
         return;
     }
 

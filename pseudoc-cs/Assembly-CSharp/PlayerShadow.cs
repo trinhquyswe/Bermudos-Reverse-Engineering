@@ -68,7 +68,7 @@ public class PlayerShadow : MonoBehaviour // TypeDefIndex: 5584
                         param1_00 = playerSpriteRenderers[iVar3 + 4]._opaque;
                         uVar2 = UnityEngine.Object.get_name(param1,0);
                         param2 = UnityEngine.Object.get_name(param1_00,0);
-                        iVar4 = unnamed_function_81494(uVar2,param2,0);
+                        iVar4 = /* candidates: System.String.Equals | System.String.op_Equality */ unnamed_function_81494(uVar2,param2,0);
                         if (iVar4 != 0) {
                             uVar2 = UnityEngine.SpriteRenderer.get_sprite(param1_00,0);
                             UnityEngine.SpriteRenderer.set_sprite(param1,uVar2,0);
@@ -86,6 +86,6 @@ public class PlayerShadow : MonoBehaviour // TypeDefIndex: 5584
     // RVA: 0x3799 Offset: 0x3799 VA: 0x3799
     public PlayerShadow()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

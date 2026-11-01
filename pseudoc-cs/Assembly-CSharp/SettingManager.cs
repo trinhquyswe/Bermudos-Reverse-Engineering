@@ -88,11 +88,9 @@ public class SettingManager : MonoBehaviour // TypeDefIndex: 5660
         UnityEngine.GameObject.SetActive(uVar1,1,0);
         iVar3 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         __this_00 = (SoundEffectManager)Raw.Deref(Raw.Read<object>(iVar3 + 0x5c));
         pGVar2 = GameResources.Instance;
@@ -114,11 +112,9 @@ public class SettingManager : MonoBehaviour // TypeDefIndex: 5660
         UnityEngine.GameObject.SetActive(uVar1,1,0);
         iVar3 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         __this_00 = (SoundEffectManager)Raw.Deref(Raw.Read<object>(iVar3 + 0x5c));
         pGVar2 = GameResources.Instance;
@@ -166,7 +162,7 @@ public class SettingManager : MonoBehaviour // TypeDefIndex: 5660
     // RVA: 0x391B Offset: 0x391B VA: 0x391B
     public SettingManager()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 
     [CompilerGenerated]
@@ -184,7 +180,6 @@ public class SettingManager : MonoBehaviour // TypeDefIndex: 5660
 
         param1_00 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
         if ((Raw.Read<byte>(param1_00 + 0xbd) & 1) == 0) {
-            param1_00 = unnamed_function_95087(param1_00);
         }
         method_00 = *(MethodInfo)(Raw.Read<int>(param1_00 + 0x60) + 8);
         if ((method_00[5].field_0x1d & 1) == 0) {

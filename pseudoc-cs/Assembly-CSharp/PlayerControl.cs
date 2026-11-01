@@ -64,11 +64,9 @@ public class PlayerControl : MonoBehaviour // TypeDefIndex: 5690
         this.inputSystem_Actions = __this_00;
         iVar7 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar7 + 0xbd) & 1) == 0) {
-            iVar7 = unnamed_function_95087(iVar7);
         }
         iVar7 = Raw.Read<int>(Raw.Read<int>(iVar7 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar7 + 0xbd) & 1) == 0) {
-            iVar7 = unnamed_function_95087(iVar7);
         }
         iVar8 = Raw.Deref(Raw.Read<object>(iVar7 + 0x5c));
         param1 = Raw.Read<int>(iVar8 + 0x20);
@@ -80,7 +78,7 @@ public class PlayerControl : MonoBehaviour // TypeDefIndex: 5690
             Raw.Write<int>(iVar8 + 0x20, 0);
             return;
         }
-        iVar6 = unnamed_function_1112(iVar7,System_Action_GameState__TypeInfo);
+        iVar6 = (iVar7 as System_Action_GameState_);
         if (iVar6 == 0) {
             unnamed_function_1116(iVar7,uVar5);
             do {
@@ -89,7 +87,7 @@ public class PlayerControl : MonoBehaviour // TypeDefIndex: 5690
         }
         Raw.Write<int>(iVar8 + 0x20, iVar6);
         uVar5 = System_Action_GameState__TypeInfo;
-        iVar8 = unnamed_function_1112(iVar7,System_Action_GameState__TypeInfo);
+        iVar8 = (iVar7 as System_Action_GameState_);
         if (iVar8 != 0) {
             return;
         }
@@ -244,11 +242,9 @@ public class PlayerControl : MonoBehaviour // TypeDefIndex: 5690
 
         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-            iVar3 = unnamed_function_95087(iVar3);
         }
         iVar4 = Raw.Deref(Raw.Read<object>(iVar3 + 0x5c));
         param1 = Raw.Read<int>(iVar4 + 0x20);
@@ -260,7 +256,7 @@ public class PlayerControl : MonoBehaviour // TypeDefIndex: 5690
             Raw.Write<int>(iVar4 + 0x20, 0);
             return;
         }
-        iVar2 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+        iVar2 = (iVar3 as System_Action_GameState_);
         if (iVar2 == 0) {
             unnamed_function_1116(iVar3,uVar1);
             do {
@@ -269,7 +265,7 @@ public class PlayerControl : MonoBehaviour // TypeDefIndex: 5690
         }
         Raw.Write<int>(iVar4 + 0x20, iVar2);
         uVar1 = System_Action_GameState__TypeInfo;
-        iVar4 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+        iVar4 = (iVar3 as System_Action_GameState_);
         if (iVar4 != 0) {
             return;
         }
@@ -292,11 +288,9 @@ public class PlayerControl : MonoBehaviour // TypeDefIndex: 5690
             UnityEngine.InputSystem.InputAction.Enable(this.openInventory,0);
             iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
             if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                iVar3 = unnamed_function_95087(iVar3);
             }
             iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                iVar3 = unnamed_function_95087(iVar3);
             }
             iVar4 = Raw.Deref(Raw.Read<object>(iVar3 + 0x5c));
             param1 = Raw.Read<int>(iVar4 + 0x20);
@@ -308,7 +302,7 @@ public class PlayerControl : MonoBehaviour // TypeDefIndex: 5690
                 Raw.Write<int>(iVar4 + 0x20, 0);
                 return;
             }
-            iVar2 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+            iVar2 = (iVar3 as System_Action_GameState_);
             if (iVar2 == 0) {
                 unnamed_function_1116(iVar3,uVar1);
                 do {
@@ -317,7 +311,7 @@ public class PlayerControl : MonoBehaviour // TypeDefIndex: 5690
             }
             Raw.Write<int>(iVar4 + 0x20, iVar2);
             uVar1 = System_Action_GameState__TypeInfo;
-            iVar4 = unnamed_function_1112(iVar3,System_Action_GameState__TypeInfo);
+            iVar4 = (iVar3 as System_Action_GameState_);
             if (iVar4 == 0) {
                 unnamed_function_1116(iVar3,uVar1);
                 do {
@@ -361,11 +355,9 @@ public class PlayerControl : MonoBehaviour // TypeDefIndex: 5690
         if ((9.9999994e-11 <= fVar1 * fVar1 + fVar6 * fVar6) && (fVar1 = UnityEngine.Time.get_time(0), this.dashCooldownTimer < fVar1)) {
             iVar2 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
             if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-                iVar2 = unnamed_function_95087(iVar2);
             }
             iVar2 = Raw.Read<int>(Raw.Read<int>(iVar2 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar2 + 0xbd) & 1) == 0) {
-                iVar2 = unnamed_function_95087(iVar2);
             }
             ((SoundEffectManager)Raw.Deref(Raw.Read<object>(iVar2 + 0x5c))).PlaySoundEffect(this.player.dashSoundEffect);
             fVar1 = UnityEngine.Time.get_time(0);
@@ -476,11 +468,9 @@ public class PlayerControl : MonoBehaviour // TypeDefIndex: 5690
             if (this.isRunningSoundPlaying != false) {
                 iVar5 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
                 if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-                    iVar5 = unnamed_function_95087(iVar5);
                 }
                 iVar5 = Raw.Read<int>(Raw.Read<int>(iVar5 + 0x60) + 8);
                 if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-                    iVar5 = unnamed_function_95087(iVar5);
                 }
                 ((SoundEffectManager)Raw.Deref(Raw.Read<object>(iVar5 + 0x5c))).StopSoundEffectLoop((SoundEffectSO)this.player.spawnPosition.y);
                 this.isRunningSoundPlaying = false;
@@ -620,11 +610,9 @@ public class PlayerControl : MonoBehaviour // TypeDefIndex: 5690
         if (this.isRunningSoundPlaying == false) {
             iVar5 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);
             if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-                iVar5 = unnamed_function_95087(iVar5);
             }
             iVar5 = Raw.Read<int>(Raw.Read<int>(iVar5 + 0x60) + 8);
             if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
-                iVar5 = unnamed_function_95087(iVar5);
             }
             ((SoundEffectManager)Raw.Deref(Raw.Read<object>(iVar5 + 0x5c))).PlaySoundEffectPersistent((SoundEffectSO)this.player.spawnPosition.y, true);
             this.isRunningSoundPlaying = true;
@@ -634,7 +622,7 @@ public class PlayerControl : MonoBehaviour // TypeDefIndex: 5690
     // RVA: 0x39AC Offset: 0x39AC VA: 0x39AC
     public PlayerControl()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 
     [CompilerGenerated]

@@ -77,6 +77,6 @@ public class ReceiveDamageAction : Action // TypeDefIndex: 5571
     // RVA: 0x3740 Offset: 0x3740 VA: 0x3740
     public ReceiveDamageAction()
     {
-        unnamed_function_51834(this,0);
+        /* candidates: BehaviorDesigner.Runtime.Tasks.Action.ctor | BehaviorDesigner.Runtime.Tasks.BehaviorReference.ctor (+6) */ unnamed_function_51834(this,0);
     }
 }

@@ -65,7 +65,7 @@ public class MovementByVelocity : MonoBehaviour // TypeDefIndex: 5675
             param1_01 = System.Delegate.Combine(param1,param1_00,0);
             param2 = System_Action_MovementByVelocityEvent__MovementByVelocityArgs__TypeInfo;
             if ((param1_01 != 0) && (param2_00 = unnamed_function_1112 (param1_01, System_Action_MovementByVelocityEvent__MovementByVelocityArgs__TypeInfo ), param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&pMVar3.OnMovementByVelocity,param2_00,param1);
+            pAVar2 = (Action)Interlocked.CompareExchange(ref pMVar3.OnMovementByVelocity, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -111,7 +111,7 @@ public class MovementByVelocity : MonoBehaviour // TypeDefIndex: 5675
             param1_01 = System.Delegate.Remove(param1,param1_00,0);
             param2 = System_Action_MovementByVelocityEvent__MovementByVelocityArgs__TypeInfo;
             if ((param1_01 != 0) && (param2_00 = unnamed_function_1112 (param1_01, System_Action_MovementByVelocityEvent__MovementByVelocityArgs__TypeInfo ), param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&pMVar3.OnMovementByVelocity,param2_00,param1);
+            pAVar2 = (Action)Interlocked.CompareExchange(ref pMVar3.OnMovementByVelocity, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -162,7 +162,7 @@ public class MovementByVelocity : MonoBehaviour // TypeDefIndex: 5675
                         throw null;
                     } while( true );
                 }
-                pAVar2 = (Action)unnamed_function_1144(&pMVar3.OnMovementByVelocity,param2_00,param1);
+                pAVar2 = (Action)Interlocked.CompareExchange(ref pMVar3.OnMovementByVelocity, param2_00, param1);
                 bVar1 = param1 != pAVar2;
                 param1 = pAVar2;
             } while (bVar1);
@@ -190,7 +190,7 @@ public class MovementByVelocity : MonoBehaviour // TypeDefIndex: 5675
             param1_01 = System.Delegate.Combine(param1,param1_00,0);
             param2 = System_Action_MovementByVelocityEvent__MovementByVelocityArgs__TypeInfo;
             if ((param1_01 != 0) && (param2_00 = unnamed_function_1112 (param1_01, System_Action_MovementByVelocityEvent__MovementByVelocityArgs__TypeInfo ), param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&pMVar3.OnMovementByVelocity,param2_00,param1);
+            pAVar2 = (Action)Interlocked.CompareExchange(ref pMVar3.OnMovementByVelocity, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -211,7 +211,7 @@ public class MovementByVelocity : MonoBehaviour // TypeDefIndex: 5675
 
         local_10 = CONCAT44(movementByVelocityArgs.moveSpeed * movementByVelocityArgs.moveDirection.y, movementByVelocityArgs.moveSpeed * movementByVelocityArgs.moveDirection.x);
         local_8 = local_10;
-        unnamed_function_16392(this.rigidBody2D,&local_10,0);
+        /* candidates: UnityEngine.Rigidbody2D.set_velocity | UnityEngine.Rigidbody2D.set_velocity_Injected */ unnamed_function_16392(this.rigidBody2D,&local_10,0);
     }
 
     // RVA: 0x3961 Offset: 0x3961 VA: 0x3961
@@ -222,12 +222,12 @@ public class MovementByVelocity : MonoBehaviour // TypeDefIndex: 5675
 
         local_10 = CONCAT44((*moveDirection).y * moveSpeed,(*moveDirection).x * moveSpeed);
         local_8 = local_10;
-        unnamed_function_16392(this.rigidBody2D,&local_10,0);
+        /* candidates: UnityEngine.Rigidbody2D.set_velocity | UnityEngine.Rigidbody2D.set_velocity_Injected */ unnamed_function_16392(this.rigidBody2D,&local_10,0);
     }
 
     // RVA: 0x3962 Offset: 0x3962 VA: 0x3962
     public MovementByVelocity()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

@@ -113,16 +113,16 @@ public class GameManager : SingletonMonobehaviour<GameManager> // TypeDefIndex: 
         if (iVar2 != 0) {
             uVar1 = Esper.ESave.SaveFileSetup.GetSaveFile(this.saveFileSetup,0);
             uVar1 = Esper.ESave.SaveFile.GetData<object>(uVar1,"Checkpoint",0,DAT_ram_0056c1c8);
-            iVar2 = unnamed_function_81494(uVar1,"Coast",0);
+            iVar2 = /* candidates: System.String.Equals | System.String.op_Equality */ unnamed_function_81494(uVar1,"Coast",0);
             if (iVar2 == 0) {
-                iVar2 = unnamed_function_81494(uVar1,"The Forest",0);
+                iVar2 = /* candidates: System.String.Equals | System.String.op_Equality */ unnamed_function_81494(uVar1,"The Forest",0);
                 if (iVar2 == 0) goto code_r0x81a53cbf;
                 uVar1 = UnityEngine.Component.get_transform(this.player,0);
                 local_40 = Raw.Read<long>((int)this.player.spawnPosition.x + 0x18);
                 local_28 = 0;
                 local_38 = 0;
                 local_30 = local_40;
-                unnamed_function_44962(uVar1,&local_40,0);
+                /* candidates: UnityEngine.Transform.set_position | UnityEngine.Transform.set_position_Injected */ unnamed_function_44962(uVar1,&local_40,0);
                 puVar4 = &"The Forest";
                 iVar2 = Raw.Read<int>(UnityEngine_SceneManagement_SceneManager_TypeInfo + 0x74);
             }
@@ -132,7 +132,7 @@ public class GameManager : SingletonMonobehaviour<GameManager> // TypeDefIndex: 
                 local_18 = 0;
                 local_60._24_4_ = 0;
                 local_20 = local_60._16_8_;
-                unnamed_function_44962(uVar1,&local_60.field_0x10,0);
+                /* candidates: UnityEngine.Transform.set_position | UnityEngine.Transform.set_position_Injected */ unnamed_function_44962(uVar1,&local_60.field_0x10,0);
                 puVar4 = &"Coast";
                 iVar2 = Raw.Read<int>(UnityEngine_SceneManagement_SceneManager_TypeInfo + 0x74);
             }
@@ -187,20 +187,16 @@ public class GameManager : SingletonMonobehaviour<GameManager> // TypeDefIndex: 
                 UnityEngine.Rigidbody2D.set_mass(uVar1,1e+06,0);
                 iVar3 = Raw.Read<int>(DAT_ram_00565d58 + 0x10);
                 if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                    iVar3 = unnamed_function_95087(iVar3);
                 }
                 iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
                 if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                    iVar3 = unnamed_function_95087(iVar3);
                 }
                 ((MusicManager)Raw.Deref(Raw.Read<object>(iVar3 + 0x5c))).StopPlayingBackgroundMusic();
                 iVar3 = Raw.Read<int>(DAT_ram_00565d58 + 0x10);
                 if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                    iVar3 = unnamed_function_95087(iVar3);
                 }
                 iVar3 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x60) + 8);
                 if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
-                    iVar3 = unnamed_function_95087(iVar3);
                 }
                 __this_00 = (MusicManager)Raw.Deref(Raw.Read<object>(iVar3 + 0x5c));
                 pGVar2 = GameResources.Instance;
@@ -330,7 +326,7 @@ public class GameManager : SingletonMonobehaviour<GameManager> // TypeDefIndex: 
                 iVar5 = Raw.Read<int>(Raw.Read<int>(iVar3 + 0x14) + 0xc);
                 method_00 = (EnemyManagerData)new EnemyManagerData();
                 param1 = (List)new System_Collections_Generic_List_bool_();
-                unnamed_function_5132(param1,DAT_ram_00562b48);
+                /* candidates: System.Collections.Generic.List<AdditionalLightsShadowCasterPass.ShadowResolutionRequest>..ctor | System.Collections.Generic.List<AnimationOutputWeightProcessor.WeightInfo>..ctor (+167) */ unnamed_function_5132(param1,DAT_ram_00562b48);
                 method_00.enemieStateList = param1;
                 method_00.enemyCount = iVar5;
                 method_00.enemyName = psVar4;
@@ -403,7 +399,7 @@ public class GameManager : SingletonMonobehaviour<GameManager> // TypeDefIndex: 
         param1 = Raw.Read<int>(iVar2 + 0x34);
         uVar1 = new UnityEngine_Events_UnityAction_TMPWriter_();
         UnityEngine.Events.UnityAction<object>.__ctor(uVar1,this,DAT_ram_0056998c,0);
-        unnamed_function_71922(param1,uVar1,DAT_ram_00566810);
+        /* candidates: UnityEngine.Events.UnityEvent<Color>.AddListener | UnityEngine.Events.UnityEvent<InputAction.CallbackContext>.AddListener (+6) */ unnamed_function_71922(param1,uVar1,DAT_ram_00566810);
     }
     public void _WonScene_b__20_1(TMPEffects_Components_TMPWriter_o tMP)
     {

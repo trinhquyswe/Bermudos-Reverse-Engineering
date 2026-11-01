@@ -54,7 +54,7 @@ public class Weapon : MonoBehaviour // TypeDefIndex: 5731
         iVar2 = UnityEngine.Sprite.GetPhysicsShape(uVar1,0,this.spritePhysicsShapePointsList,0);
         if (0 < iVar2) {
             param1 = this.polygonCollider2D;
-            uVar1 = unnamed_function_5184(this.spritePhysicsShapePointsList,DAT_ram_00564114);
+            uVar1 = /* candidates: System.Collections.Generic.List<AdditionalLightsShadowCasterPass.ShadowResolutionRequest>.ToArray | System.Collections.Generic.List<AnimationOutputWeightProcessor.WeightInfo>.ToArray (+165) */ unnamed_function_5184(this.spritePhysicsShapePointsList,DAT_ram_00564114);
             UnityEngine.PolygonCollider2D.set_points(param1,uVar1,0);
         }
     }
@@ -65,8 +65,8 @@ public class Weapon : MonoBehaviour // TypeDefIndex: 5731
         List param1 = default;
 
         param1 = (List)new System_Collections_Generic_List_Vector2_();
-        unnamed_function_5132(param1,DAT_ram_0056410c);
+        /* candidates: System.Collections.Generic.List<AdditionalLightsShadowCasterPass.ShadowResolutionRequest>..ctor | System.Collections.Generic.List<AnimationOutputWeightProcessor.WeightInfo>..ctor (+167) */ unnamed_function_5132(param1,DAT_ram_0056410c);
         this.spritePhysicsShapePointsList = param1;
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

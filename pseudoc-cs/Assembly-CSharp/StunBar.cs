@@ -54,7 +54,7 @@ public class StunBar : MonoBehaviour // TypeDefIndex: 5597
             param1_01 = System.Delegate.Combine(param1,param1_00,0);
             param2 = System_Action_PoiseEvent__PoiseEventArgs__TypeInfo;
             if ((param1_01 != 0) && (param2_00 = unnamed_function_1112 (param1_01,System_Action_PoiseEvent__PoiseEventArgs__TypeInfo), param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&pPVar3.OnPoise,param2_00,param1);
+            pAVar2 = (Action)Interlocked.CompareExchange(ref pPVar3.OnPoise, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -88,7 +88,7 @@ public class StunBar : MonoBehaviour // TypeDefIndex: 5597
             param1_01 = System.Delegate.Remove(param1,param1_00,0);
             param2 = System_Action_PoiseEvent__PoiseEventArgs__TypeInfo;
             if ((param1_01 != 0) && (param2_00 = unnamed_function_1112 (param1_01,System_Action_PoiseEvent__PoiseEventArgs__TypeInfo), param2_00 == 0)) break;
-            pAVar2 = (Action)unnamed_function_1144(&pPVar3.OnPoise,param2_00,param1);
+            pAVar2 = (Action)Interlocked.CompareExchange(ref pPVar3.OnPoise, param2_00, param1);
             bVar1 = param1 == pAVar2;
             param1 = pAVar2;
             if (bVar1) {
@@ -137,6 +137,6 @@ public class StunBar : MonoBehaviour // TypeDefIndex: 5597
     // RVA: 0x37DD Offset: 0x37DD VA: 0x37DD
     public StunBar()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }

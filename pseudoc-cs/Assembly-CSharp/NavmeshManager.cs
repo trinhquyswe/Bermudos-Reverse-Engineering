@@ -137,6 +137,6 @@ public class NavmeshManager : MonoBehaviour // TypeDefIndex: 5684
     // RVA: 0x397C Offset: 0x397C VA: 0x397C
     public NavmeshManager()
     {
-        unnamed_function_44622(this,0);
+        /* candidates: UnityEngine.Behaviour.ctor | UnityEngine.Component.ctor (+3) */ unnamed_function_44622(this,0);
     }
 }
