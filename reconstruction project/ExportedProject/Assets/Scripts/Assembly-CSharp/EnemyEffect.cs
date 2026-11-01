@@ -1,63 +1,103 @@
+using System.Collections;
 using UnityEngine;
 
-public class EnemyEffect : MonoBehaviour
+public class EnemyEffect : Effect
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    private PoiseEvent poiseEvent;
+    private EnemyMovement enemyMovement;
+    private Coroutine pushEnemyByAmmoCoroutine;
+    private Rigidbody2D rb2d;
 
-	1. No dll files were provided to AssetRipper.
+    [SerializeField] private ParticleSystem hitParticleSystem;
+    [SerializeField] private ParticleSystem bloodParticleSystem;
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    private float pushForce = 0f; // TODO(il2cpp): default value ambiguous (0x24 vs 0x28 in dump); verify.
 
-	2. Incorrect dll files were provided to AssetRipper.
+    private void Awake()
+    {
+        rb2d = GetComponent<Rigidbody2D>();
+        enemyMovement = GetComponent<EnemyMovement>();
+        poiseEvent = GetComponent<PoiseEvent>();
+    }
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+    private void OnEnable()
+    {
+        poiseEvent.OnPoise += PoiseEvent_onPoiseEvent;
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    private void OnDisable()
+    {
+        poiseEvent.OnPoise -= PoiseEvent_onPoiseEvent;
+    }
 
-	3. Assembly Reconstruction has not been implemented.
+    private void Start()
+    {
+        hitParticleSystem.Stop();
+        bloodParticleSystem.Stop();
+    }
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
+    private void PoiseEvent_onPoiseEvent(PoiseEvent poiseEvent, PoiseEventArgs args)
+    {
+        if (args.currentPoise <= 0f)
+        {
+            ParticleSystem.MainModule main = hitParticleSystem.main;
+            main.startLifetimeMultiplier = args.stunTime;
+            hitParticleSystem.Play();
+        }
+    }
 
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
+    public void CallDamageFlashEffect(Material flashMaterial, Material originalMaterial, SpriteRenderer[] spriteRenderers)
+    {
+        if (gameObject.activeSelf)
+        {
+            StartCoroutine(DamageFlashCoroutine(flashMaterial, originalMaterial, spriteRenderers));
+        }
+    }
 
-	4. This script is unnecessary.
+    public void DamagePushEfect(Vector3 ammoPosition)
+    {
+        if (!gameObject.activeSelf)
+        {
+            return;
+        }
 
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
+        Vector2 direction = ((Vector2)(transform.position - ammoPosition)).normalized;
+        if (direction == Vector2.zero)
+        {
+            direction = Vector2.right; // TODO(il2cpp): fallback direction assumed.
+        }
 
-	5. Script Content Level 0
+        Vector2 target = new Vector2(ammoPosition.x + direction.x * pushForce, ammoPosition.y + direction.y * pushForce);
+        pushEnemyByAmmoCoroutine = StartCoroutine(PushEnemyByAmmo(new Vector3(target.x, target.y, 0f)));
+    }
 
-		AssetRipper was set to not load any script information.
+    public void PushEnemyByWeapon(Vector3 playerPosition)
+    {
+        Vector2 direction = ((Vector2)(transform.position - playerPosition)).normalized;
+        Vector3 target = transform.position + (Vector3)(direction * pushForce);
+        StartCoroutine(PushEnemyByWeaponCoroutine(target));
+    }
 
-	6. Cpp2IL failed to decompile Il2Cpp data
+    public void BloodEffect()
+    {
+        bloodParticleSystem.Play();
+    }
 
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
+    private IEnumerator DamageFlashCoroutine(Material flashMaterial, Material originalMaterial, SpriteRenderer[] spriteRenderers)
+    {
+        // TODO(il2cpp): DamageFlashCoroutine body not recovered.
+        yield break;
+    }
 
-	7. An incorrect path was provided to AssetRipper.
+    private IEnumerator PushEnemyByAmmo(Vector3 target)
+    {
+        // TODO(il2cpp): PushEnemyByAmmo coroutine body not recovered.
+        yield break;
+    }
 
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
-
-	*/
+    private IEnumerator PushEnemyByWeaponCoroutine(Vector3 target)
+    {
+        // TODO(il2cpp): PushEnemyByWeaponCoroutine body not recovered.
+        yield break;
+    }
 }

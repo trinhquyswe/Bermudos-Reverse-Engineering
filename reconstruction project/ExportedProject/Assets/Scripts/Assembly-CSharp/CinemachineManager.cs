@@ -1,63 +1,70 @@
+using Cinemachine;
+using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 
 public class CinemachineManager : MonoBehaviour
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    [SerializeField] private Camera zoomCamera;
+    [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
 
-	1. No dll files were provided to AssetRipper.
+    private CinemachineConfiner2D cinemachineConfiner2D;
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    private void Awake()
+    {
+        cinemachineConfiner2D = GetComponentInChildren<CinemachineConfiner2D>();
+    }
 
-	2. Incorrect dll files were provided to AssetRipper.
+    private void OnEnable()
+    {
+        // TODO(il2cpp): StaticEventHandler is still a dummy; event names and args type assumed from pseudo.
+        StaticEventHandler.OnMapChanged += StaticEventHandler_OnMapChanged;
+        GameManager.Instance.OnGameStateChange += GameManager_OnGameStateChange;
+    }
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+    private void OnDisable()
+    {
+        // Original only unsubscribes OnMapChanged; the game-state subscription removes itself on Play.
+        StaticEventHandler.OnMapChanged -= StaticEventHandler_OnMapChanged;
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    private void Start()
+    {
+        // TODO(il2cpp): camera follow target assignment via virtual call not recovered.
+    }
 
-	3. Assembly Reconstruction has not been implemented.
+    private void GameManager_OnGameStateChange(GameState gameState)
+    {
+        switch (gameState)
+        {
+            case GameState.Intro:
+                StartCoroutine(ZoomCam());
+                break;
+            case GameState.Begin:
+                // Zoom target and tween setup are approximated from pseudo.
+                zoomCamera.DOOrthoSize(8.4375f, 5f);
+                break;
+            case GameState.Play:
+                zoomCamera.gameObject.SetActive(false);
+                cinemachineVirtualCamera.gameObject.SetActive(true);
+                GameManager.Instance.OnGameStateChange -= GameManager_OnGameStateChange;
+                break;
+        }
+    }
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
+    private void StaticEventHandler_OnMapChanged(MapChangedEventArgs args)
+    {
+        Confine(args.map);
+    }
 
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
+    private void Confine(Map map)
+    {
+        // TODO(il2cpp): Confine body not recovered; expected to assign the confiner bounding shape from map.
+    }
 
-	4. This script is unnecessary.
-
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
-
-	5. Script Content Level 0
-
-		AssetRipper was set to not load any script information.
-
-	6. Cpp2IL failed to decompile Il2Cpp data
-
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
-
-	7. An incorrect path was provided to AssetRipper.
-
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
-
-	*/
+    private IEnumerator ZoomCam()
+    {
+        // TODO(il2cpp): ZoomCam coroutine body not recovered.
+        yield break;
+    }
 }

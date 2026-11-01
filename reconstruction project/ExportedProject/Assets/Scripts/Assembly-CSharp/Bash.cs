@@ -2,62 +2,205 @@ using UnityEngine;
 
 public class Bash : MonoBehaviour
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    [SerializeField] private SoundEffectSO duringBashSoundEffect;
+    [SerializeField] private SoundEffectSO releaseBashSoundEffect;
+    [SerializeField] private string instructionBash; // TODO(il2cpp): instruction text source not recovered.
 
-	1. No dll files were provided to AssetRipper.
+    private float bashRadius = 2.5f;
+    private float bashForce = 10f;
+    private int bashCost = 10;
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    private Player player;
+    private Arrow arrow;
+    private Collider2D collider2d;
+    private BashState bashState;
+    private LayerMask layerMask;
+    private float aimCountdown;
+    private int displayCount;
+    private bool isDuring;
+    private bool isRelease;
+    private bool isDuringSoundPlaying;
 
-	2. Incorrect dll files were provided to AssetRipper.
+    private void Awake()
+    {
+        player = GetComponent<Player>();
+        arrow = GetComponent<Arrow>();
+        bashState = BashState.None;
+    }
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+    private void OnEnable()
+    {
+        player.bashEvent.OnBash += OnBashEvent_OnBash;
+        GameManager.Instance.OnGameStateChange += GameStateChanged_OnBash;
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    private void OnDisable()
+    {
+        player.bashEvent.OnBash -= OnBashEvent_OnBash;
+        GameManager.Instance.OnGameStateChange -= GameStateChanged_OnBash;
+    }
 
-	3. Assembly Reconstruction has not been implemented.
+    private void Start()
+    {
+        layerMask = LayerMask.GetMask("EnemyAmmo");
+    }
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
+    private void Update()
+    {
+        switch (bashState)
+        {
+            case BashState.ActiveBash:
+                Prepare();
+                break;
+            case BashState.DuringBash:
+                if (isDuring)
+                {
+                    During();
+                }
+                break;
+            case BashState.ReleaseBash:
+                if (isRelease)
+                {
+                    Release();
+                }
+                break;
+            case BashState.None:
+                InitializeFlagVarible();
+                break;
+        }
+    }
 
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
+    private void OnBashEvent_OnBash(BashEvent bashEvent, BashEventArgs args)
+    {
+        bashState = args.bashState;
+    }
 
-	4. This script is unnecessary.
+    private void GameStateChanged_OnBash(GameState gameState)
+    {
+        if (gameState == GameState.Instruct)
+        {
+            InvokeRepeating(nameof(InstructBash), 0f, 0.15f);
+            GameManager.Instance.OnGameStateChange -= GameStateChanged_OnBash;
+        }
+    }
 
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
+    private void InstructBash()
+    {
+        // Condition on the hit is inferred; original sets timeScale 0 and aimCountdown 10 on overlap.
+        Collider2D hit = Physics2D.OverlapCircle(transform.position, bashRadius, layerMask);
+        collider2d = hit;
+        if (hit != null)
+        {
+            Time.timeScale = 0f;
+            aimCountdown = 10f;
+            isDuring = true;
+        }
+    }
 
-	5. Script Content Level 0
+    private void Prepare()
+    {
+        if (bashCost <= player.stamina.currentStamina)
+        {
+            player.stamina.UseStamina(bashCost);
+            Collider2D hit = Physics2D.OverlapCircle(transform.position, bashRadius, layerMask);
+            collider2d = hit;
+            if (hit != null && hit.GetComponent<Ammo>() != null && bashCost <= player.stamina.currentStamina)
+            {
+                Time.timeScale = 0f;
+                aimCountdown = 2f;
+                isDuring = true;
+                bashState = BashState.DuringBash; // Inferred state transition; not directly confirmed in pseudo.
+            }
+        }
+    }
 
-		AssetRipper was set to not load any script information.
+    private void During()
+    {
+        aimCountdown -= Time.unscaledDeltaTime;
+        if (aimCountdown <= 0f)
+        {
+            // TODO(il2cpp): Arrow.lineRenderer is private; clearing the arrow line needs a reset API.
+            Time.timeScale = 1f;
+            isDuring = false;
+            return;
+        }
 
-	6. Cpp2IL failed to decompile Il2Cpp data
+        isRelease = true;
+        if (collider2d != null)
+        {
+            if (!isDuringSoundPlaying)
+            {
+                SoundEffectManager.Instance.PlaySoundEffect(duringBashSoundEffect);
+                isDuringSoundPlaying = true;
+            }
 
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
+            Vector2 mousePosition = HelperUtilities.GetMouseWorldPosition();
+            Vector2 ammoPosition = collider2d.transform.position;
+            arrow.MakeArrow(mousePosition, ammoPosition);
+        }
+    }
 
-	7. An incorrect path was provided to AssetRipper.
+    private void Release()
+    {
+        Time.timeScale = 1f;
+        if (collider2d != null && isRelease)
+        {
+            // TODO(il2cpp): original writes 2 to a field at offset 0x74 of the hit Ammo component; field name not recovered.
+            collider2d.gameObject.layer = LayerMask.NameToLayer("BashAmmo");
+            MoveAmmoByBash();
+            // TODO(il2cpp): clearing the arrow line needs a reset API (Arrow.lineRenderer is private).
 
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
+            if (isDuringSoundPlaying)
+            {
+                SoundEffectManager.Instance.PlaySoundEffect(releaseBashSoundEffect);
+                isDuringSoundPlaying = false;
+            }
 
-	*/
+            ProcessInstructionBashInRealseState();
+        }
+
+        bashState = BashState.None; // Inferred end-of-release transition.
+    }
+
+    private void MoveAmmoByBash()
+    {
+        Rigidbody2D rb = collider2d.GetComponent<Rigidbody2D>();
+        Vector2 ammoPosition = collider2d.transform.position;
+        Vector2 mousePosition = HelperUtilities.GetMouseWorldPosition();
+        Vector2 direction = ammoPosition - mousePosition;
+
+        if (direction.magnitude > 0.00001f)
+        {
+            direction = direction.normalized;
+        }
+        else
+        {
+            direction = Vector2.right; // TODO(il2cpp): fallback direction constant not verified.
+        }
+
+        rb.AddForce(direction * bashForce);
+    }
+
+    private void ProcessInstructionBashInRealseState()
+    {
+        if (GameManager.Instance.gameState != GameState.Instruct)
+        {
+            return;
+        }
+
+        if (displayCount == 2)
+        {
+            CancelInvoke(nameof(InstructBash));
+            GameManager.Instance.HandleGameState(GameState.Play);
+        }
+
+        // TODO(il2cpp): StaticEventHandler instruction-changed invoke arguments not recovered (instructionBash, count, flags).
+        displayCount++;
+    }
+
+    private void InitializeFlagVarible()
+    {
+        isDuring = false;
+        isRelease = false;
+    }
 }

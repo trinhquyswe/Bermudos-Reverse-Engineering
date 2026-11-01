@@ -1,63 +1,101 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
+// Approx: HotBarItem predicate (isOnHotBar) and key (hotbarSlot) inferred from the compiler-generated lambdas.
+// TODO(il2cpp): SaveFileSetup / SaveFile fields (dump 0x1C, 0x20) omitted; types are absent from the folder.
+// TODO(il2cpp): Awake, Start, ToggleInventory, LoadItemsToInventory, CollectIntentoryItem, LoadItemFromJson, SaveItemToJson bodies not recovered.
+[DisallowMultipleComponent]
 public class InventoryManager : MonoBehaviour
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    public List<InventoryItem> inventoryItemList;
+    public List<ItemSO> itemSOList;
+    private Inventory inventory;
+    public Image inventoryInstructionImg;
+    private string instructionText;
+    private bool isInstruction;
 
-	1. No dll files were provided to AssetRipper.
+    public List<InventoryItem> HotBarItem
+    {
+        get
+        {
+            return inventoryItemList
+                .Where(x => x.isOnHotBar)
+                .OrderBy(x => x.hotbarSlot)
+                .ToList();
+        }
+    }
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    private void Awake()
+    {
+    }
 
-	2. Incorrect dll files were provided to AssetRipper.
+    private void OnEnable()
+    {
+        StaticEventHandler.OnInventoryChanged += StaticEventHandler_OnInventoryChanged;
+        StaticEventHandler.OnExit += StaticEventHandler_OnExit;
+        GameManager.Instance.OnGameStateChange += Instance_OnGameStateChange;
+    }
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+    private void OnDisable()
+    {
+        StaticEventHandler.OnInventoryChanged -= StaticEventHandler_OnInventoryChanged;
+        StaticEventHandler.OnExit -= StaticEventHandler_OnExit;
+        GameManager.Instance.OnGameStateChange -= Instance_OnGameStateChange;
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    // TODO(il2cpp): game-state handling body not recovered.
+    private void Instance_OnGameStateChange(GameState gameState)
+    {
+    }
 
-	3. Assembly Reconstruction has not been implemented.
+    // Approx: stores the Inventory carried by the event.
+    private void StaticEventHandler_OnInventoryChanged(OnInventoryChangedEventArgs onInventoryChangedEventArgs)
+    {
+        inventory = onInventoryChangedEventArgs.inventory;
+    }
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
+    private void Start()
+    {
+    }
 
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
+    public void ToggleInventory()
+    {
+    }
 
-	4. This script is unnecessary.
+    private void LoadItemsToInventory()
+    {
+    }
 
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
+    // Approx: copies the item data onto the slot view.
+    private void SetInventorySlot(ItemUI slot, InventoryItem item)
+    {
+        slot.inventoryItem = item;
+        slot.isHasItem = true;
+        slot.ItemImg.sprite = item.itemSO.itemIcon;
+        slot.ItemImg.gameObject.SetActive(true);
+        slot.quantityText.text = item.quantity.ToString();
+        slot.quantityText.gameObject.SetActive(true);
+    }
 
-	5. Script Content Level 0
+    public void CollectIntentoryItem(ItemSO itemSO)
+    {
+    }
 
-		AssetRipper was set to not load any script information.
+    public void LoadItemFromJson()
+    {
+    }
 
-	6. Cpp2IL failed to decompile Il2Cpp data
+    private void SaveItemToJson()
+    {
+    }
 
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
+    private void OnApplicationQuit()
+    {
+    }
 
-	7. An incorrect path was provided to AssetRipper.
-
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
-
-	*/
+    private void StaticEventHandler_OnExit()
+    {
+    }
 }

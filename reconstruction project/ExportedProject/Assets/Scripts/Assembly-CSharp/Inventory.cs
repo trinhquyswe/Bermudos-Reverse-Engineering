@@ -1,63 +1,108 @@
+using System.Collections.Generic;
 using UnityEngine;
 
+// TODO(il2cpp): ResetInventory, swap/move and slot-initialization bodies are not recoverable from the pseudo (try/catch lowering).
+// TODO(il2cpp): OnEnable scale tween constants and ease are unrecovered; omitted.
 public class Inventory : MonoBehaviour
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    [HideInInspector]
+    public List<ItemUI> inventorySlotList;
+    [HideInInspector]
+    public List<ItemUI> hotBarSlotList;
+    public GameObject itemUIPrefab;
+    public GameObject content;
+    public GameObject hotBar;
+    private ItemUI draggedItemUI;
+    private ItemUI hoverItemUI;
+    private ItemUI pressedItemUI;
+    private ItemUI previousPressedItemUI;
 
-	1. No dll files were provided to AssetRipper.
+    private void Start()
+    {
+        StaticEventHandler.CallInventoryChangedEvent(this);
+    }
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    private void OnEnable()
+    {
+        StaticEventHandler.OnItemUIEndDragChanged += StaticEventHandler_OnItemUIChanged;
+        StaticEventHandler.OnItemUIHoverChanged += StaticEventHandler_OnItemUIHoverChanged;
+        StaticEventHandler.OnItemUIClickChanged += StaticEventHandler_OnItemUIClickChanged;
+    }
 
-	2. Incorrect dll files were provided to AssetRipper.
+    private void OnDisable()
+    {
+        StaticEventHandler.OnItemUIEndDragChanged -= StaticEventHandler_OnItemUIChanged;
+        StaticEventHandler.OnItemUIHoverChanged -= StaticEventHandler_OnItemUIHoverChanged;
+        StaticEventHandler.OnItemUIClickChanged -= StaticEventHandler_OnItemUIClickChanged;
+    }
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+    // TODO(il2cpp): OnDestroy body not recovered.
+    private void OnDestroy()
+    {
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    // TODO(il2cpp): body not recoverable from pseudo (nested try/catch lowering).
+    public void ResetInventory(List<InventoryItem> skipList)
+    {
+    }
 
-	3. Assembly Reconstruction has not been implemented.
+    private void StaticEventHandler_OnItemUIClickChanged(OnItemUIChangedEventArgs onItemUIChangedEventArgs)
+    {
+        previousPressedItemUI = pressedItemUI;
+        pressedItemUI = onItemUIChangedEventArgs.itemUI;
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
+        if (previousPressedItemUI != null && previousPressedItemUI != pressedItemUI)
+        {
+            previousPressedItemUI.SelectorImg.gameObject.SetActive(false);
+        }
 
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
+        if (pressedItemUI != null)
+        {
+            pressedItemUI.SelectorImg.gameObject.SetActive(true);
+        }
+    }
 
-	4. This script is unnecessary.
+    private void StaticEventHandler_OnItemUIChanged(OnItemUIChangedEventArgs onItemUIChangedEventArgs)
+    {
+        draggedItemUI = onItemUIChangedEventArgs.itemUI;
+    }
 
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
+    private void StaticEventHandler_OnItemUIHoverChanged(OnItemUIChangedEventArgs onItemUIChangedEventArgs)
+    {
+        hoverItemUI = onItemUIChangedEventArgs.itemUI;
+        if (draggedItemUI != null)
+        {
+            MoveAndSwapItemUI();
+        }
+    }
 
-	5. Script Content Level 0
+    // TODO(il2cpp): swap/move logic not recovered from the pseudo (nested try/catch lowering); body omitted.
+    public void MoveAndSwapItemUI()
+    {
+    }
 
-		AssetRipper was set to not load any script information.
+    // TODO(il2cpp): body not recovered.
+    public void SwapTwoItemUI(ItemUIType itemUIType)
+    {
+    }
 
-	6. Cpp2IL failed to decompile Il2Cpp data
+    // TODO(il2cpp): body not recovered.
+    public void SwapItemUIWithEmptySlot(ItemUIType itemUITypee)
+    {
+    }
 
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
+    // TODO(il2cpp): body not recovered.
+    public void MoveItemToHotBar()
+    {
+    }
 
-	7. An incorrect path was provided to AssetRipper.
+    // TODO(il2cpp): body not recovered.
+    public void InitializeInventorySlotList(int quantity)
+    {
+    }
 
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
-
-	*/
+    // TODO(il2cpp): body not recovered.
+    public void InitializeHotBarSlotList(int quantity)
+    {
+    }
 }

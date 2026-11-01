@@ -1,63 +1,113 @@
+using System.Collections;
 using UnityEngine;
 
+// Approx: component lookups in Awake and the potion amounts/multiplier are not in the pseudo; flagged.
+// TODO(il2cpp): Start, UsePotion name mapping and UseAttackPotionCoroutine body not recovered.
+[DisallowMultipleComponent]
 public class ItemConsumer : MonoBehaviour
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    private InventoryManager inventoryManager;
+    private DealDamage dealDamage;
+    private Health health;
+    private Rage rage;
+    private Coroutine attackPotionCoroutine;
+    private float attackPotionMultiplier;
+    private int bigHealthPotionAmount;
+    private int smallHealthPotionAmount;
+    private int ragePotionAmount;
+    private InventoryItem currentInventoryItem;
+    [SerializeField]
+    private SoundEffectSO useItemSoundEffect;
+    private int normalDamage;
 
-	1. No dll files were provided to AssetRipper.
+    private void Awake()
+    {
+        inventoryManager = GetComponent<InventoryManager>();
+        dealDamage = GetComponent<DealDamage>();
+        health = GetComponent<Health>();
+        rage = GetComponent<Rage>();
+    }
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    private void OnEnable()
+    {
+        StaticEventHandler.OnHotBarScrollChanged += StaticEventHandler_OnHotBarScrollChanged;
+    }
 
-	2. Incorrect dll files were provided to AssetRipper.
+    private void OnDisable()
+    {
+        StaticEventHandler.OnHotBarScrollChanged -= StaticEventHandler_OnHotBarScrollChanged;
+    }
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+    private void Start()
+    {
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    private void StaticEventHandler_OnHotBarScrollChanged(OnInventoryItemChangedEventArgs onInventoryItemChangedEventArgs)
+    {
+        currentInventoryItem = onInventoryItemChangedEventArgs.inventoryItem;
+    }
 
-	3. Assembly Reconstruction has not been implemented.
+    public void UseItemFromHotBar()
+    {
+        if (currentInventoryItem == null || currentInventoryItem.itemSO == null)
+        {
+            return;
+        }
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
+        UsePotion(currentInventoryItem.itemSO.itemName);
+    }
 
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
+    // TODO(il2cpp): potion-name-to-effect mapping not recovered (string literals unavailable).
+    private void UsePotion(string potionName)
+    {
+    }
 
-	4. This script is unnecessary.
+    private void UseAttackPotion()
+    {
+        if (attackPotionCoroutine != null)
+        {
+            return;
+        }
 
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
+        attackPotionCoroutine = StartCoroutine(UseAttackPotionCoroutine());
+    }
 
-	5. Script Content Level 0
+    // TODO(il2cpp): coroutine body not recovered; attackPotionMultiplier and normalDamage are not applied here.
+    private IEnumerator UseAttackPotionCoroutine()
+    {
+        yield break;
+    }
 
-		AssetRipper was set to not load any script information.
+    private void UseBigHealthPotion()
+    {
+        if (health == null)
+        {
+            return;
+        }
 
-	6. Cpp2IL failed to decompile Il2Cpp data
+        health.IncreaseHealth(bigHealthPotionAmount);
+        SoundEffectManager.Instance.PlaySoundEffect(useItemSoundEffect);
+    }
 
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
+    public void UseSmallHealthPotion()
+    {
+        if (health == null)
+        {
+            return;
+        }
 
-	7. An incorrect path was provided to AssetRipper.
+        health.IncreaseHealth(smallHealthPotionAmount);
+        SoundEffectManager.Instance.PlaySoundEffect(useItemSoundEffect);
+    }
 
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
+    public void UseRagePotion()
+    {
+        if (rage == null)
+        {
+            return;
+        }
 
-	*/
+        rage.IncreaseRage(ragePotionAmount);
+        SoundEffectManager.Instance.PlaySoundEffect(useItemSoundEffect);
+    }
 }

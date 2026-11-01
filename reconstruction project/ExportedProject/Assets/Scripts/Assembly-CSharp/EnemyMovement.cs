@@ -1,63 +1,176 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
+// Approx: PoiseEvent pseudo casts idleEvent to AttackEvent (invalid); enemy.attackEvent used instead.
+// TODO(il2cpp): stun coroutine body not fully recovered; only the wait is kept.
 public class EnemyMovement : MonoBehaviour
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    private Vector2 startPosition;
+    private Vector2 roamingPosition;
+    private bool hasInitializedRoamingPosition;
+    private float maxDistance = 15f;
+    [HideInInspector]
+    public NavMeshAgent navMeshAgent;
+    private Enemy enemy;
 
-	1. No dll files were provided to AssetRipper.
+    private void Awake()
+    {
+        enemy = GetComponent<Enemy>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
+    }
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    private void OnEnable()
+    {
+        enemy.poiseEvent.OnPoise += PoiseEvent_OnPoise;
+    }
 
-	2. Incorrect dll files were provided to AssetRipper.
+    private void OnDisable()
+    {
+        enemy.poiseEvent.OnPoise -= PoiseEvent_OnPoise;
+    }
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+    private void Start()
+    {
+        navMeshAgent.updateRotation = false;
+        navMeshAgent.updateUpAxis = false;
+        navMeshAgent.speed = 3f;
+        startPosition = transform.position;
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    private void PoiseEvent_OnPoise(PoiseEvent poiseEvent, PoiseEventArgs poiseEventArgs)
+    {
+        if (poiseEventArgs.currentPoise <= 0f)
+        {
+            StopEnemy(poiseEventArgs.stunTime);
+        }
+    }
 
-	3. Assembly Reconstruction has not been implemented.
+    private void StopEnemy(float stunTime)
+    {
+        enemy.attackEvent.CallAttackEvent();
+        StartCoroutine(StopEnemyCoroutine(stunTime));
+    }
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
+    private IEnumerator StopEnemyCoroutine(float stunTime)
+    {
+        yield return new WaitForSeconds(stunTime);
+    }
 
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
+    public void MoveRoamingPosition()
+    {
+        if (!hasInitializedRoamingPosition)
+        {
+            roamingPosition = GetRoamingPosition();
+            hasInitializedRoamingPosition = true;
+        }
 
-	4. This script is unnecessary.
+        navMeshAgent.SetDestination(roamingPosition);
+        navMeshAgent.stoppingDistance = 1f;
 
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
+        if (Vector2.Distance(transform.position, roamingPosition) <= 1f)
+        {
+            roamingPosition = GetRoamingPosition();
+        }
+    }
 
-	5. Script Content Level 0
+    private Vector2 GetRoamingPosition()
+    {
+        if (!navMeshAgent.isOnNavMesh)
+        {
+            return roamingPosition;
+        }
 
-		AssetRipper was set to not load any script information.
+        Vector2 randomDirection = HelperUtilities.GetRandomDirection();
+        float randomDistance = Random.Range(1f, 5f);
+        roamingPosition = startPosition + randomDirection * randomDistance;
 
-	6. Cpp2IL failed to decompile Il2Cpp data
+        NavMeshHit hit;
+        NavMesh.SamplePosition(roamingPosition, out hit, 10f, 1);
+        return hit.position;
+    }
 
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
+    public void MoveToPlayer()
+    {
+        Player player = GameManager.Instance.player;
+        if (player != null && navMeshAgent.isOnNavMesh)
+        {
+            navMeshAgent.stoppingDistance = 2f;
+            navMeshAgent.SetDestination(player.transform.position);
+        }
+    }
 
-	7. An incorrect path was provided to AssetRipper.
+    public void FindPlayer()
+    {
+        Vector3 playerPosition = GameManager.Instance.player.transform.position;
+        if (Vector2.Distance(playerPosition, transform.position) < 5f)
+        {
+            enemy.enemyStateEvent.CallEnemyStateEvent(EnemyState.Chasing);
+        }
+    }
 
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
+    public void GetDistanceToStartPosition()
+    {
+        maxDistance = 15f;
+        if (Vector2.Distance(transform.position, startPosition) > maxDistance)
+        {
+            enemy.enemyStateEvent.CallEnemyStateEvent(EnemyState.GoBackToStart);
+        }
+    }
 
-	*/
+    public void GoBackToStartPosition()
+    {
+        if (!navMeshAgent.isOnNavMesh)
+        {
+            return;
+        }
+
+        navMeshAgent.stoppingDistance = 2f;
+        navMeshAgent.SetDestination(startPosition);
+
+        Vector3 playerPosition = GameManager.Instance.player.transform.position;
+        if (Vector2.Distance(playerPosition, transform.position) <= 5f)
+        {
+            if (Vector2.Distance(startPosition, transform.position) <= maxDistance - 5f)
+            {
+                enemy.enemyStateEvent.CallEnemyStateEvent(EnemyState.Chasing);
+            }
+        }
+
+        if (Vector2.Distance(transform.position, startPosition) < 2f)
+        {
+            enemy.enemyStateEvent.CallEnemyStateEvent(EnemyState.Roaming);
+        }
+    }
+
+    // Approx: direction-to-angle bands assumed (Up 45..135, Right -45..45, Down -135..-45, else Left).
+    public void GetAimDirection(bool isPlayerDir)
+    {
+        Vector3 origin = transform.position;
+        Vector3 target = isPlayerDir
+            ? GameManager.Instance.player.transform.position
+            : (Vector3)roamingPosition;
+
+        float angle = HelperUtilities.GetAngleFromVector(target - origin);
+
+        AimDirection aimDirection;
+        if (angle > 45f && angle <= 135f)
+        {
+            aimDirection = AimDirection.Up;
+        }
+        else if (angle > -45f && angle <= 45f)
+        {
+            aimDirection = AimDirection.Right;
+        }
+        else if (angle > -135f && angle <= -45f)
+        {
+            aimDirection = AimDirection.Down;
+        }
+        else
+        {
+            aimDirection = AimDirection.Left;
+        }
+
+        enemy.animateEvent.CallAnimateEvent(aimDirection);
+    }
 }

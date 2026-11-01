@@ -1,63 +1,271 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
+// Approx: aim-direction constants assumed to be Vector2.up/down/left/right and the 0.71 diagonals.
+// Approx: rest action has no recovered handler (TODO below). UI action map property name assumed to be UI.
+[DisallowMultipleComponent]
 public class PlayerControl : MonoBehaviour
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    private Player player;
+    private InputSystem_Actions inputSystem_Actions;
+    private InputAction move;
+    private InputAction fire;
+    private InputAction rightClick;
+    private InputAction spaceClick;
+    private InputAction beam;
+    private InputAction openInventory;
+    private InputAction useItemAction;
+    private InputAction restAction;
+    private BeamByPlayer beamByPlayer;
+    private InventoryManager inventoryManager;
+    private ItemConsumer useItem;
+    private Vector2 direction;
+    private Vector2 lastMoveDirection;
+    private Vector2 previousLastDirection;
+    private float dashCooldownTimer;
+    private float bashCooldownTimer;
+    private bool isRunningSoundPlaying;
 
-	1. No dll files were provided to AssetRipper.
+    private void Awake()
+    {
+        // Approx: component lookups assumed from field types.
+        player = GetComponent<Player>();
+        beamByPlayer = GetComponent<BeamByPlayer>();
+        inventoryManager = GetComponent<InventoryManager>();
+        useItem = GetComponent<ItemConsumer>();
+        inputSystem_Actions = new InputSystem_Actions();
+        GameManager.Instance.OnGameStateChange += OnGameStateChange;
+    }
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    private void OnEnable()
+    {
+        move = inputSystem_Actions.Player.Move;
+        fire = inputSystem_Actions.Player.Fire;
+        beam = inputSystem_Actions.Player.Beam;
+        rightClick = inputSystem_Actions.Player.RightClick;
+        spaceClick = inputSystem_Actions.Player.SpaceClick;
+        openInventory = inputSystem_Actions.UI.OpenInventory;
+        useItemAction = inputSystem_Actions.UI.UseItem;
+        restAction = inputSystem_Actions.Player.Rest;
 
-	2. Incorrect dll files were provided to AssetRipper.
+        move.Enable();
+        fire.Enable();
+        beam.Enable();
+        rightClick.Enable();
+        spaceClick.Enable();
+        useItemAction.Enable();
+        restAction.Enable();
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+        fire.performed += OnFireClick;
+        beam.performed += OnBeamPerformed;
+        rightClick.performed += OnRightMouseClick;
+        rightClick.canceled += OnRightMouseCanceled;
+        spaceClick.performed += OnSpaceClick;
+        openInventory.performed += OnOpenInventoryPerformed;
+        useItemAction.performed += OnUseItemPerformed;
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    private void OnDisable()
+    {
+        fire.performed -= OnFireClick;
+        beam.performed -= OnBeamPerformed;
+        rightClick.performed -= OnRightMouseClick;
+        rightClick.canceled -= OnRightMouseCanceled;
+        spaceClick.performed -= OnSpaceClick;
+        openInventory.performed -= OnOpenInventoryPerformed;
+        useItemAction.performed -= OnUseItemPerformed;
 
-	3. Assembly Reconstruction has not been implemented.
+        move.Disable();
+        fire.Disable();
+        beam.Disable();
+        rightClick.Disable();
+        spaceClick.Disable();
+        openInventory.Disable();
+        useItemAction.Disable();
+        restAction.Disable();
+    }
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
+    private void OnDestroy()
+    {
+        GameManager.Instance.OnGameStateChange -= OnGameStateChange;
+    }
 
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
+    // Approx: openInventory is enabled only once the game reaches the Instruct state.
+    private void OnGameStateChange(GameState gameState)
+    {
+        if ((gameState & ~GameState.Begin) == GameState.Instruct)
+        {
+            openInventory.Enable();
+            GameManager.Instance.OnGameStateChange -= OnGameStateChange;
+        }
+    }
 
-	4. This script is unnecessary.
+    private void OnRightMouseClick(InputAction.CallbackContext ctx)
+    {
+        if (bashCooldownTimer < Time.unscaledTime)
+        {
+            bashCooldownTimer = Time.unscaledTime + 0.5f;
+            player.bashEvent.CallOnBashEvent(BashState.ActiveBash);
+            StaticEventHandler.CallTriggerBashEvent();
+        }
+    }
 
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
+    private void OnRightMouseCanceled(InputAction.CallbackContext ctx)
+    {
+        player.bashEvent.CallOnBashEvent(BashState.ReleaseBash);
+    }
 
-	5. Script Content Level 0
+    private void OnSpaceClick(InputAction.CallbackContext ctx)
+    {
+        if (direction.sqrMagnitude >= 1e-10f && dashCooldownTimer < Time.time)
+        {
+            SoundEffectManager.Instance.PlaySoundEffect(player.dashSoundEffect);
+            dashCooldownTimer = Time.time + 1f;
+            player.dashEvent.CallDashEvent(direction);
+            StaticEventHandler.CallTriggerDashEvent();
+        }
+    }
 
-		AssetRipper was set to not load any script information.
+    private void OnFireClick(InputAction.CallbackContext ctx)
+    {
+        if (player.stamina.currentStamina > 10f)
+        {
+            player.attackEvent.CallAttackEvent();
+        }
+    }
 
-	6. Cpp2IL failed to decompile Il2Cpp data
+    private void OnBeamPerformed(InputAction.CallbackContext ctx)
+    {
+        beamByPlayer.Beam();
+    }
 
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
+    private void OnOpenInventoryPerformed(InputAction.CallbackContext ctx)
+    {
+        inventoryManager.ToggleInventory();
+    }
 
-	7. An incorrect path was provided to AssetRipper.
+    private void OnUseItemPerformed(InputAction.CallbackContext ctx)
+    {
+        useItem.UseItemFromHotBar();
+    }
 
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
+    private void Update()
+    {
+        MovementInput();
 
-	*/
+        if (rightClick.ReadValue<float>() > 0f)
+        {
+            player.bashEvent.CallOnBashEvent(BashState.DuringBash);
+        }
+    }
+
+    private void MovementInput()
+    {
+        Vector2 input = move.ReadValue<Vector2>();
+
+        if ((((input.x == 0f && input.y != 0f) || (input.x != 0f && input.y == 0f))
+            && direction.x != 0f) && direction.y != 0f)
+        {
+            lastMoveDirection = direction;
+        }
+
+        direction = input;
+
+        if (direction.sqrMagnitude < 1e-10f)
+        {
+            if (isRunningSoundPlaying)
+            {
+                SoundEffectManager.Instance.StopSoundEffectLoop(player.runSoundEffect);
+                isRunningSoundPlaying = false;
+            }
+
+            player.idleEvent.CallIdleEvent();
+
+            if ((previousLastDirection - lastMoveDirection).sqrMagnitude < 1e-10f)
+            {
+                return;
+            }
+
+            previousLastDirection = lastMoveDirection;
+
+            if (HelperUtilities.ApproximatelyEqual(lastMoveDirection, new Vector2(-0.71f, -0.71f), 0.01f))
+            {
+                player.animateEvent.CallAnimateEvent(AimDirection.DownLeft);
+            }
+            else if (HelperUtilities.ApproximatelyEqual(lastMoveDirection, new Vector2(0.71f, -0.71f), 0.01f))
+            {
+                player.animateEvent.CallAnimateEvent(AimDirection.DownRight);
+            }
+            else if (HelperUtilities.ApproximatelyEqual(lastMoveDirection, new Vector2(-0.71f, 0.71f), 0.01f))
+            {
+                player.animateEvent.CallAnimateEvent(AimDirection.UpLeft);
+            }
+            else if (HelperUtilities.ApproximatelyEqual(lastMoveDirection, new Vector2(0.71f, 0.71f), 0.01f))
+            {
+                player.animateEvent.CallAnimateEvent(AimDirection.UpRight);
+            }
+            return;
+        }
+
+        AimDirection aimDirection;
+        bool hasAim = true;
+        if ((direction - Vector2.up).sqrMagnitude < 1e-10f)
+        {
+            aimDirection = AimDirection.Up;
+        }
+        else if ((direction - Vector2.down).sqrMagnitude < 1e-10f)
+        {
+            aimDirection = AimDirection.Down;
+        }
+        else if ((direction - Vector2.left).sqrMagnitude < 1e-10f)
+        {
+            aimDirection = AimDirection.Left;
+        }
+        else if ((direction - Vector2.right).sqrMagnitude < 1e-10f)
+        {
+            aimDirection = AimDirection.Right;
+        }
+        else if (HelperUtilities.ApproximatelyEqual(direction, new Vector2(-0.71f, -0.71f), 0.01f))
+        {
+            aimDirection = AimDirection.DownLeft;
+        }
+        else if (HelperUtilities.ApproximatelyEqual(direction, new Vector2(0.71f, -0.71f), 0.01f))
+        {
+            aimDirection = AimDirection.DownRight;
+        }
+        else if (HelperUtilities.ApproximatelyEqual(direction, new Vector2(-0.71f, 0.71f), 0.01f))
+        {
+            aimDirection = AimDirection.UpLeft;
+        }
+        else if (HelperUtilities.ApproximatelyEqual(direction, new Vector2(0.71f, 0.71f), 0.01f))
+        {
+            aimDirection = AimDirection.UpRight;
+        }
+        else
+        {
+            aimDirection = AimDirection.Up;
+            hasAim = false;
+        }
+
+        if (hasAim)
+        {
+            player.animateEvent.CallAnimateEvent(aimDirection);
+        }
+
+        float moveSpeed = player.movementDetails.minMoveSpeed;
+        if (player.movementDetails.minMoveSpeed != player.movementDetails.maxMoveSpeed)
+        {
+            moveSpeed = Random.Range(player.movementDetails.minMoveSpeed, player.movementDetails.maxMoveSpeed);
+        }
+
+        player.movementByVelocityEvent.CallMovementByVelocityEvent(direction, moveSpeed);
+
+        if (!isRunningSoundPlaying)
+        {
+            SoundEffectManager.Instance.PlaySoundEffectPersistent(player.runSoundEffect, true);
+            isRunningSoundPlaying = true;
+        }
+    }
+
+    // TODO(il2cpp): Rest action handler not recovered from the pseudo; restAction is enabled but not wired.
 }

@@ -1,63 +1,120 @@
-using UnityEngine;
+using System;
 
-public class StaticEventHandler : MonoBehaviour
+// Approx: OnTriggerBash/Dash and OnExit/OnPressRestEvent/OnRestInBonfire use parameterless Action per pseudo signatures.
+public static class StaticEventHandler
 {
-	/*
-	Dummy class. This could have happened for several reasons:
+    public static Action<MapChangedEventArgs> OnMapChanged;
+    public static Action OnMapTransition;
+    public static Action<OnNoteOpenedEventArgs> OnNoteOpened;
+    public static Action<OnPlayerChangedEventArgs> OnPlayerChanged;
+    public static Action<OnBossChangedEventArgs> OnBossChanged;
+    public static Action<OnBuildNavMeshEventArgs> OnBuildNavMesh;
+    public static Action OnTriggerBash;
+    public static Action OnTriggerDash;
+    public static Action<OnInventoryItemChangedEventArgs> OnItemChanged;
+    public static Action OnPressRestEvent;
+    public static Action OnRestInBonfire;
+    public static Action OnExit;
+    public static Action<OnInventoryChangedEventArgs> OnInventoryChanged;
+    public static Action<OnItemUIChangedEventArgs> OnItemUIEndDragChanged;
+    public static Action<OnItemUIChangedEventArgs> OnItemUIHoverChanged;
+    public static Action<OnItemUIChangedEventArgs> OnItemUIClickChanged;
+    public static Action<OnInventoryItemChangedEventArgs> OnHotBarScrollChanged;
+    public static Action<OnInventoryItemChangedEventArgs> OnMoveItemToHotBar;
+    public static Action<string, int, bool> OnInstructionChanged;
 
-	1. No dll files were provided to AssetRipper.
+    public static void CallMapChangedEvent(Map map)
+    {
+        OnMapChanged?.Invoke(new MapChangedEventArgs { map = map });
+    }
 
-		Unity asset bundles and serialized files do not contain script information to decompile.
-			* For Mono games, that information is contained in .NET dll files.
-			* For Il2Cpp games, that information is contained in compiled C++ assemblies and the global metadata.
-			
-		AssetRipper usually expects games to conform to a normal file structure for Unity games of that platform.
-		A unexpected file structure could cause AssetRipper to not find the required files.
+    public static void CallMapTransitionEvent()
+    {
+        OnMapTransition?.Invoke();
+    }
 
-	2. Incorrect dll files were provided to AssetRipper.
+    public static void CallNoteOpenedEvent(bool isOpening, string note)
+    {
+        OnNoteOpened?.Invoke(new OnNoteOpenedEventArgs { isOpening = isOpening, note = note });
+    }
 
-		Any of the following could cause this:
-			* Il2CppInterop assemblies
-			* Deobfuscated assemblies
-			* Older assemblies (compared to when the bundle was built)
-			* Newer assemblies (compared to when the bundle was built)
+    public static void CallPlayerChangedEvent(Player player)
+    {
+        OnPlayerChanged?.Invoke(new OnPlayerChangedEventArgs { player = player });
+    }
 
-		Note: Although assembly publicizing is bad, it alone cannot cause empty scripts. See: https://github.com/AssetRipper/AssetRipper/issues/653
+    public static void CallBossChangedEvent(Boss boss)
+    {
+        OnBossChanged?.Invoke(new OnBossChangedEventArgs { boss = boss });
+    }
 
-	3. Assembly Reconstruction has not been implemented.
+    public static void CallBuildNavMeshEvent(bool isBuildWhenMapChanged)
+    {
+        OnBuildNavMesh?.Invoke(new OnBuildNavMeshEventArgs { isBuildWhenMapChanged = isBuildWhenMapChanged });
+    }
 
-		Asset bundles contain a small amount of information about the script content.
-		This information can be used to recover the serializable fields of a script.
+    public static void CallTriggerBashEvent()
+    {
+        OnTriggerBash?.Invoke();
+    }
 
-		See: https://github.com/AssetRipper/AssetRipper/issues/655
+    public static void CallTriggerDashEvent()
+    {
+        OnTriggerDash?.Invoke();
+    }
 
-	4. This script is unnecessary.
+    public static void CallItemChangedEvent(InventoryItem inventoryItem)
+    {
+        OnItemChanged?.Invoke(new OnInventoryItemChangedEventArgs { inventoryItem = inventoryItem });
+    }
 
-		If this script has no asset or script references, it can be deleted.
-		Be sure to resolve any compile errors before deleting because they can hide references.
+    public static void CallPressRestEvent()
+    {
+        OnPressRestEvent?.Invoke();
+    }
 
-	5. Script Content Level 0
+    public static void CallRestInBonfireEvent()
+    {
+        OnRestInBonfire?.Invoke();
+    }
 
-		AssetRipper was set to not load any script information.
+    public static void CallExitEvent()
+    {
+        OnExit?.Invoke();
+    }
 
-	6. Cpp2IL failed to decompile Il2Cpp data
+    public static void CallInventoryChangedEvent(Inventory inventory)
+    {
+        OnInventoryChanged?.Invoke(new OnInventoryChangedEventArgs { inventory = inventory });
+    }
 
-		If this happened, there will be errors in the AssetRipper.log indicating that it happened.
-		This is an upstream problem, and the AssetRipper developer has very little control over it.
-		Please post a GitHub issue at: https://github.com/SamboyCoding/Cpp2IL/issues
+    public static void CallItemUIEndDragChangedEvent(ItemUI itemUI)
+    {
+        OnItemUIEndDragChanged?.Invoke(new OnItemUIChangedEventArgs { itemUI = itemUI });
+    }
 
-	7. An incorrect path was provided to AssetRipper.
+    public static void CallItemUIHoverChangedEvent(ItemUI itemUI)
+    {
+        OnItemUIHoverChanged?.Invoke(new OnItemUIChangedEventArgs { itemUI = itemUI });
+    }
 
-		This is characterized by "Mixed game structure has been found at" in the AssetRipper.log file.
-		AssetRipper expects games to conform to a normal file structure for Unity games of that platform.
-		An unexpected file structure could cause AssetRipper to not find the required files for script decompilation.
-		Generally, AssetRipper expects users to provide the root folder of the game. For example:
-			* Windows: the folder containing the game's .exe file
-			* Mac: the .app file/folder
-			* Linux: the folder containing the game's executable file
-			* Android: the apk file
-			* iOS: the ipa file
-			* Switch: the folder containing exefs and romfs
+    public static void CallItemUIClickChangedEvent(ItemUI itemUI)
+    {
+        OnItemUIClickChanged?.Invoke(new OnItemUIChangedEventArgs { itemUI = itemUI });
+    }
 
-	*/
+    public static void CallHotBarScrollChangedEvent(InventoryItem inventoryItem)
+    {
+        OnHotBarScrollChanged?.Invoke(new OnInventoryItemChangedEventArgs { inventoryItem = inventoryItem });
+    }
+
+    public static void CallMoveItemToHotBarEvent(InventoryItem inventoryItem)
+    {
+        OnMoveItemToHotBar?.Invoke(new OnInventoryItemChangedEventArgs { inventoryItem = inventoryItem });
+    }
+
+    public static void CallInstructionChangedEvent(string instructionText, int displayCount = -1, bool isActive = true)
+    {
+        OnInstructionChanged?.Invoke(instructionText, displayCount, isActive);
+    }
 }
