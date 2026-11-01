@@ -2,7 +2,10 @@
 // Syntactically valid C#. Semantics are unresolved; legend:
 //   Raw.Read<T>(a), Raw.Write<T>(a, v)  raw memory at address a (was *(T *)(a))
 //   Raw.Deref(p)                        one extra dereference of pointer p
-//   Raw.VCall(a)(args)                  virtual call through vtable slot a
+//   Raw.VCall(k, s)(args)               virtual call: vtable slot s of class k (k+0xc0+8*s)
+//   Raw.VCallAt(e)(args)                virtual call: vtable entry at address e (interface)
+//   Raw.DelegateInvoke(d)(args)         delegate invoke: target from d+0xc, this d+0x20
+//   Raw.IndirectCall(a)(args)           unresolved indirect call (function-table offset a)
 //   Type.Method(args)                   managed method (was unnamed_function_N)
 //   Type.field                          static field (was Raw at X_TypeInfo + 0x5c)
 //   this                                instance pointer (was __ret in object-style methods)
@@ -112,7 +115,7 @@ public class StunBar : MonoBehaviour // TypeDefIndex: 5597
             this.stunTime = param2;
             UnityEngine.UI.Slider.set_maxValue(this.stunBar,param2,0);
             iVar1 = this.stunBar._opaque;
-            Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0x238) * 4) /* virtual */ (this.stunBar,this.stunTime,Raw.Read<int>(iVar1 + 0x23c));
+            Raw.VCall(iVar1, 47) /* virtual */ (this.stunBar,this.stunTime,Raw.Read<int>(iVar1 + 0x23c));
         }
     }
 
@@ -125,12 +128,12 @@ public class StunBar : MonoBehaviour // TypeDefIndex: 5597
         int iVar4 = default;
 
         iVar4 = this.stunBar._opaque;
-        fVar1 = (float)Raw.VCall((ulong)Raw.Read<uint>(iVar4 + 0x230) * 4) /* virtual */ (this.stunBar,Raw.Read<int>(iVar4 + 0x234));
+        fVar1 = (float)Raw.VCall(iVar4, 46) /* virtual */ (this.stunBar,Raw.Read<int>(iVar4 + 0x234));
         if (0.0 < fVar1) {
             pSVar3 = this.stunBar;
-            fVar1 = (float)Raw.VCall((ulong)Raw.Read<uint>(pSVar3._opaque + 0x230) * 4) /* virtual */ (pSVar3,Raw.Read<int>(pSVar3._opaque + 0x234));
+            fVar1 = (float)Raw.VCall(pSVar3._opaque, 46) /* virtual */ (pSVar3,Raw.Read<int>(pSVar3._opaque + 0x234));
             fVar2 = UnityEngine.Time.get_deltaTime(0);
-            Raw.VCall((ulong)Raw.Read<uint>(pSVar3._opaque + 0x238) * 4) /* virtual */ (pSVar3,fVar1 - fVar2,Raw.Read<int>(pSVar3._opaque + 0x23c));
+            Raw.VCall(pSVar3._opaque, 47) /* virtual */ (pSVar3,fVar1 - fVar2,Raw.Read<int>(pSVar3._opaque + 0x23c));
         }
     }
 

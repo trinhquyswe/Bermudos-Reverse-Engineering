@@ -2,7 +2,10 @@
 // Syntactically valid C#. Semantics are unresolved; legend:
 //   Raw.Read<T>(a), Raw.Write<T>(a, v)  raw memory at address a (was *(T *)(a))
 //   Raw.Deref(p)                        one extra dereference of pointer p
-//   Raw.VCall(a)(args)                  virtual call through vtable slot a
+//   Raw.VCall(k, s)(args)               virtual call: vtable slot s of class k (k+0xc0+8*s)
+//   Raw.VCallAt(e)(args)                virtual call: vtable entry at address e (interface)
+//   Raw.DelegateInvoke(d)(args)         delegate invoke: target from d+0xc, this d+0x20
+//   Raw.IndirectCall(a)(args)           unresolved indirect call (function-table offset a)
 //   Type.Method(args)                   managed method (was unnamed_function_N)
 //   Type.field                          static field (was Raw at X_TypeInfo + 0x5c)
 //   this                                instance pointer (was __ret in object-style methods)
@@ -148,7 +151,7 @@ public class GameManager : SingletonMonobehaviour<GameManager> // TypeDefIndex: 
         local_60._8_8_ = 0x3f80000000000000;
         local_60._opaque0 = 0;
         local_60._opaque1 = 0;
-        Raw.VCall((ulong)Raw.Read<uint>(iVar2 + 0x178) * 4) /* virtual */ (this.beginSreen,&local_60,Raw.Read<int>(iVar2 + 0x17c));
+        Raw.VCall(iVar2, 23) /* virtual */ (this.beginSreen,&local_60,Raw.Read<int>(iVar2 + 0x17c));
         uVar1 = UnityEngine.Component.get_gameObject(this.beginSreen,0);
         UnityEngine.GameObject.SetActive(uVar1,1,0);
         uVar1 = DG.Tweening.DOTweenModuleUI.DOFade(this.beginSreen,0.0,1.5,0);
@@ -209,7 +212,7 @@ public class GameManager : SingletonMonobehaviour<GameManager> // TypeDefIndex: 
         }
         pAVar4 = this.OnGameStateChange;
         if (pAVar4 != (Action)0x0) {
-            Raw.VCall((ulong)(uint)pAVar4[3]._opaque * 4) /* virtual */ (pAVar4[8]._opaque,gameState,pAVar4[5]._opaque);
+            Raw.DelegateInvoke(pAVar4) /* delegate invoke */ (pAVar4[8]._opaque,gameState,pAVar4[5]._opaque);
         }
     }
 
@@ -238,7 +241,7 @@ public class GameManager : SingletonMonobehaviour<GameManager> // TypeDefIndex: 
         iVar2 = this.wonPanel._opaque;
         local_18 = 0;
         local_20 = 0;
-        Raw.VCall((ulong)Raw.Read<uint>(iVar2 + 0x178) * 4) /* virtual */ (this.wonPanel,&local_20,Raw.Read<int>(iVar2 + 0x17c));
+        Raw.VCall(iVar2, 23) /* virtual */ (this.wonPanel,&local_20,Raw.Read<int>(iVar2 + 0x17c));
         uVar1 = DG.Tweening.DOTweenModuleUI.DOFade(this.wonPanel,1.0,1.0,0);
         param1 = new DG_Tweening_TweenCallback();
         DG.Tweening.TweenCallback.__ctor(param1,this,DAT_ram_00569988,0);
@@ -383,7 +386,7 @@ public class GameManager : SingletonMonobehaviour<GameManager> // TypeDefIndex: 
         UnityEngine.Rigidbody2D.set_mass(uVar1,0.5,0);
         pAVar2 = this.OnGameStateChange;
         if (pAVar2 != (Action)0x0) {
-            Raw.VCall((ulong)(uint)pAVar2[3]._opaque * 4) /* virtual */(pAVar2[8]._opaque,3,pAVar2[5]._opaque);
+            Raw.DelegateInvoke(pAVar2) /* delegate invoke */(pAVar2[8]._opaque,3,pAVar2[5]._opaque);
         }
     }
     public void _WonScene_b__20_0()
@@ -462,7 +465,7 @@ public class GameManager : SingletonMonobehaviour<GameManager> // TypeDefIndex: 
         this.gameState = Begin;
         pAVar1 = this.OnGameStateChange;
         if (pAVar1 != (Action)0x0) {
-            Raw.VCall((ulong)(uint)pAVar1[3]._opaque * 4) /* virtual */(pAVar1[8]._opaque,1,pAVar1[5]._opaque);
+            Raw.DelegateInvoke(pAVar1) /* delegate invoke */(pAVar1[8]._opaque,1,pAVar1[5]._opaque);
         }
     }
 }

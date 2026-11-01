@@ -2,7 +2,10 @@
 // Syntactically valid C#. Semantics are unresolved; legend:
 //   Raw.Read<T>(a), Raw.Write<T>(a, v)  raw memory at address a (was *(T *)(a))
 //   Raw.Deref(p)                        one extra dereference of pointer p
-//   Raw.VCall(a)(args)                  virtual call through vtable slot a
+//   Raw.VCall(k, s)(args)               virtual call: vtable slot s of class k (k+0xc0+8*s)
+//   Raw.VCallAt(e)(args)                virtual call: vtable entry at address e (interface)
+//   Raw.DelegateInvoke(d)(args)         delegate invoke: target from d+0xc, this d+0x20
+//   Raw.IndirectCall(a)(args)           unresolved indirect call (function-table offset a)
 //   Type.Method(args)                   managed method (was unnamed_function_N)
 //   Type.field                          static field (was Raw at X_TypeInfo + 0x5c)
 //   this                                instance pointer (was __ret in object-style methods)
@@ -334,7 +337,7 @@ public class PlayerControl : MonoBehaviour // TypeDefIndex: 5690
             this.player.bashEvent.CallOnBashEvent(ActiveBash);
             iVar2 = StaticEventHandler.OnTriggerBash;
             if (iVar2 != 0) {
-                Raw.VCall((ulong)Raw.Read<uint>(iVar2 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar2 + 0x20),Raw.Read<int>(iVar2 + 0x14));
+                Raw.DelegateInvoke(iVar2) /* delegate invoke */ (Raw.Read<int>(iVar2 + 0x20),Raw.Read<int>(iVar2 + 0x14));
             }
         }
     }
@@ -368,11 +371,11 @@ public class PlayerControl : MonoBehaviour // TypeDefIndex: 5690
             if (pAVar4 != (Action)0x0) {
                 iVar2 = new DashEventArgs();
                 Raw.Write<Vector2>(iVar2 + 8, VVar5);
-                Raw.VCall((ulong)(uint)pAVar4[3]._opaque * 4) /* virtual */ (pAVar4[8]._opaque,pDVar3,iVar2,pAVar4[5]._opaque);
+                Raw.DelegateInvoke(pAVar4) /* delegate invoke */ (pAVar4[8]._opaque,pDVar3,iVar2,pAVar4[5]._opaque);
             }
             iVar2 = StaticEventHandler.OnTriggerDash;
             if (iVar2 != 0) {
-                Raw.VCall((ulong)Raw.Read<uint>(iVar2 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar2 + 0x20),Raw.Read<int>(iVar2 + 0x14));
+                Raw.DelegateInvoke(iVar2) /* delegate invoke */ (Raw.Read<int>(iVar2 + 0x20),Raw.Read<int>(iVar2 + 0x14));
             }
         }
     }
@@ -478,7 +481,7 @@ public class PlayerControl : MonoBehaviour // TypeDefIndex: 5690
             pIVar6 = this.player.idleEvent;
             pAVar7 = pIVar6.OnIdle;
             if (pAVar7 != (Action)0x0) {
-                Raw.VCall((ulong)(uint)pAVar7[3]._opaque * 4) /* virtual */ (pAVar7[8]._opaque,pIVar6,pAVar7[5]._opaque);
+                Raw.DelegateInvoke(pAVar7) /* delegate invoke */ (pAVar7[8]._opaque,pIVar6,pAVar7[5]._opaque);
             }
             local_90 = this.lastMoveDirection;
             fVar2 = this.previousLastDirection.x - local_90.x;
@@ -605,7 +608,7 @@ public class PlayerControl : MonoBehaviour // TypeDefIndex: 5690
             iVar5 = new MovementByVelocityArgs();
             Raw.Write<float>(iVar5 + 0x10, fVar2);
             Raw.Write<Vector2>(iVar5 + 8, VVar8);
-            Raw.VCall((ulong)(uint)pAVar7[3]._opaque * 4) /* virtual */ (pAVar7[8]._opaque,pMVar3,iVar5,pAVar7[5]._opaque);
+            Raw.DelegateInvoke(pAVar7) /* delegate invoke */ (pAVar7[8]._opaque,pMVar3,iVar5,pAVar7[5]._opaque);
         }
         if (this.isRunningSoundPlaying == false) {
             iVar5 = Raw.Read<int>(DAT_ram_00565d6c + 0x10);

@@ -2,7 +2,10 @@
 // Syntactically valid C#. Semantics are unresolved; legend:
 //   Raw.Read<T>(a), Raw.Write<T>(a, v)  raw memory at address a (was *(T *)(a))
 //   Raw.Deref(p)                        one extra dereference of pointer p
-//   Raw.VCall(a)(args)                  virtual call through vtable slot a
+//   Raw.VCall(k, s)(args)               virtual call: vtable slot s of class k (k+0xc0+8*s)
+//   Raw.VCallAt(e)(args)                virtual call: vtable entry at address e (interface)
+//   Raw.DelegateInvoke(d)(args)         delegate invoke: target from d+0xc, this d+0x20
+//   Raw.IndirectCall(a)(args)           unresolved indirect call (function-table offset a)
 //   Type.Method(args)                   managed method (was unnamed_function_N)
 //   Type.field                          static field (was Raw at X_TypeInfo + 0x5c)
 //   this                                instance pointer (was __ret in object-style methods)
@@ -97,9 +100,9 @@ public class Instruction : MonoBehaviour // TypeDefIndex: 5654
             uVar1 = UnityEngine.Component.get_gameObject(this,0);
             UnityEngine.GameObject.SetActive(uVar1,1,0);
             iVar2 = this.instructionText._opaque;
-            Raw.VCall((ulong)Raw.Read<uint>(iVar2 + 0x2d0) * 4) /* virtual */ (this.instructionText,instruction,Raw.Read<int>(iVar2 + 0x2d4));
+            Raw.VCall(iVar2, 66) /* virtual */ (this.instructionText,instruction,Raw.Read<int>(iVar2 + 0x2d4));
             iVar2 = this.displayCount._opaque;
-            Raw.VCall((ulong)Raw.Read<uint>(iVar2 + 0x2d0) * 4) /* virtual */ (this.displayCount,"",Raw.Read<int>(iVar2 + 0x2d4));
+            Raw.VCall(iVar2, 66) /* virtual */ (this.displayCount,"",Raw.Read<int>(iVar2 + 0x2d4));
         }
         else {
             if ((uint)displayCount < 3) {
@@ -120,12 +123,12 @@ public class Instruction : MonoBehaviour // TypeDefIndex: 5654
                 uVar1 = UnityEngine.Component.get_gameObject(this,0);
                 UnityEngine.GameObject.SetActive(uVar1,1,0);
                 iVar2 = this.instructionText._opaque;
-                Raw.VCall((ulong)Raw.Read<uint>(iVar2 + 0x2d0) * 4) /* virtual */ (this.instructionText,instruction,Raw.Read<int>(iVar2 + 0x2d4));
+                Raw.VCall(iVar2, 66) /* virtual */ (this.instructionText,instruction,Raw.Read<int>(iVar2 + 0x2d4));
                 uVar1 = System.Int32.ToString(&local_4,0);
                 pTVar3 = this.displayCount;
                 uVar1 = System.String.Concat(uVar1,"/3",0);
                 iVar2 = pTVar3._opaque;
-                Raw.VCall((ulong)Raw.Read<uint>(iVar2 + 0x2d0) * 4) /* virtual */ (pTVar3,uVar1,Raw.Read<int>(iVar2 + 0x2d4));
+                Raw.VCall(iVar2, 66) /* virtual */ (pTVar3,uVar1,Raw.Read<int>(iVar2 + 0x2d4));
             }
             else {
                 uVar1 = UnityEngine.Component.get_gameObject(this,0);

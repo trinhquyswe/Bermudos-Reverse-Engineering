@@ -2,7 +2,10 @@
 // Syntactically valid C#. Semantics are unresolved; legend:
 //   Raw.Read<T>(a), Raw.Write<T>(a, v)  raw memory at address a (was *(T *)(a))
 //   Raw.Deref(p)                        one extra dereference of pointer p
-//   Raw.VCall(a)(args)                  virtual call through vtable slot a
+//   Raw.VCall(k, s)(args)               virtual call: vtable slot s of class k (k+0xc0+8*s)
+//   Raw.VCallAt(e)(args)                virtual call: vtable entry at address e (interface)
+//   Raw.DelegateInvoke(d)(args)         delegate invoke: target from d+0xc, this d+0x20
+//   Raw.IndirectCall(a)(args)           unresolved indirect call (function-table offset a)
 //   Type.Method(args)                   managed method (was unnamed_function_N)
 //   Type.field                          static field (was Raw at X_TypeInfo + 0x5c)
 //   this                                instance pointer (was __ret in object-style methods)
@@ -40,7 +43,7 @@ public class Inventory : MonoBehaviour // TypeDefIndex: 5640
             __this_00 = (OnInventoryChangedEventArgs) new OnInventoryChangedEventArgs();
             new OnInventoryChangedEventArgs();
             __this_00.inventory = this;
-            Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),__this_00,Raw.Read<int>(iVar1 + 0x14));
+            Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),__this_00,Raw.Read<int>(iVar1 + 0x14));
         }
     }
 
@@ -339,9 +342,9 @@ public class Inventory : MonoBehaviour // TypeDefIndex: 5640
                 pTVar5 = this.hoverItemUI.quantityText;
                 pTVar6 = this.draggedItemUI.quantityText;
                 iVar1 = pTVar6._opaque;
-                uVar2 = Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0x2c8) * 4) /* virtual */ (pTVar6,Raw.Read<int>(iVar1 + 0x2cc));
+                uVar2 = Raw.VCall(iVar1, 65) /* virtual */ (pTVar6,Raw.Read<int>(iVar1 + 0x2cc));
                 iVar1 = pTVar5._opaque;
-                Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0x2d0) * 4) /* virtual */ (pTVar5,uVar2,Raw.Read<int>(iVar1 + 0x2d4));
+                Raw.VCall(iVar1, 66) /* virtual */ (pTVar5,uVar2,Raw.Read<int>(iVar1 + 0x2d4));
                 pIVar3 = this.hoverItemUI;
                 pIVar7 = this.draggedItemUI.inventoryItem;
                 pIVar3.inventoryItem = pIVar7;
@@ -355,7 +358,7 @@ public class Inventory : MonoBehaviour // TypeDefIndex: 5640
                 __this_00 = (OnInventoryItemChangedEventArgs) new OnInventoryItemChangedEventArgs();
                 new OnInventoryItemChangedEventArgs();
                 __this_00.inventoryItem = pIVar7;
-                Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),__this_00,Raw.Read<int>(iVar1 + 0x14));
+                Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),__this_00,Raw.Read<int>(iVar1 + 0x14));
                 return;
             }
         }
@@ -392,15 +395,15 @@ public class Inventory : MonoBehaviour // TypeDefIndex: 5640
         iVar3 = this.draggedItemUI.ItemImg[0x20]._opaque;
         pTVar4 = this.draggedItemUI.quantityText;
         iVar7 = pTVar4._opaque;
-        uVar1 = Raw.VCall((ulong)Raw.Read<uint>(iVar7 + 0x2c8) * 4) /* virtual */ (pTVar4,Raw.Read<int>(iVar7 + 0x2cc));
+        uVar1 = Raw.VCall(iVar7, 65) /* virtual */ (pTVar4,Raw.Read<int>(iVar7 + 0x2cc));
         pIVar5 = this.draggedItemUI.inventoryItem;
         UnityEngine.UI.Image.set_sprite(this.draggedItemUI.ItemImg,this.hoverItemUI.ItemImg[0x20]._opaque,0);
         pTVar4 = this.draggedItemUI.quantityText;
         pTVar8 = this.hoverItemUI.quantityText;
         iVar7 = pTVar8._opaque;
-        uVar2 = Raw.VCall((ulong)Raw.Read<uint>(iVar7 + 0x2c8) * 4) /* virtual */ (pTVar8,Raw.Read<int>(iVar7 + 0x2cc));
+        uVar2 = Raw.VCall(iVar7, 65) /* virtual */ (pTVar8,Raw.Read<int>(iVar7 + 0x2cc));
         iVar7 = pTVar4._opaque;
-        Raw.VCall((ulong)Raw.Read<uint>(iVar7 + 0x2d0) * 4) /* virtual */ (pTVar4,uVar2,Raw.Read<int>(iVar7 + 0x2d4));
+        Raw.VCall(iVar7, 66) /* virtual */ (pTVar4,uVar2,Raw.Read<int>(iVar7 + 0x2d4));
         pIVar9 = this.hoverItemUI.inventoryItem;
         this.draggedItemUI.inventoryItem = pIVar9;
         uVar2 = System.Int32.ToString(&pIVar9.inventorySlot,0);
@@ -414,7 +417,7 @@ public class Inventory : MonoBehaviour // TypeDefIndex: 5640
         UnityEngine.UI.Image.set_sprite(this.hoverItemUI.ItemImg,iVar3,0);
         pTVar4 = this.hoverItemUI.quantityText;
         iVar3 = pTVar4._opaque;
-        Raw.VCall((ulong)Raw.Read<uint>(iVar3 + 0x2d0) * 4) /* virtual */ (pTVar4,uVar1,Raw.Read<int>(iVar3 + 0x2d4));
+        Raw.VCall(iVar3, 66) /* virtual */ (pTVar4,uVar1,Raw.Read<int>(iVar3 + 0x2d4));
         pIVar6 = this.hoverItemUI;
         pIVar6.inventoryItem = pIVar5;
         Raw.Write<int>((int)&pIVar5.klass + iVar7, pIVar6.itemId);
@@ -439,9 +442,9 @@ public class Inventory : MonoBehaviour // TypeDefIndex: 5640
         pTVar2 = this.hoverItemUI.quantityText;
         pTVar4 = this.draggedItemUI.quantityText;
         iVar7 = pTVar4._opaque;
-        uVar1 = Raw.VCall((ulong)Raw.Read<uint>(iVar7 + 0x2c8) * 4) /* virtual */ (pTVar4,Raw.Read<int>(iVar7 + 0x2cc));
+        uVar1 = Raw.VCall(iVar7, 65) /* virtual */ (pTVar4,Raw.Read<int>(iVar7 + 0x2cc));
         iVar7 = pTVar2._opaque;
-        Raw.VCall((ulong)Raw.Read<uint>(iVar7 + 0x2d0) * 4) /* virtual */ (pTVar2,uVar1,Raw.Read<int>(iVar7 + 0x2d4));
+        Raw.VCall(iVar7, 66) /* virtual */ (pTVar2,uVar1,Raw.Read<int>(iVar7 + 0x2d4));
         pIVar3 = this.hoverItemUI;
         pIVar5 = this.draggedItemUI;
         pIVar6 = pIVar5.inventoryItem;
@@ -479,9 +482,9 @@ public class Inventory : MonoBehaviour // TypeDefIndex: 5640
         pTVar2 = this.hoverItemUI.quantityText;
         pTVar4 = this.draggedItemUI.quantityText;
         iVar6 = pTVar4._opaque;
-        uVar1 = Raw.VCall((ulong)Raw.Read<uint>(iVar6 + 0x2c8) * 4) /* virtual */ (pTVar4,Raw.Read<int>(iVar6 + 0x2cc));
+        uVar1 = Raw.VCall(iVar6, 65) /* virtual */ (pTVar4,Raw.Read<int>(iVar6 + 0x2cc));
         iVar6 = pTVar2._opaque;
-        Raw.VCall((ulong)Raw.Read<uint>(iVar6 + 0x2d0) * 4) /* virtual */ (pTVar2,uVar1,Raw.Read<int>(iVar6 + 0x2d4));
+        Raw.VCall(iVar6, 66) /* virtual */ (pTVar2,uVar1,Raw.Read<int>(iVar6 + 0x2d4));
         pIVar3 = this.hoverItemUI;
         pIVar5 = this.draggedItemUI.inventoryItem;
         pIVar3.inventoryItem = pIVar5;

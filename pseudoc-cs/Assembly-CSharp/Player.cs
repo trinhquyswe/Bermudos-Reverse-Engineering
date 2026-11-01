@@ -2,7 +2,10 @@
 // Syntactically valid C#. Semantics are unresolved; legend:
 //   Raw.Read<T>(a), Raw.Write<T>(a, v)  raw memory at address a (was *(T *)(a))
 //   Raw.Deref(p)                        one extra dereference of pointer p
-//   Raw.VCall(a)(args)                  virtual call through vtable slot a
+//   Raw.VCall(k, s)(args)               virtual call: vtable slot s of class k (k+0xc0+8*s)
+//   Raw.VCallAt(e)(args)                virtual call: vtable entry at address e (interface)
+//   Raw.DelegateInvoke(d)(args)         delegate invoke: target from d+0xc, this d+0x20
+//   Raw.IndirectCall(a)(args)           unresolved indirect call (function-table offset a)
 //   Type.Method(args)                   managed method (was unnamed_function_N)
 //   Type.field                          static field (was Raw at X_TypeInfo + 0x5c)
 //   this                                instance pointer (was __ret in object-style methods)
@@ -135,7 +138,7 @@ public class Player : MonoBehaviour // TypeDefIndex: 5688
             __this_00 = (OnPlayerChangedEventArgs) new OnPlayerChangedEventArgs();
             new OnPlayerChangedEventArgs();
             __this_00.player = this;
-            Raw.VCall((ulong)Raw.Read<uint>(iVar3 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar3 + 0x20),__this_00,Raw.Read<int>(iVar3 + 0x14));
+            Raw.DelegateInvoke(iVar3) /* delegate invoke */ (Raw.Read<int>(iVar3 + 0x20),__this_00,Raw.Read<int>(iVar3 + 0x14));
         }
         __this_01 = this.healthEvent;
         value = (System.Action.HealthEvent.HealthEventArgs) new System_Action_HealthEvent__HealthEventArgs_();
@@ -300,7 +303,7 @@ public class Player : MonoBehaviour // TypeDefIndex: 5688
         iVar3 = *piVar5;
         MStack_70._16_8_ = 0x3f80000000000000;
         MStack_70._8_8_ = 0;
-        Raw.VCall((ulong)Raw.Read<uint>(iVar3 + 0x178) * 4) /* virtual */ (piVar5,&MStack_70.field_0x8,Raw.Read<int>(iVar3 + 0x17c));
+        Raw.VCall(iVar3, 23) /* virtual */ (piVar5,&MStack_70.field_0x8,Raw.Read<int>(iVar3 + 0x17c));
         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
         }

@@ -2,7 +2,10 @@
 // Syntactically valid C#. Semantics are unresolved; legend:
 //   Raw.Read<T>(a), Raw.Write<T>(a, v)  raw memory at address a (was *(T *)(a))
 //   Raw.Deref(p)                        one extra dereference of pointer p
-//   Raw.VCall(a)(args)                  virtual call through vtable slot a
+//   Raw.VCall(k, s)(args)               virtual call: vtable slot s of class k (k+0xc0+8*s)
+//   Raw.VCallAt(e)(args)                virtual call: vtable entry at address e (interface)
+//   Raw.DelegateInvoke(d)(args)         delegate invoke: target from d+0xc, this d+0x20
+//   Raw.IndirectCall(a)(args)           unresolved indirect call (function-table offset a)
 //   Type.Method(args)                   managed method (was unnamed_function_N)
 //   Type.field                          static field (was Raw at X_TypeInfo + 0x5c)
 //   this                                instance pointer (was __ret in object-style methods)
@@ -158,21 +161,21 @@ public class MenuInGame : MonoBehaviour // TypeDefIndex: 5662
 
         iVar3 = StaticEventHandler.OnExit;
         if (iVar3 != 0) {
-            Raw.VCall((ulong)Raw.Read<uint>(iVar3 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar3 + 0x20),Raw.Read<int>(iVar3 + 0x14));
+            Raw.DelegateInvoke(iVar3) /* delegate invoke */ (Raw.Read<int>(iVar3 + 0x20),Raw.Read<int>(iVar3 + 0x14));
         }
         piVar1 = (object)UnityEngine.Component.GetComponent<object>(this,DAT_ram_00567ea8);
         local_8 = 0;
         local_10 = 0;
         local_18 = 0;
         local_20 = 0;
-        Raw.VCall((ulong)Raw.Read<uint>(*piVar1 + 0x178) * 4) /* virtual */ (piVar1,&local_20,Raw.Read<int>(*piVar1 + 0x17c));
+        Raw.VCall(*piVar1, 23) /* virtual */ (piVar1,&local_20,Raw.Read<int>(*piVar1 + 0x17c));
         uVar2 = UnityEngine.Component.get_gameObject(this.exitButton,0);
         UnityEngine.GameObject.SetActive(uVar2,0,0);
         uVar2 = UnityEngine.Component.get_gameObject(this.resumeButton,0);
         UnityEngine.GameObject.SetActive(uVar2,0,0);
         iVar3 = StaticEventHandler.OnMapTransition;
         if (iVar3 != 0) {
-            Raw.VCall((ulong)Raw.Read<uint>(iVar3 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar3 + 0x20),Raw.Read<int>(iVar3 + 0x14));
+            Raw.DelegateInvoke(iVar3) /* delegate invoke */ (Raw.Read<int>(iVar3 + 0x20),Raw.Read<int>(iVar3 + 0x14));
         }
         iVar3 = new MenuInGame__WaitMapTransitionEvent_d__13();
         Raw.Write<int>(iVar3 + 8, 0);

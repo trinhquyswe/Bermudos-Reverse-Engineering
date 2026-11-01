@@ -2,7 +2,10 @@
 // Syntactically valid C#. Semantics are unresolved; legend:
 //   Raw.Read<T>(a), Raw.Write<T>(a, v)  raw memory at address a (was *(T *)(a))
 //   Raw.Deref(p)                        one extra dereference of pointer p
-//   Raw.VCall(a)(args)                  virtual call through vtable slot a
+//   Raw.VCall(k, s)(args)               virtual call: vtable slot s of class k (k+0xc0+8*s)
+//   Raw.VCallAt(e)(args)                virtual call: vtable entry at address e (interface)
+//   Raw.DelegateInvoke(d)(args)         delegate invoke: target from d+0xc, this d+0x20
+//   Raw.IndirectCall(a)(args)           unresolved indirect call (function-table offset a)
 //   Type.Method(args)                   managed method (was unnamed_function_N)
 //   Type.field                          static field (was Raw at X_TypeInfo + 0x5c)
 //   this                                instance pointer (was __ret in object-style methods)
@@ -107,7 +110,7 @@ public class HealthBar : MonoBehaviour // TypeDefIndex: 5621
         int iVar1 = default;
 
         iVar1 = this.healthBar._opaque;
-        Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0x238) * 4) /* virtual */ (this.healthBar,healthEventArgs.healthPercent,Raw.Read<int>(iVar1 + 0x23c));
+        Raw.VCall(iVar1, 47) /* virtual */ (this.healthBar,healthEventArgs.healthPercent,Raw.Read<int>(iVar1 + 0x23c));
     }
 
     // RVA: 0x3833 Offset: 0x3833 VA: 0x3833
@@ -122,14 +125,14 @@ public class HealthBar : MonoBehaviour // TypeDefIndex: 5621
         float fVar7 = default;
 
         iVar5 = this.healthBar._opaque;
-        fVar1 = (float)Raw.VCall((ulong)Raw.Read<uint>(iVar5 + 0x230) * 4) /* virtual */ (this.healthBar,Raw.Read<int>(iVar5 + 0x234));
+        fVar1 = (float)Raw.VCall(iVar5, 46) /* virtual */ (this.healthBar,Raw.Read<int>(iVar5 + 0x234));
         iVar5 = this.easeHealthBar._opaque;
-        fVar2 = (float)Raw.VCall((ulong)Raw.Read<uint>(iVar5 + 0x230) * 4) /* virtual */ (this.easeHealthBar,Raw.Read<int>(iVar5 + 0x234));
+        fVar2 = (float)Raw.VCall(iVar5, 46) /* virtual */ (this.easeHealthBar,Raw.Read<int>(iVar5 + 0x234));
         if (fVar1 != fVar2) {
             pSVar4 = this.easeHealthBar;
-            fVar2 = (float)Raw.VCall((ulong)Raw.Read<uint>(pSVar4._opaque + 0x230) * 4) /* virtual */ (pSVar4,Raw.Read<int>(pSVar4._opaque + 0x234));
+            fVar2 = (float)Raw.VCall(pSVar4._opaque, 46) /* virtual */ (pSVar4,Raw.Read<int>(pSVar4._opaque + 0x234));
             iVar5 = this.healthBar._opaque;
-            fVar3 = (float)Raw.VCall((ulong)Raw.Read<uint>(iVar5 + 0x230) * 4) /* virtual */ (this.healthBar,Raw.Read<int>(iVar5 + 0x234));
+            fVar3 = (float)Raw.VCall(iVar5, 46) /* virtual */ (this.healthBar,Raw.Read<int>(iVar5 + 0x234));
             fVar7 = this.lerpSpeed;
             fVar1 = fVar7;
             if (1.0 <= fVar7) {
@@ -139,7 +142,7 @@ public class HealthBar : MonoBehaviour // TypeDefIndex: 5621
             if (0.0 <= fVar7) {
                 fVar6 = fVar1;
             }
-            Raw.VCall((ulong)Raw.Read<uint>(pSVar4._opaque + 0x238) * 4) /* virtual */ (pSVar4,fVar2 + (fVar3 - fVar2) * fVar6,Raw.Read<int>(pSVar4._opaque + 0x23c));
+            Raw.VCall(pSVar4._opaque, 47) /* virtual */ (pSVar4,fVar2 + (fVar3 - fVar2) * fVar6,Raw.Read<int>(pSVar4._opaque + 0x23c));
         }
     }
 

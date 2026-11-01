@@ -2,7 +2,10 @@
 // Syntactically valid C#. Semantics are unresolved; legend:
 //   Raw.Read<T>(a), Raw.Write<T>(a, v)  raw memory at address a (was *(T *)(a))
 //   Raw.Deref(p)                        one extra dereference of pointer p
-//   Raw.VCall(a)(args)                  virtual call through vtable slot a
+//   Raw.VCall(k, s)(args)               virtual call: vtable slot s of class k (k+0xc0+8*s)
+//   Raw.VCallAt(e)(args)                virtual call: vtable entry at address e (interface)
+//   Raw.DelegateInvoke(d)(args)         delegate invoke: target from d+0xc, this d+0x20
+//   Raw.IndirectCall(a)(args)           unresolved indirect call (function-table offset a)
 //   Type.Method(args)                   managed method (was unnamed_function_N)
 //   Type.field                          static field (was Raw at X_TypeInfo + 0x5c)
 //   this                                instance pointer (was __ret in object-style methods)
@@ -125,7 +128,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             __this_00 = (MapChangedEventArgs)new MapChangedEventArgs();
             new MapChangedEventArgs();
             *(BossMap)&__this_00.map = this;
-            Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),__this_00,Raw.Read<int>(iVar1 + 0x14));
+            Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),__this_00,Raw.Read<int>(iVar1 + 0x14));
         }
     }
 
@@ -184,7 +187,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
 
         iVar1 = StaticEventHandler.OnMapTransition;
         if (iVar1 != 0) {
-            Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),Raw.Read<int>(iVar1 + 0x14));
+            Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),Raw.Read<int>(iVar1 + 0x14));
         }
     }
 
@@ -258,7 +261,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             new OnNoteOpenedEventArgs();
             this.note = (string)note;
             this.isOpening = isOpening;
-            Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),this,Raw.Read<int>(iVar1 + 0x14));
+            Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),this,Raw.Read<int>(iVar1 + 0x14));
         }
     }
 
@@ -331,7 +334,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             this = (OnPlayerChangedEventArgs)new OnPlayerChangedEventArgs();
             new OnPlayerChangedEventArgs();
             this.player = player;
-            Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),this,Raw.Read<int>(iVar1 + 0x14));
+            Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),this,Raw.Read<int>(iVar1 + 0x14));
         }
     }
 
@@ -404,7 +407,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             this = (OnBossChangedEventArgs)new OnBossChangedEventArgs();
             new OnBossChangedEventArgs();
             this.boss = boss;
-            Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),this,Raw.Read<int>(iVar1 + 0x14));
+            Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),this,Raw.Read<int>(iVar1 + 0x14));
         }
     }
 
@@ -477,7 +480,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             this = (OnBuildNavMeshEventArgs)new OnBuildNavMeshEventArgs();
             new OnBuildNavMeshEventArgs();
             this.isBuildWhenMapChanged = isBuildWhenMapChanged;
-            Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),this,Raw.Read<int>(iVar1 + 0x14));
+            Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),this,Raw.Read<int>(iVar1 + 0x14));
         }
     }
 
@@ -536,7 +539,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
 
         iVar1 = StaticEventHandler.OnTriggerBash;
         if (iVar1 != 0) {
-            Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),Raw.Read<int>(iVar1 + 0x14));
+            Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),Raw.Read<int>(iVar1 + 0x14));
         }
     }
 
@@ -595,7 +598,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
 
         iVar1 = StaticEventHandler.OnTriggerDash;
         if (iVar1 != 0) {
-            Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),Raw.Read<int>(iVar1 + 0x14));
+            Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),Raw.Read<int>(iVar1 + 0x14));
         }
     }
 
@@ -668,7 +671,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             this = (OnInventoryItemChangedEventArgs) new OnInventoryItemChangedEventArgs();
             new OnInventoryItemChangedEventArgs();
             this.inventoryItem = inventoryItem;
-            Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),this,Raw.Read<int>(iVar1 + 0x14));
+            Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),this,Raw.Read<int>(iVar1 + 0x14));
         }
     }
 
@@ -727,7 +730,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
 
         iVar1 = StaticEventHandler.OnPressRestEvent;
         if (iVar1 != 0) {
-            Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),Raw.Read<int>(iVar1 + 0x14));
+            Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),Raw.Read<int>(iVar1 + 0x14));
         }
     }
 
@@ -786,7 +789,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
 
         iVar1 = StaticEventHandler.OnRestInBonfire;
         if (iVar1 != 0) {
-            Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),Raw.Read<int>(iVar1 + 0x14));
+            Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),Raw.Read<int>(iVar1 + 0x14));
         }
     }
 
@@ -845,7 +848,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
 
         iVar1 = StaticEventHandler.OnExit;
         if (iVar1 != 0) {
-            Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),Raw.Read<int>(iVar1 + 0x14));
+            Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),Raw.Read<int>(iVar1 + 0x14));
         }
     }
 
@@ -918,7 +921,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             __this_00 = (OnInventoryChangedEventArgs) new OnInventoryChangedEventArgs();
             new OnInventoryChangedEventArgs();
             __this_00.inventory = this;
-            Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),__this_00,Raw.Read<int>(iVar1 + 0x14));
+            Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),__this_00,Raw.Read<int>(iVar1 + 0x14));
         }
     }
 
@@ -991,7 +994,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             this = (OnItemUIChangedEventArgs)new OnItemUIChangedEventArgs();
             new OnItemUIChangedEventArgs();
             this.itemUI = itemUI;
-            Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),this,Raw.Read<int>(iVar1 + 0x14));
+            Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),this,Raw.Read<int>(iVar1 + 0x14));
         }
     }
 
@@ -1064,7 +1067,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             this = (OnItemUIChangedEventArgs)new OnItemUIChangedEventArgs();
             new OnItemUIChangedEventArgs();
             this.itemUI = itemUI;
-            Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),this,Raw.Read<int>(iVar1 + 0x14));
+            Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),this,Raw.Read<int>(iVar1 + 0x14));
         }
     }
 
@@ -1137,7 +1140,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             this = (OnItemUIChangedEventArgs)new OnItemUIChangedEventArgs();
             new OnItemUIChangedEventArgs();
             this.itemUI = itemUI;
-            Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),this,Raw.Read<int>(iVar1 + 0x14));
+            Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),this,Raw.Read<int>(iVar1 + 0x14));
         }
     }
 
@@ -1210,7 +1213,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             this = (OnInventoryItemChangedEventArgs) new OnInventoryItemChangedEventArgs();
             new OnInventoryItemChangedEventArgs();
             this.inventoryItem = inventoryItem;
-            Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),this,Raw.Read<int>(iVar1 + 0x14));
+            Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),this,Raw.Read<int>(iVar1 + 0x14));
         }
     }
 
@@ -1283,7 +1286,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
             this = (OnInventoryItemChangedEventArgs) new OnInventoryItemChangedEventArgs();
             new OnInventoryItemChangedEventArgs();
             this.inventoryItem = inventoryItem;
-            Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),this,Raw.Read<int>(iVar1 + 0x14));
+            Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),this,Raw.Read<int>(iVar1 + 0x14));
         }
     }
 
@@ -1353,7 +1356,7 @@ public static class StaticEventHandler // TypeDefIndex: 5720
 
         iVar1 = StaticEventHandler.OnInstructionChanged;
         if (iVar1 != 0) {
-            Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),instructionText,displayCount, CONCAT31(in_register_20000021,isActive),Raw.Read<int>(iVar1 + 0x14));
+            Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),instructionText,displayCount, CONCAT31(in_register_20000021,isActive),Raw.Read<int>(iVar1 + 0x14));
         }
     }
 }

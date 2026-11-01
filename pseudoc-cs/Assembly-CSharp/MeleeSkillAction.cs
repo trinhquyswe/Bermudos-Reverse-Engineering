@@ -2,7 +2,10 @@
 // Syntactically valid C#. Semantics are unresolved; legend:
 //   Raw.Read<T>(a), Raw.Write<T>(a, v)  raw memory at address a (was *(T *)(a))
 //   Raw.Deref(p)                        one extra dereference of pointer p
-//   Raw.VCall(a)(args)                  virtual call through vtable slot a
+//   Raw.VCall(k, s)(args)               virtual call: vtable slot s of class k (k+0xc0+8*s)
+//   Raw.VCallAt(e)(args)                virtual call: vtable entry at address e (interface)
+//   Raw.DelegateInvoke(d)(args)         delegate invoke: target from d+0xc, this d+0x20
+//   Raw.IndirectCall(a)(args)           unresolved indirect call (function-table offset a)
 //   Type.Method(args)                   managed method (was unnamed_function_N)
 //   Type.field                          static field (was Raw at X_TypeInfo + 0x5c)
 //   this                                instance pointer (was __ret in object-style methods)
@@ -45,7 +48,7 @@ public class MeleeSkillAction : SkillsAction // TypeDefIndex: 5570
     public override TaskStatus OnUpdate()
     {
         if (Raw.Read<sbyte>(Raw.Read<int>(this + 0xa8) + 0x4c) != '\0') {
-            Raw.VCall((ulong)Raw.Read<uint>(Raw.Read<int>(this) + 0x1b8) * 4) /* virtual */ (this,Raw.Read<int>(this + 0x34),Raw.Read<int>(Raw.Read<int>(this) + 0x1bc));
+            Raw.VCall(Raw.Read<int>(this), 31) /* virtual */ (this,Raw.Read<int>(this + 0x34),Raw.Read<int>(Raw.Read<int>(this) + 0x1bc));
             return;
         }
         return;

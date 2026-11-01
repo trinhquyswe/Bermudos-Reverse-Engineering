@@ -2,7 +2,10 @@
 // Syntactically valid C#. Semantics are unresolved; legend:
 //   Raw.Read<T>(a), Raw.Write<T>(a, v)  raw memory at address a (was *(T *)(a))
 //   Raw.Deref(p)                        one extra dereference of pointer p
-//   Raw.VCall(a)(args)                  virtual call through vtable slot a
+//   Raw.VCall(k, s)(args)               virtual call: vtable slot s of class k (k+0xc0+8*s)
+//   Raw.VCallAt(e)(args)                virtual call: vtable entry at address e (interface)
+//   Raw.DelegateInvoke(d)(args)         delegate invoke: target from d+0xc, this d+0x20
+//   Raw.IndirectCall(a)(args)           unresolved indirect call (function-table offset a)
 //   Type.Method(args)                   managed method (was unnamed_function_N)
 //   Type.field                          static field (was Raw at X_TypeInfo + 0x5c)
 //   this                                instance pointer (was __ret in object-style methods)
@@ -136,7 +139,7 @@ public class HotBarScroll : MonoBehaviour // TypeDefIndex: 5639
                 iVar4 = /* candidates: System.Collections.Generic.List<EasingFunction>.get_Item | System.Collections.Generic.List<InputEventPtr>.get_Item (+7) */ unnamed_function_6529(pSVar2,this.currentIndex,DAT_ram_0056342c);
                 uVar1 = System.Int32.ToString(iVar4 + 0xc,0);
                 iVar4 = pTVar5._opaque;
-                Raw.VCall((ulong)Raw.Read<uint>(iVar4 + 0x2d0) * 4) /* virtual */ (pTVar5,uVar1,Raw.Read<int>(iVar4 + 0x2d4));
+                Raw.VCall(iVar4, 66) /* virtual */ (pTVar5,uVar1,Raw.Read<int>(iVar4 + 0x2d4));
                 iVar4 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
                 if ((Raw.Read<byte>(iVar4 + 0xbd) & 1) == 0) {
                 }
@@ -217,11 +220,11 @@ public class HotBarScroll : MonoBehaviour // TypeDefIndex: 5639
                     pTVar6 = this.itemQuantity;
                     uVar2 = System.Int32.ToString(&onInventoryItemChangedEventArgs.inventoryItem.quantity,0);
                     iVar3 = pTVar6._opaque;
-                    Raw.VCall((ulong)Raw.Read<uint>(iVar3 + 0x2d0) * 4) /* virtual */ (pTVar6,uVar2,Raw.Read<int>(iVar3 + 0x2d4));
+                    Raw.VCall(iVar3, 66) /* virtual */ (pTVar6,uVar2,Raw.Read<int>(iVar3 + 0x2d4));
                     if (onInventoryItemChangedEventArgs.inventoryItem.quantity == 0) {
                         UnityEngine.UI.Image.set_sprite(this.itemIcom,this.emptyItemSprite,0);
                         iVar3 = this.itemQuantity._opaque;
-                        Raw.VCall((ulong)Raw.Read<uint>(iVar3 + 0x2d0) * 4) /* virtual */ (this.itemQuantity,"",Raw.Read<int>(iVar3 + 0x2d4));
+                        Raw.VCall(iVar3, 66) /* virtual */ (this.itemQuantity,"",Raw.Read<int>(iVar3 + 0x2d4));
                     }
                 }
             }
@@ -250,7 +253,7 @@ public class HotBarScroll : MonoBehaviour // TypeDefIndex: 5639
             pTVar4 = this.itemQuantity;
             uVar2 = System.Int32.ToString(&onInventoryItemChangedEventArgs.inventoryItem.quantity,0);
             iVar3 = pTVar4._opaque;
-            Raw.VCall((ulong)Raw.Read<uint>(iVar3 + 0x2d0) * 4) /* virtual */ (pTVar4,uVar2,Raw.Read<int>(iVar3 + 0x2d4));
+            Raw.VCall(iVar3, 66) /* virtual */ (pTVar4,uVar2,Raw.Read<int>(iVar3 + 0x2d4));
         }
     }
 
@@ -379,7 +382,7 @@ public class HotBarScroll : MonoBehaviour // TypeDefIndex: 5639
         pSVar2 = (Raw.Read<object>(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar5 + 0x5c)) + 0x10) + 0x50)).HotBarItem;
         iVar5 = /* candidates: System.Collections.Generic.List<EasingFunction>.get_Item | System.Collections.Generic.List<InputEventPtr>.get_Item (+7) */ unnamed_function_6529(pSVar2,this.currentIndex,DAT_ram_0056342c);
         uVar3 = System.Int32.ToString(iVar5 + 0xc,0);
-        Raw.VCall((ulong)Raw.Read<uint>(pTVar7._opaque + 0x2d0) * 4) /* virtual */ (pTVar7,uVar3,Raw.Read<int>(pTVar7._opaque + 0x2d4));
+        Raw.VCall(pTVar7._opaque, 66) /* virtual */ (pTVar7,uVar3,Raw.Read<int>(pTVar7._opaque + 0x2d4));
         iVar5 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar5 + 0xbd) & 1) == 0) {
         }
@@ -393,7 +396,7 @@ public class HotBarScroll : MonoBehaviour // TypeDefIndex: 5639
             __this_00 = (OnInventoryItemChangedEventArgs) new OnInventoryItemChangedEventArgs();
             new OnInventoryItemChangedEventArgs();
             __this_00.inventoryItem = pIVar4;
-            Raw.VCall((ulong)Raw.Read<uint>(iVar5 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar5 + 0x20),__this_00,Raw.Read<int>(iVar5 + 0x14));
+            Raw.DelegateInvoke(iVar5) /* delegate invoke */ (Raw.Read<int>(iVar5 + 0x20),__this_00,Raw.Read<int>(iVar5 + 0x14));
         }
     }
 

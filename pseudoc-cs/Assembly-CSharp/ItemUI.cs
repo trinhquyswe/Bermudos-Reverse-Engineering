@@ -2,7 +2,10 @@
 // Syntactically valid C#. Semantics are unresolved; legend:
 //   Raw.Read<T>(a), Raw.Write<T>(a, v)  raw memory at address a (was *(T *)(a))
 //   Raw.Deref(p)                        one extra dereference of pointer p
-//   Raw.VCall(a)(args)                  virtual call through vtable slot a
+//   Raw.VCall(k, s)(args)               virtual call: vtable slot s of class k (k+0xc0+8*s)
+//   Raw.VCallAt(e)(args)                virtual call: vtable entry at address e (interface)
+//   Raw.DelegateInvoke(d)(args)         delegate invoke: target from d+0xc, this d+0x20
+//   Raw.IndirectCall(a)(args)           unresolved indirect call (function-table offset a)
 //   Type.Method(args)                   managed method (was unnamed_function_N)
 //   Type.field                          static field (was Raw at X_TypeInfo + 0x5c)
 //   this                                instance pointer (was __ret in object-style methods)
@@ -99,10 +102,10 @@ public class ItemUI : MonoBehaviour, IPointerEnterHandler, IEventSystemHandler, 
         uVar1 = UnityEngine.Component.get_gameObject(this.quantityText,0);
         UnityEngine.GameObject.SetActive(uVar1,0,0);
         iVar2 = this.quantityText._opaque;
-        Raw.VCall((ulong)Raw.Read<uint>(iVar2 + 0x2d0) * 4) /* virtual */ (this.quantityText,"",Raw.Read<int>(iVar2 + 0x2d4));
+        Raw.VCall(iVar2, 66) /* virtual */ (this.quantityText,"",Raw.Read<int>(iVar2 + 0x2d4));
         UnityEngine.UI.Image.set_sprite(this.ItemImg,0,0);
         iVar2 = this.quantityText._opaque;
-        Raw.VCall((ulong)Raw.Read<uint>(iVar2 + 0x2d0) * 4) /* virtual */ (this.quantityText,"",Raw.Read<int>(iVar2 + 0x2d4));
+        Raw.VCall(iVar2, 66) /* virtual */ (this.quantityText,"",Raw.Read<int>(iVar2 + 0x2d4));
         this.isHasItem = false;
         this.inventoryItem = (InventoryItem)0x0;
     }
@@ -203,7 +206,7 @@ public class ItemUI : MonoBehaviour, IPointerEnterHandler, IEventSystemHandler, 
                 __this_00 = (OnItemUIChangedEventArgs) new OnItemUIChangedEventArgs();
                 new OnItemUIChangedEventArgs();
                 __this_00.itemUI = this;
-                Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),__this_00,Raw.Read<int>(iVar1 + 0x14));
+                Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),__this_00,Raw.Read<int>(iVar1 + 0x14));
             }
             param1 = this.itemUICopy;
             UnityEngine.Object.Destroy(param1,0);
@@ -222,7 +225,7 @@ public class ItemUI : MonoBehaviour, IPointerEnterHandler, IEventSystemHandler, 
                 __this_00 = (OnItemUIChangedEventArgs) new OnItemUIChangedEventArgs();
                 new OnItemUIChangedEventArgs();
                 __this_00.itemUI = this;
-                Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),__this_00,Raw.Read<int>(iVar1 + 0x14));
+                Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),__this_00,Raw.Read<int>(iVar1 + 0x14));
             }
         }
     }
@@ -238,7 +241,7 @@ public class ItemUI : MonoBehaviour, IPointerEnterHandler, IEventSystemHandler, 
             __this_00 = (OnItemUIChangedEventArgs) new OnItemUIChangedEventArgs();
             new OnItemUIChangedEventArgs();
             __this_00.itemUI = this;
-            Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),__this_00,Raw.Read<int>(iVar1 + 0x14));
+            Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),__this_00,Raw.Read<int>(iVar1 + 0x14));
         }
     }
 

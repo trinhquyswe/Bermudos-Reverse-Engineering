@@ -2,7 +2,10 @@
 // Syntactically valid C#. Semantics are unresolved; legend:
 //   Raw.Read<T>(a), Raw.Write<T>(a, v)  raw memory at address a (was *(T *)(a))
 //   Raw.Deref(p)                        one extra dereference of pointer p
-//   Raw.VCall(a)(args)                  virtual call through vtable slot a
+//   Raw.VCall(k, s)(args)               virtual call: vtable slot s of class k (k+0xc0+8*s)
+//   Raw.VCallAt(e)(args)                virtual call: vtable entry at address e (interface)
+//   Raw.DelegateInvoke(d)(args)         delegate invoke: target from d+0xc, this d+0x20
+//   Raw.IndirectCall(a)(args)           unresolved indirect call (function-table offset a)
 //   Type.Method(args)                   managed method (was unnamed_function_N)
 //   Type.field                          static field (was Raw at X_TypeInfo + 0x5c)
 //   this                                instance pointer (was __ret in object-style methods)
@@ -61,7 +64,7 @@ public class BossManager : MonoBehaviour // TypeDefIndex: 5559
             UnityEngine.Rigidbody2D.set_mass(uVar2,0.5,0);
             iVar1 = Raw.Read<int>(iVar1 + 0x20);
             if (iVar1 != 0) {
-                Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),3,Raw.Read<int>(iVar1 + 0x14));
+                Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),3,Raw.Read<int>(iVar1 + 0x14));
             }
             uVar2 = UnityEngine.Component.get_gameObject(this,0);
             UnityEngine.GameObject.SetActive(uVar2,0,0);

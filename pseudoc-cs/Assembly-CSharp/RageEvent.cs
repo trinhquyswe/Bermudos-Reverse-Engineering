@@ -2,7 +2,10 @@
 // Syntactically valid C#. Semantics are unresolved; legend:
 //   Raw.Read<T>(a), Raw.Write<T>(a, v)  raw memory at address a (was *(T *)(a))
 //   Raw.Deref(p)                        one extra dereference of pointer p
-//   Raw.VCall(a)(args)                  virtual call through vtable slot a
+//   Raw.VCall(k, s)(args)               virtual call: vtable slot s of class k (k+0xc0+8*s)
+//   Raw.VCallAt(e)(args)                virtual call: vtable entry at address e (interface)
+//   Raw.DelegateInvoke(d)(args)         delegate invoke: target from d+0xc, this d+0x20
+//   Raw.IndirectCall(a)(args)           unresolved indirect call (function-table offset a)
 //   Type.Method(args)                   managed method (was unnamed_function_N)
 //   Type.field                          static field (was Raw at X_TypeInfo + 0x5c)
 //   this                                instance pointer (was __ret in object-style methods)
@@ -90,7 +93,7 @@ public static class RageEvent // TypeDefIndex: 5628
             Raw.Write<float>(iVar1 + 0x10, rageAmount);
             Raw.Write<float>(iVar1 + 0xc, rageAmount);
             Raw.Write<float>(iVar1 + 8, ragePercent);
-            Raw.VCall((ulong)Raw.Read<uint>(iVar2 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar2 + 0x20),iVar1,Raw.Read<int>(iVar2 + 0x14));
+            Raw.DelegateInvoke(iVar2) /* delegate invoke */ (Raw.Read<int>(iVar2 + 0x20),iVar1,Raw.Read<int>(iVar2 + 0x14));
         }
     }
 }

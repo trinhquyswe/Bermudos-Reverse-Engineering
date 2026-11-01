@@ -501,6 +501,21 @@ def fold_helpers(text, stats):
         return "(%s != %s)" % (a, b)
 
     text = re.sub(r"unnamed_function_44679\(\s*(.+?)\s*,\s*(.+?)\s*,\s*0\s*\)", repl_ineq, text)
+
+    # unnamed_function_1144(&obj->field, value, comparand) -> Interlocked.CompareExchange(ref obj->field, value, comparand)
+    # (returns the original value; stores value only when the current value equals comparand)
+    def repl_cmpxchg(m):
+        stats["helpers"] += 1
+        return "Interlocked.CompareExchange(ref %s, %s, %s)" % (m.group(1), m.group(2), m.group(3))
+
+    text = re.sub(r"unnamed_function_1144\(\s*&([\w.>-]+)\s*,\s*([^,()]+?)\s*,\s*([^,()]+?)\s*\)", repl_cmpxchg, text)
+
+    # unnamed_function_1112(obj, T_TypeInfo) -> (obj as T)   (isinst helper; forwards to unnamed_function_95405)
+    def repl_isinst(m):
+        stats["helpers"] += 1
+        return "(%s as %s)" % (m.group(1), m.group(2))
+
+    text = re.sub(r"unnamed_function_1112\(\s*([\w.>-]+)\s*,\s*(\w+)_TypeInfo\s*\)", repl_isinst, text)
     return text
 
 
@@ -541,6 +556,19 @@ def fold_runtime(text, stats):
             continue
         out.append(lines[i])
         i += 1
+    text = "".join(out)
+
+    # class-init identity call: a standalone `X = unnamed_function_95087(X);` returns X after its
+    # init check, so the statement is dropped. Only drop it when the previous line closes a
+    # statement or block, so an unbraced if/else body is never changed.
+    out = []
+    for ln in text.splitlines(keepends=True):
+        if re.match(r"^[ \t]*(\w+) = unnamed_function_95087\(\1\);[ \t]*\r?\n?$", ln):
+            prev = next((p for p in reversed(out) if p.strip()), "")
+            if prev.rstrip().endswith((";", "{", "}")):
+                stats["guards"] += 1
+                continue
+        out.append(ln)
     text = "".join(out)
 
     # virtual-call annotation

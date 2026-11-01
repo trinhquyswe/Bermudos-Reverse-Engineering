@@ -2,7 +2,10 @@
 // Syntactically valid C#. Semantics are unresolved; legend:
 //   Raw.Read<T>(a), Raw.Write<T>(a, v)  raw memory at address a (was *(T *)(a))
 //   Raw.Deref(p)                        one extra dereference of pointer p
-//   Raw.VCall(a)(args)                  virtual call through vtable slot a
+//   Raw.VCall(k, s)(args)               virtual call: vtable slot s of class k (k+0xc0+8*s)
+//   Raw.VCallAt(e)(args)                virtual call: vtable entry at address e (interface)
+//   Raw.DelegateInvoke(d)(args)         delegate invoke: target from d+0xc, this d+0x20
+//   Raw.IndirectCall(a)(args)           unresolved indirect call (function-table offset a)
 //   Type.Method(args)                   managed method (was unnamed_function_N)
 //   Type.field                          static field (was Raw at X_TypeInfo + 0x5c)
 //   this                                instance pointer (was __ret in object-style methods)
@@ -44,7 +47,7 @@ public class Map : MonoBehaviour // TypeDefIndex: 5664
             __this_00 = (MapChangedEventArgs)new MapChangedEventArgs();
             new MapChangedEventArgs();
             *(Map)&__this_00.map = this;
-            Raw.VCall((ulong)Raw.Read<uint>(iVar4 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar4 + 0x20),__this_00,Raw.Read<int>(iVar4 + 0x14));
+            Raw.DelegateInvoke(iVar4) /* delegate invoke */ (Raw.Read<int>(iVar4 + 0x20),__this_00,Raw.Read<int>(iVar4 + 0x14));
         }
         /* candidates: System.Collections.Generic.List<Color32>.GetEnumerator | System.Collections.Generic.List<EasingFunction>.GetEnumerator (+9) */ unnamed_function_6549(&local_10,this.enviroments,DAT_ram_00562f7c);
         local_18 = 0;

@@ -20,7 +20,10 @@ call rewriting and string literals. P1 adds:
   S4  raw memory      *(T *)(E)          -> Raw.Read<T>(E)
                       *(T *)(E) = V;     -> Raw.Write<T>(E, V);
                       **(T **)(E)        -> Raw.Deref(Raw.Read<object>(E))
-                      (**(code **)(E))(a) -> Raw.VCall(E)(a)
+                      (**(code **)(E))(a) -> Raw.VCall(k, s)(a)      vtable slot s of class k
+                                            Raw.VCallAt(e)(a)      vtable entry at address e (interface loop)
+                                            Raw.DelegateInvoke(d)(a)  delegate invoke (d+0xc)
+                                            Raw.IndirectCall(E)(a)  anything else (unresolved)
   S5  indentation     rebuilt from brace depth (P0 flattened it).
 
 Result is syntactically valid C#. Calls to unnamed_function_N become Type.Method when
@@ -42,6 +45,7 @@ from collections import defaultdict, deque
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import infer_cs as p0  # noqa: E402  (P0 transforms are reused, not copied)
+import il2cpp_layout as lay  # noqa: E402  (wasm32 struct offsets, checked against libil2cpp)
 
 WORKSPACE = p0.WORKSPACE
 
@@ -69,6 +73,16 @@ METHINFO_CAST_RE = re.compile(r"\(\s*MethodInfo\s*\*\s*\)\s*")
 # raw memory access (S4)
 CAND_RE = re.compile(r"\(\*\*\(code \*\*\)|\*+\(")
 VCALL_HEAD = "(**(code **)"
+VIRT_MARK = " /* virtual */"  # infer_cs (P0) appends this after every call head
+_LAYOUT = lay.build()
+VTABLE_OFF = _LAYOUT["Il2CppClass"][0]["vtable"]                  # 0xc0
+VIRT_ENTRY = lay.VIRTUAL_INVOKE_DATA[0]                           # 8 bytes per entry
+DELEGATE_INVOKE_OFF = _LAYOUT["Il2CppDelegate"][0]["invoke_impl"]  # 0xc
+VSLOT_E_RE = re.compile(
+    r"^\s*\(\s*(?:ulonglong|ulong)\s*\)\s*\*\s*\(\s*uint\s*\*\s*\)\s*\(\s*(.+?)\s*\+\s*(0x[0-9A-Fa-f]+|\d+)\s*\)\s*\*\s*4\s*$")
+ELEM_E_RE = re.compile(
+    r"^\s*\(\s*(?:ulonglong|ulong)\s*\)\s*\(\s*uint\s*\)\s*(\w+)\s*\[\s*(\d+)\s*\]\s*\.\s*_opaque\s*\*\s*4\s*$")
+PTR_E_RE = re.compile(r"^\s*\(\s*(?:ulonglong|ulong)\s*\)\s*\*\s*(\w+)\s*\*\s*4\s*$")
 HEAD_RE = re.compile(r"\*+\(\s*([A-Za-z_][\w\. ]*?)\s*(\*+)\s*\)\s*")
 STARS_RE = re.compile(r"\*+")
 IDENT_RE = re.compile(r"[A-Za-z_]\w*")
@@ -95,10 +109,11 @@ RET_WRITE_RE = re.compile(r"\*\s*(?:\([^()]*\)\s*)?__ret\s*=(?!=)|__ret\s*\[|&\s
 THIS_PTR_RE = re.compile(r"\b__this\b")
 STATIC_HDR_RE = re.compile(r"\bstatic\b")
 
-STAT_NAMES = ("methods", "raw", "raw_write", "vcall", "stub_filled", "appended",
+STAT_NAMES = ("methods", "raw", "raw_write", "vslot", "vcall_at", "delegate", "icall", "stub_filled", "appended",
               "unbalanced", "decl_lines", "unparsed_local",
               "native_call", "native_kept", "static_read", "static_write",
-              "static_unmapped", "static_type_skip", "ret_this", "ret_kept", "ret_static")
+              "static_unmapped", "static_type_skip", "ret_this", "ret_kept", "ret_static",
+              "native_arity_narrowed", "native_arity_fallback")
 
 
 # ------------------------------------------------------- symbol maps (S7)
@@ -230,12 +245,127 @@ def rewrite_static_reads(text, stats):
     return STATIC_READ_RE.sub(rep, text)
 
 
+# tools/dummy_signatures.tsv (written by tools/dummy_index.py): one row per DummyDll method.
+# Used to drop ambiguous candidates whose argument count cannot match the call site.
+ARITY_PATH = os.path.join(HERE, "dummy_signatures.tsv")
+GENERIC_ARG_RE = re.compile(r"<.*>$")
+_ARITY = None
+
+
+def arity_index():
+    """key -> [(base, sret, generic)] where base = arity - sret = instance + params + 1."""
+    global _ARITY
+    if _ARITY is None:
+        if not os.path.exists(ARITY_PATH):
+            sys.exit("missing %s: run  python tools/dummy_index.py" % ARITY_PATH)
+        _ARITY = {}
+        with open(ARITY_PATH, encoding="utf-8") as fh:
+            next(fh, None)
+            for line in fh:
+                f = line.rstrip("\n").split("\t")
+                if len(f) < 9:
+                    continue
+                sret, arity = int(f[4]), int(f[8])
+                _ARITY.setdefault(f[0], []).append((arity - sret, sret, f[3] == "1"))
+    return _ARITY
+
+
+def split_generic(name):
+    """'Base<A, B<C>>' -> ('Base', 2); a name without a trailing <...> -> (name, 0)."""
+    if not GENERIC_ARG_RE.search(name):
+        return name, 0
+    inner = name[name.index("<") + 1:-1]
+    depth, args = 0, 1
+    for c in inner:
+        if c == "<":
+            depth += 1
+        elif c == ">":
+            depth -= 1
+        elif c == "," and depth == 0:
+            args += 1
+    return name[:name.index("<")], args
+
+
+def index_key(cand):
+    """'Owner$$Member' candidate -> (signature index key, generic instantiation flag).
+
+    Generic arguments are stripped: the owner gets the `N arity suffix used by the index.
+    """
+    owner, _, member = cand.partition("$$")
+    owner_base, owner_args = split_generic(owner)
+    member_base, member_args = split_generic(member)
+    if owner_args:
+        owner_base = "%s`%d" % (owner_base, owner_args)
+    return owner_base + "$$" + member_base, bool(owner_args or member_args)
+
+
+def arity_fits(cand, arity):
+    """False only when the index shows cand cannot take arity arguments. Unknown keeps it."""
+    key, generic = index_key(cand)
+    for base, sret, gen in arity_index().get(key, ()):
+        if generic or gen:
+            # sret of an instantiation depends on its type arguments, so accept either
+            if arity - base in (0, 1):
+                return True
+        elif arity == base + sret:
+            return True
+    return key not in arity_index()
+
+
+def call_arity(text, open_idx):
+    """Top-level argument count of the call whose '(' is at open_idx; None if unbalanced."""
+    close = _match_close(text, open_idx)
+    if close < 0:
+        return None
+    inner = text[open_idx + 1:close]
+    if not inner.strip():
+        return 0
+    depth, commas, k = 0, 0, 0
+    while k < len(inner):
+        c = inner[k]
+        if c in "\"'":
+            m = STR_LIT_RE.match(inner, k)
+            if m is not None:
+                k = m.end()
+                continue
+        if c in "([{":
+            depth += 1
+        elif c in ")]}":
+            depth -= 1
+        elif c == "," and depth == 0:
+            commas += 1
+        k += 1
+    return commas + 1
+
+
 def rename_native_calls(text, stats):
-    """unnamed_function_N( -> Type.Method( when N has exactly one managed name."""
-    natives = symbol_maps()["native_calls"]
+    """unnamed_function_N( -> Type.Method( when N has exactly one managed name.
+
+    Ambiguous N stays unnamed. Its candidates are narrowed by the argument count of the
+    call (arity_fits); the remaining ones go into a one-line comment before the call.
+    """
+    maps = symbol_maps()
+    natives = maps["native_calls"]
+    ambiguous = maps.get("ambiguous", {})
     def rep(m):
         name = natives.get(m.group(1))
         if name is None:
+            cands = ambiguous.get(m.group(1))
+            if cands:
+                stats["native_ambiguous"] += 1
+                kept = cands
+                arity = call_arity(text, m.end() - 1)
+                if arity is not None:
+                    fit = [c for c in cands if arity_fits(c, arity)]
+                    if not fit:
+                        stats["native_arity_fallback"] += 1
+                    else:
+                        if len(fit) < len(cands):
+                            stats["native_arity_narrowed"] += 1
+                        kept = fit
+                shown = " | ".join(c.replace("$$", ".") for c in kept[:2])
+                more = " (+%d)" % (len(kept) - 2) if len(kept) > 2 else ""
+                return "/* candidates: %s%s */ %s" % (shown, more, m.group(0))
             stats["native_kept"] += 1
             return m.group(0)
         stats["native_call"] += 1
@@ -337,8 +467,32 @@ def find_semicolon(s, start):
     return len(s)
 
 
+def call_target(inner, stats):
+    """Callee E of (**(code **)(E))(a) -> (C# text, kind); kind is virtual, delegate or None."""
+    m = VSLOT_E_RE.match(inner)
+    if m is not None:
+        base, off = m.group(1), int(m.group(2), 0)
+        if off == DELEGATE_INVOKE_OFF:
+            stats["delegate"] += 1
+            return "Raw.DelegateInvoke(%s)" % rewrite_raw(base, stats), "delegate"
+        if off >= VTABLE_OFF and (off - VTABLE_OFF) % VIRT_ENTRY == 0:
+            stats["vslot"] += 1
+            slot = (off - VTABLE_OFF) // VIRT_ENTRY
+            return "Raw.VCall(%s, %d)" % (rewrite_raw(base, stats), slot), "virtual"
+    m = ELEM_E_RE.match(inner)
+    if m is not None and int(m.group(2)) * 4 == DELEGATE_INVOKE_OFF:
+        stats["delegate"] += 1
+        return "Raw.DelegateInvoke(%s)" % m.group(1), "delegate"
+    m = PTR_E_RE.match(inner)
+    if m is not None:
+        stats["vcall_at"] += 1
+        return "Raw.VCallAt(%s)" % m.group(1), "virtual"
+    stats["icall"] += 1
+    return "Raw.IndirectCall(%s)" % rewrite_raw(inner, stats), None
+
+
 def rewrite_raw(s, stats):
-    """*(T *)(E) reads/writes, **(T **)(E) derefs and (**(code **)(E))(a) vcalls."""
+    """*(T *)(E) reads/writes, **(T **)(E) derefs and (**(code **)(E))(a) calls."""
     out, pos, n = [], 0, len(s)
     while True:
         m = CAND_RE.search(s, pos)
@@ -352,9 +506,13 @@ def rewrite_raw(s, stats):
             e_open = i + len(VCALL_HEAD)
             e_close = p0.match_delim(s, e_open) if (e_open < n and s[e_open] == "(") else -1
             if e_close > 0 and e_close + 1 < n and s[e_close + 1] == ")":
-                stats["vcall"] += 1
-                out.append("Raw.VCall(%s)" % rewrite_raw(s[e_open + 1:e_close], stats))
+                head, kind = call_target(s[e_open + 1:e_close], stats)
                 pos = e_close + 2
+                if kind == "delegate":
+                    if s.startswith(VIRT_MARK, pos):
+                        pos += len(VIRT_MARK)
+                    head += " /* delegate invoke */"
+                out.append(head)
                 continue
         h = HEAD_RE.match(s, i)
         if h is None or h.group(1).strip() == "MethodInfo":
@@ -596,7 +754,10 @@ def assemble(fn, assembly, cls_lines, bodies, stats):
         "// Syntactically valid C#. Semantics are unresolved; legend:",
         "//   Raw.Read<T>(a), Raw.Write<T>(a, v)  raw memory at address a (was *(T *)(a))",
         "//   Raw.Deref(p)                        one extra dereference of pointer p",
-        "//   Raw.VCall(a)(args)                  virtual call through vtable slot a",
+        "//   Raw.VCall(k, s)(args)               virtual call: vtable slot s of class k (k+0xc0+8*s)",
+        "//   Raw.VCallAt(e)(args)                virtual call: vtable entry at address e (interface)",
+        "//   Raw.DelegateInvoke(d)(args)         delegate invoke: target from d+0xc, this d+0x20",
+        "//   Raw.IndirectCall(a)(args)           unresolved indirect call (function-table offset a)",
         "//   Type.Method(args)                   managed method (was unnamed_function_N)",
         "//   Type.field                          static field (was Raw at X_TypeInfo + 0x5c)",
         "//   this                                instance pointer (was __ret in object-style methods)",

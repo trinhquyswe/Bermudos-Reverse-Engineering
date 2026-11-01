@@ -2,7 +2,10 @@
 // Syntactically valid C#. Semantics are unresolved; legend:
 //   Raw.Read<T>(a), Raw.Write<T>(a, v)  raw memory at address a (was *(T *)(a))
 //   Raw.Deref(p)                        one extra dereference of pointer p
-//   Raw.VCall(a)(args)                  virtual call through vtable slot a
+//   Raw.VCall(k, s)(args)               virtual call: vtable slot s of class k (k+0xc0+8*s)
+//   Raw.VCallAt(e)(args)                virtual call: vtable entry at address e (interface)
+//   Raw.DelegateInvoke(d)(args)         delegate invoke: target from d+0xc, this d+0x20
+//   Raw.IndirectCall(a)(args)           unresolved indirect call (function-table offset a)
 //   Type.Method(args)                   managed method (was unnamed_function_N)
 //   Type.field                          static field (was Raw at X_TypeInfo + 0x5c)
 //   this                                instance pointer (was __ret in object-style methods)
@@ -323,7 +326,7 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
                 psVar4 = this.instructionText;
                 iVar2 = StaticEventHandler.OnInstructionChanged;
                 if (iVar2 != 0) {
-                    Raw.VCall((ulong)Raw.Read<uint>(iVar2 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar2 + 0x20),psVar4,0xffffffff,1,Raw.Read<int>(iVar2 + 0x14));
+                    Raw.DelegateInvoke(iVar2) /* delegate invoke */ (Raw.Read<int>(iVar2 + 0x20),psVar4,0xffffffff,1,Raw.Read<int>(iVar2 + 0x14));
                 }
             }
             uVar1 = UnityEngine.Component.get_gameObject(this.inventory,0);
@@ -339,7 +342,7 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
             uVar1 = "";
             iVar2 = StaticEventHandler.OnInstructionChanged;
             if (iVar2 != 0) {
-                Raw.VCall((ulong)Raw.Read<uint>(iVar2 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar2 + 0x20),uVar1,0xfffffff7,0,Raw.Read<int>(iVar2 + 0x14));
+                Raw.DelegateInvoke(iVar2) /* delegate invoke */ (Raw.Read<int>(iVar2 + 0x20),uVar1,0xfffffff7,0,Raw.Read<int>(iVar2 + 0x14));
                 return;
             }
         }
@@ -458,7 +461,7 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
                     piVar5 = Raw.Read<object>(iVar4 + 0x1c);
                     uVar3 = System.Int32.ToString(iVar1 + 0xc,0);
                     iVar2 = *piVar5;
-                    Raw.VCall((ulong)Raw.Read<uint>(iVar2 + 0x2d0) * 4) /* virtual */ (piVar5,uVar3,Raw.Read<int>(iVar2 + 0x2d4));
+                    Raw.VCall(iVar2, 66) /* virtual */ (piVar5,uVar3,Raw.Read<int>(iVar2 + 0x2d4));
                     Raw.Write<byte>(iVar4 + 0x30, 1);
                     Raw.Write<int>(iVar4 + 0x20, iVar1);
                 }
@@ -472,7 +475,7 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
                     piVar5 = Raw.Read<object>(iVar4 + 0x1c);
                     uVar3 = System.Int32.ToString(iVar1 + 0xc,0);
                     iVar2 = *piVar5;
-                    Raw.VCall((ulong)Raw.Read<uint>(iVar2 + 0x2d0) * 4) /* virtual */ (piVar5,uVar3,Raw.Read<int>(iVar2 + 0x2d4));
+                    Raw.VCall(iVar2, 66) /* virtual */ (piVar5,uVar3,Raw.Read<int>(iVar2 + 0x2d4));
                     Raw.Write<byte>(iVar4 + 0x30, 1);
                     Raw.Write<int>(iVar4 + 0x20, iVar1);
                 }
@@ -497,7 +500,7 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
         pTVar2 = slot.quantityText;
         uVar1 = System.Int32.ToString(&item.quantity,0);
         iVar3 = pTVar2._opaque;
-        Raw.VCall((ulong)Raw.Read<uint>(iVar3 + 0x2d0) * 4) /* virtual */ (pTVar2,uVar1,Raw.Read<int>(iVar3 + 0x2d4));
+        Raw.VCall(iVar3, 66) /* virtual */ (pTVar2,uVar1,Raw.Read<int>(iVar3 + 0x2d4));
         slot.isHasItem = true;
         slot.inventoryItem = item;
     }
@@ -532,7 +535,7 @@ public class InventoryManager : MonoBehaviour // TypeDefIndex: 5643
                     __this_00 = (OnInventoryItemChangedEventArgs) new OnInventoryItemChangedEventArgs();
                     new OnInventoryItemChangedEventArgs();
                     __this_00.inventoryItem = pIVar2;
-                    Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar1 + 0x20),__this_00,Raw.Read<int>(iVar1 + 0x14));
+                    Raw.DelegateInvoke(iVar1) /* delegate invoke */ (Raw.Read<int>(iVar1 + 0x20),__this_00,Raw.Read<int>(iVar1 + 0x14));
                     return;
                 }
                 iVar1 = iVar1 + 1;

@@ -2,7 +2,10 @@
 // Syntactically valid C#. Semantics are unresolved; legend:
 //   Raw.Read<T>(a), Raw.Write<T>(a, v)  raw memory at address a (was *(T *)(a))
 //   Raw.Deref(p)                        one extra dereference of pointer p
-//   Raw.VCall(a)(args)                  virtual call through vtable slot a
+//   Raw.VCall(k, s)(args)               virtual call: vtable slot s of class k (k+0xc0+8*s)
+//   Raw.VCallAt(e)(args)                virtual call: vtable entry at address e (interface)
+//   Raw.DelegateInvoke(d)(args)         delegate invoke: target from d+0xc, this d+0x20
+//   Raw.IndirectCall(a)(args)           unresolved indirect call (function-table offset a)
 //   Type.Method(args)                   managed method (was unnamed_function_N)
 //   Type.field                          static field (was Raw at X_TypeInfo + 0x5c)
 //   this                                instance pointer (was __ret in object-style methods)
@@ -29,7 +32,7 @@ public static class HelperUtilities // TypeDefIndex: 5730
         iVar1 = /* candidates: System.String.Equals | System.String.op_Equality */ unnamed_function_81494(stringToCheck,"",0);
         if (iVar1 != 0) {
             piVar2 = (object)UnityEngine.Object.get_name(thisObject,0);
-            uVar3 = Raw.VCall((ulong)Raw.Read<uint>(*piVar2 + 0xd8) * 4) /* virtual */ (piVar2,Raw.Read<int>(*piVar2 + 0xdc));
+            uVar3 = Raw.VCall(*piVar2, 3) /* virtual */ (piVar2,Raw.Read<int>(*piVar2 + 0xdc));
             uVar3 = System.String.Concat(fieldName," is empty and must contain a value in object ",uVar3,0);
             UnityEngine.Debug.Log(uVar3,0);
         }
@@ -46,7 +49,7 @@ public static class HelperUtilities // TypeDefIndex: 5730
         iVar1 = UnityEngine.Object.op_Equality(objectToCheck,0,0);
         if (iVar1 != 0) {
             piVar2 = (object)UnityEngine.Object.get_name(thisObject,0);
-            uVar3 = Raw.VCall((ulong)Raw.Read<uint>(*piVar2 + 0xd8) * 4) /* virtual */ (piVar2,Raw.Read<int>(*piVar2 + 0xdc));
+            uVar3 = Raw.VCall(*piVar2, 3) /* virtual */ (piVar2,Raw.Read<int>(*piVar2 + 0xdc));
             uVar3 = System.String.Concat(fieldName," is null and must contain a value in object ",uVar3,0);
             UnityEngine.Debug.Log(uVar3,0);
         }
@@ -77,7 +80,7 @@ public static class HelperUtilities // TypeDefIndex: 5730
         local_8 = 0;
         if (enumerableObjectToCheck == (System.Collections.IEnumerable)0x0) {
             piVar8 = (object)UnityEngine.Object.get_name(thisObject,0);
-            uVar6 = Raw.VCall((ulong)Raw.Read<uint>(*piVar8 + 0xd8) * 4) /* virtual */ (piVar8,Raw.Read<int>(*piVar8 + 0xdc));
+            uVar6 = Raw.VCall(*piVar8, 3) /* virtual */ (piVar8,Raw.Read<int>(*piVar8 + 0xdc));
             uVar6 = System.String.Concat(fieldName," is null in object ",uVar6,0);
             UnityEngine.Debug.Log(uVar6,0);
             return true;
@@ -94,7 +97,7 @@ public static class HelperUtilities // TypeDefIndex: 5730
             } while (Raw.Read<ushort>(iVar11 + 0xb6) != uVar3);
         }
         puVar4 = (object)unnamed_function_95091 (enumerableObjectToCheck,System_Collections_IEnumerable_TypeInfo,0);
-        code_r0x81a22734: local_4 = (object)Raw.VCall((ulong)*puVar4 * 4) /* virtual */(enumerableObjectToCheck,puVar4[1]);
+        code_r0x81a22734: local_4 = (object)Raw.VCallAt(puVar4) /* virtual */(enumerableObjectToCheck,puVar4[1]);
         local_10 = &local_8;
         local_18 = 0;
         local_14 = &local_4;
@@ -201,7 +204,7 @@ public static class HelperUtilities // TypeDefIndex: 5730
                         } while (Raw.Read<ushort>(iVar7 + 0xb6) != uVar3);
                     }
                     puVar4 = (object)unnamed_function_95091(piVar8,System_IDisposable_TypeInfo,0);
-                    code_r0x81a22b71: Raw.VCall((ulong)*puVar4 * 4) /* virtual */(piVar8,puVar4[1]);
+                    code_r0x81a22b71: Raw.VCallAt(puVar4) /* virtual */(piVar8,puVar4[1]);
                 }
                 if (local_18 != 0) {
                     unnamed_function_1088(local_18);
@@ -231,7 +234,7 @@ public static class HelperUtilities // TypeDefIndex: 5730
                 }
                 if (iVar9 == 0) {
                     piVar8 = (object)UnityEngine.Object.get_name(thisObject,0);
-                    uVar6 = Raw.VCall((ulong)Raw.Read<uint>(*piVar8 + 0xd8) * 4) /* virtual */ (piVar8,Raw.Read<int>(*piVar8 + 0xdc));
+                    uVar6 = Raw.VCall(*piVar8, 3) /* virtual */ (piVar8,Raw.Read<int>(*piVar8 + 0xdc));
                     uVar6 = System.String.Concat(fieldName," has no values in object ",uVar6,0);
                     UnityEngine.Debug.Log(uVar6,0);
                     return true;
@@ -330,7 +333,7 @@ public static class HelperUtilities // TypeDefIndex: 5730
                 return false;
             }
             piVar1 = (object)UnityEngine.Object.get_name(thisObject,0);
-            uVar2 = Raw.VCall((ulong)Raw.Read<uint>(*piVar1 + 0xd8) * 4) /* virtual */ (piVar1,Raw.Read<int>(*piVar1 + 0xdc));
+            uVar2 = Raw.VCall(*piVar1, 3) /* virtual */ (piVar1,Raw.Read<int>(*piVar1 + 0xdc));
             uVar2 = System.String.Concat(fieldName," must contain a positive value in object ",uVar2,0);
             iVar3 = Raw.Read<int>(UnityEngine_Debug_TypeInfo + 0x74);
         }
@@ -339,7 +342,7 @@ public static class HelperUtilities // TypeDefIndex: 5730
                 return false;
             }
             piVar1 = (object)UnityEngine.Object.get_name(thisObject,0);
-            uVar2 = Raw.VCall((ulong)Raw.Read<uint>(*piVar1 + 0xd8) * 4) /* virtual */ (piVar1,Raw.Read<int>(*piVar1 + 0xdc));
+            uVar2 = Raw.VCall(*piVar1, 3) /* virtual */ (piVar1,Raw.Read<int>(*piVar1 + 0xdc));
             uVar2 = System.String.Concat(fieldName," must contain a positive value or zero in object ",uVar2,0);
             iVar3 = Raw.Read<int>(UnityEngine_Debug_TypeInfo + 0x74);
         }
@@ -420,7 +423,7 @@ public static class HelperUtilities // TypeDefIndex: 5730
             Raw.Write<int>(param1 + 0x14, uVar4);
             Raw.Write<object>(param1 + 0x1c, " in object ");
             piVar3 = (object)UnityEngine.Object.get_name(thisObject,0);
-            uVar4 = Raw.VCall((ulong)Raw.Read<uint>(*piVar3 + 0xd8) * 4) /* virtual */ (piVar3,Raw.Read<int>(*piVar3 + 0xdc));
+            uVar4 = Raw.VCall(*piVar3, 3) /* virtual */ (piVar3,Raw.Read<int>(*piVar3 + 0xdc));
             Raw.Write<int>(param1 + 0x20, uVar4);
             uVar4 = System.String.Concat(param1,0);
             UnityEngine.Debug.Log(uVar4,0);

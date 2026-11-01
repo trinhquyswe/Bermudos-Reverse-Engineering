@@ -2,7 +2,10 @@
 // Syntactically valid C#. Semantics are unresolved; legend:
 //   Raw.Read<T>(a), Raw.Write<T>(a, v)  raw memory at address a (was *(T *)(a))
 //   Raw.Deref(p)                        one extra dereference of pointer p
-//   Raw.VCall(a)(args)                  virtual call through vtable slot a
+//   Raw.VCall(k, s)(args)               virtual call: vtable slot s of class k (k+0xc0+8*s)
+//   Raw.VCallAt(e)(args)                virtual call: vtable entry at address e (interface)
+//   Raw.DelegateInvoke(d)(args)         delegate invoke: target from d+0xc, this d+0x20
+//   Raw.IndirectCall(a)(args)           unresolved indirect call (function-table offset a)
 //   Type.Method(args)                   managed method (was unnamed_function_N)
 //   Type.field                          static field (was Raw at X_TypeInfo + 0x5c)
 //   this                                instance pointer (was __ret in object-style methods)
@@ -29,7 +32,7 @@ public class EnvMapAnimator : MonoBehaviour // TypeDefIndex: 5735
 
         pTVar1 = (TMP_Text)UnityEngine.Component.GetComponent<object>(this,DAT_ram_00567f3c);
         this.m_textMeshPro = pTVar1;
-        pMVar2 = (Material) Raw.VCall((ulong)Raw.Read<uint>(pTVar1._opaque + 0x2d8) * 4) /* virtual */ (pTVar1,Raw.Read<int>(pTVar1._opaque + 0x2dc));
+        pMVar2 = (Material) Raw.VCall(pTVar1._opaque, 67) /* virtual */ (pTVar1,Raw.Read<int>(pTVar1._opaque + 0x2dc));
         this.m_material = pMVar2;
     }
 

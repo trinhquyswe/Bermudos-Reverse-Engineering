@@ -2,7 +2,10 @@
 // Syntactically valid C#. Semantics are unresolved; legend:
 //   Raw.Read<T>(a), Raw.Write<T>(a, v)  raw memory at address a (was *(T *)(a))
 //   Raw.Deref(p)                        one extra dereference of pointer p
-//   Raw.VCall(a)(args)                  virtual call through vtable slot a
+//   Raw.VCall(k, s)(args)               virtual call: vtable slot s of class k (k+0xc0+8*s)
+//   Raw.VCallAt(e)(args)                virtual call: vtable entry at address e (interface)
+//   Raw.DelegateInvoke(d)(args)         delegate invoke: target from d+0xc, this d+0x20
+//   Raw.IndirectCall(a)(args)           unresolved indirect call (function-table offset a)
 //   Type.Method(args)                   managed method (was unnamed_function_N)
 //   Type.field                          static field (was Raw at X_TypeInfo + 0x5c)
 //   this                                instance pointer (was __ret in object-style methods)
@@ -140,14 +143,14 @@ public class SettingManager : MonoBehaviour // TypeDefIndex: 5660
         Raw.Write<int>(param2 + 0xc, (int)currentText);
         TMPro.TMP_Text.set_fontSize(previousText,this.startFontSize,0);
         iVar2 = this.audioText._opaque;
-        Raw.VCall((ulong)Raw.Read<uint>(iVar2 + 0x170) * 4) /* virtual */ (&local_10,this.audioText,Raw.Read<int>(iVar2 + 0x174));
+        Raw.VCall(iVar2, 22) /* virtual */ (&local_10,this.audioText,Raw.Read<int>(iVar2 + 0x174));
         iVar2 = this.audioText._opaque;
-        Raw.VCall((ulong)Raw.Read<uint>(iVar2 + 0x170) * 4) /* virtual */ (&local_10,this.audioText,Raw.Read<int>(iVar2 + 0x174));
+        Raw.VCall(iVar2, 22) /* virtual */ (&local_10,this.audioText,Raw.Read<int>(iVar2 + 0x174));
         iVar2 = this.audioText._opaque;
-        Raw.VCall((ulong)Raw.Read<uint>(iVar2 + 0x170) * 4) /* virtual */ (&local_10,this.audioText,Raw.Read<int>(iVar2 + 0x174));
+        Raw.VCall(iVar2, 22) /* virtual */ (&local_10,this.audioText,Raw.Read<int>(iVar2 + 0x174));
         local_4 = (float)this.aplha;
         local_18 = CONCAT44(local_4,local_8);
-        Raw.VCall((ulong)Raw.Read<uint>(previousText._opaque + 0x178) * 4) /* virtual */ (previousText,local_20,Raw.Read<int>(previousText._opaque + 0x17c));
+        Raw.VCall(previousText._opaque, 23) /* virtual */ (previousText,local_20,Raw.Read<int>(previousText._opaque + 0x17c));
         Raw.Write<int>(param2 + 8, Raw.Read<int>(Raw.Read<int>(param2 + 0xc) + 0x148));
         DG.Tweening.DOTween.KillAll(0,0);
         uVar1 = DG.Tweening.DOTweenModuleUI.DOFade(Raw.Read<int>(param2 + 0xc),1.0,0.5,0);

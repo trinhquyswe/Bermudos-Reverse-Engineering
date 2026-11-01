@@ -2,7 +2,10 @@
 // Syntactically valid C#. Semantics are unresolved; legend:
 //   Raw.Read<T>(a), Raw.Write<T>(a, v)  raw memory at address a (was *(T *)(a))
 //   Raw.Deref(p)                        one extra dereference of pointer p
-//   Raw.VCall(a)(args)                  virtual call through vtable slot a
+//   Raw.VCall(k, s)(args)               virtual call: vtable slot s of class k (k+0xc0+8*s)
+//   Raw.VCallAt(e)(args)                virtual call: vtable entry at address e (interface)
+//   Raw.DelegateInvoke(d)(args)         delegate invoke: target from d+0xc, this d+0x20
+//   Raw.IndirectCall(a)(args)           unresolved indirect call (function-table offset a)
 //   Type.Method(args)                   managed method (was unnamed_function_N)
 //   Type.field                          static field (was Raw at X_TypeInfo + 0x5c)
 //   this                                instance pointer (was __ret in object-style methods)
@@ -79,17 +82,17 @@ public class ChatController : MonoBehaviour // TypeDefIndex: 5732
         iVar1 = (pTVar4 != null);
         if (iVar1 != 0) {
             iVar1 = this.ChatDisplayOutput._opaque;
-            uVar3 = Raw.VCall((ulong)Raw.Read<uint>(iVar1 + 0x2c8) * 4) /* virtual */ (this.ChatDisplayOutput,Raw.Read<int>(iVar1 + 0x2cc));
+            uVar3 = Raw.VCall(iVar1, 65) /* virtual */ (this.ChatDisplayOutput,Raw.Read<int>(iVar1 + 0x2cc));
             iVar1 = /* candidates: System.String.Equals | System.String.op_Equality */ unnamed_function_81494(uVar3,Raw.Deref(Raw.Read<object>(string_TypeInfo + 0x5c)),0);
             pTVar4 = this.ChatDisplayOutput;
             iVar5 = pTVar4._opaque;
             if (iVar1 == 0) {
-                uVar3 = Raw.VCall((ulong)Raw.Read<uint>(iVar5 + 0x2c8) * 4) /* virtual */ (pTVar4,Raw.Read<int>(iVar5 + 0x2cc));
+                uVar3 = Raw.VCall(iVar5, 65) /* virtual */ (pTVar4,Raw.Read<int>(iVar5 + 0x2cc));
                 uVar2 = System.String.Concat(uVar3,"\n",uVar2,0);
-                Raw.VCall((ulong)Raw.Read<uint>(pTVar4._opaque + 0x2d0) * 4) /* virtual */ (pTVar4,uVar2,Raw.Read<int>(pTVar4._opaque + 0x2d4));
+                Raw.VCall(pTVar4._opaque, 66) /* virtual */ (pTVar4,uVar2,Raw.Read<int>(pTVar4._opaque + 0x2d4));
             }
             else {
-                Raw.VCall((ulong)Raw.Read<uint>(iVar5 + 0x2d0) * 4) /* virtual */ (pTVar4,uVar2,Raw.Read<int>(iVar5 + 0x2d4));
+                Raw.VCall(iVar5, 66) /* virtual */ (pTVar4,uVar2,Raw.Read<int>(iVar5 + 0x2d4));
             }
         }
         TMPro.TMP_InputField.ActivateInputField(this.ChatInputField,0);

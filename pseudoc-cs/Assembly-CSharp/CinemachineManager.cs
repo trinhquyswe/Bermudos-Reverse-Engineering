@@ -2,7 +2,10 @@
 // Syntactically valid C#. Semantics are unresolved; legend:
 //   Raw.Read<T>(a), Raw.Write<T>(a, v)  raw memory at address a (was *(T *)(a))
 //   Raw.Deref(p)                        one extra dereference of pointer p
-//   Raw.VCall(a)(args)                  virtual call through vtable slot a
+//   Raw.VCall(k, s)(args)               virtual call: vtable slot s of class k (k+0xc0+8*s)
+//   Raw.VCallAt(e)(args)                virtual call: vtable entry at address e (interface)
+//   Raw.DelegateInvoke(d)(args)         delegate invoke: target from d+0xc, this d+0x20
+//   Raw.IndirectCall(a)(args)           unresolved indirect call (function-table offset a)
 //   Type.Method(args)                   managed method (was unnamed_function_N)
 //   Type.field                          static field (was Raw at X_TypeInfo + 0x5c)
 //   this                                instance pointer (was __ret in object-style methods)
@@ -184,7 +187,7 @@ public class CinemachineManager : MonoBehaviour // TypeDefIndex: 5610
         }
         uVar1 = UnityEngine.Component.get_transform(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar3 + 0x5c)) + 0x10),0);
         iVar3 = pCVar2._opaque;
-        Raw.VCall((ulong)Raw.Read<uint>(iVar3 + 0x1c0) * 4) /* virtual */ (pCVar2,uVar1,Raw.Read<int>(iVar3 + 0x1c4));
+        Raw.VCall(iVar3, 32) /* virtual */ (pCVar2,uVar1,Raw.Read<int>(iVar3 + 0x1c4));
         pCVar2 = this.zoomCamera;
         iVar3 = Raw.Read<int>(DAT_ram_00565d78 + 0x10);
         if ((Raw.Read<byte>(iVar3 + 0xbd) & 1) == 0) {
@@ -194,7 +197,7 @@ public class CinemachineManager : MonoBehaviour // TypeDefIndex: 5610
         }
         uVar1 = UnityEngine.Component.get_transform(Raw.Read<int>(Raw.Deref(Raw.Read<object>(iVar3 + 0x5c)) + 0x10),0);
         iVar3 = pCVar2._opaque;
-        Raw.VCall((ulong)Raw.Read<uint>(iVar3 + 0x1c0) * 4) /* virtual */ (pCVar2,uVar1,Raw.Read<int>(iVar3 + 0x1c4));
+        Raw.VCall(iVar3, 32) /* virtual */ (pCVar2,uVar1,Raw.Read<int>(iVar3 + 0x1c4));
     }
 
     [IteratorStateMachine(typeof(CinemachineManager._ZoomCam_d__10))]
@@ -295,7 +298,7 @@ public class CinemachineManager : MonoBehaviour // TypeDefIndex: 5610
         UnityEngine.GameObject.SetActive(Raw.Read<int>(iVar3 + 0x3c),1,0);
         iVar3 = Raw.Read<int>(iVar3 + 0x20);
         if (iVar3 != 0) {
-            Raw.VCall((ulong)Raw.Read<uint>(iVar3 + 0xc) * 4) /* virtual */ (Raw.Read<int>(iVar3 + 0x20),2,Raw.Read<int>(iVar3 + 0x14));
+            Raw.DelegateInvoke(iVar3) /* delegate invoke */ (Raw.Read<int>(iVar3 + 0x20),2,Raw.Read<int>(iVar3 + 0x14));
         }
     }
 }

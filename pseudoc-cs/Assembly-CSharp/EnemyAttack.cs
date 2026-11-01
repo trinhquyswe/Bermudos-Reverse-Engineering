@@ -2,7 +2,10 @@
 // Syntactically valid C#. Semantics are unresolved; legend:
 //   Raw.Read<T>(a), Raw.Write<T>(a, v)  raw memory at address a (was *(T *)(a))
 //   Raw.Deref(p)                        one extra dereference of pointer p
-//   Raw.VCall(a)(args)                  virtual call through vtable slot a
+//   Raw.VCall(k, s)(args)               virtual call: vtable slot s of class k (k+0xc0+8*s)
+//   Raw.VCallAt(e)(args)                virtual call: vtable entry at address e (interface)
+//   Raw.DelegateInvoke(d)(args)         delegate invoke: target from d+0xc, this d+0x20
+//   Raw.IndirectCall(a)(args)           unresolved indirect call (function-table offset a)
 //   Type.Method(args)                   managed method (was unnamed_function_N)
 //   Type.field                          static field (was Raw at X_TypeInfo + 0x5c)
 //   this                                instance pointer (was __ret in object-style methods)
@@ -115,7 +118,7 @@ public class EnemyAttack : MonoBehaviour // TypeDefIndex: 5589
             code_r0x81a513c4: local_60.z = local_10.z;
             local_60.x = local_10.x;
             local_60.y = local_10.y;
-            Raw.VCall((ulong)*puVar1 * 4) /* virtual */(param1_00,pAVar3,&local_60,puVar1[1]);
+            Raw.VCallAt(puVar1) /* virtual */(param1_00,pAVar3,&local_60,puVar1[1]);
         }
     }
 
